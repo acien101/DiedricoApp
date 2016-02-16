@@ -102,7 +102,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         List<String> pointsForSpinner = new ArrayList<String>();
         for(int i = 0; i< puntos.size(); i ++){
 
-                    pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Double.toString(puntos.get(i).getX()) + " Y:" + Double.toString(puntos.get(0).getY()));
+                    pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Float.toString((float) puntos.get(i).getX()) + " Y:" + Float.toString((float) puntos.get(i).getY()));
 
 
 
