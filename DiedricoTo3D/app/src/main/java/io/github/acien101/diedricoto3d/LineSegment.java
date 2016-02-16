@@ -1,12 +1,15 @@
 package io.github.acien101.diedricoto3d;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import georegression.struct.line.LineSegment2D_F32;
  * Created by amil101 on 31/01/16.
  */
 public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
+    Context context;
     ImageView pic;
     Bitmap bmPic;
     static List<Double> interestPoints = new ArrayList<Double>();
@@ -37,8 +41,10 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     int nLineas;
     int nPlanos;
 
-    static List<Punto> puntos = new ArrayList<>();
+    List<Punto> puntos = new ArrayList<>();
     static List<Linea> lineas = new ArrayList<>();
+
+    Spinner numeroPuntos;
 
     public Vector getVector() {
         return vector;
@@ -47,6 +53,10 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
     public List<Punto> getPuntos() {
         return puntos;
+    }
+
+    public List<Linea> getLineas() {
+        return lineas;
     }
 
     @Override
@@ -75,6 +85,8 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         */
 
+        Log.i("info", Integer.toString(puntos.size()));
+
         return myBM;
 
 
@@ -87,14 +99,31 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         bmPic = bitmap;
         pic.setImageBitmap(bitmap);
 
+        List<String> pointsForSpinner = new ArrayList<String>();
+        for(int i = 0; i< puntos.size(); i ++){
+
+                    pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Double.toString(puntos.get(i).getX()) + " Y:" + Double.toString(puntos.get(0).getY()));
+
+
+
+            Log.i("puntos", "Punto " + Integer.toString(i) + " X:" + Double.toString(puntos.get(i).getX()) + " Y:" + Double.toString(puntos.get(0).getY()));
+        }
+
+        ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, pointsForSpinner);
+        menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        numeroPuntos.setAdapter(menuNumeroArrayAdapter);
+
+
     }
 
-    public LineSegment(ImageView pic, int nPuntos, int nLineas, int nPlanos){
+    public LineSegment(Context context, ImageView pic, int nPuntos, int nLineas, int nPlanos, Spinner numeroPuntos){
         super();
+        this.context = context;
         this.pic = pic;
         this.nPuntos = nPuntos;
         this.nLineas = nLineas;
         this.nPlanos = nPlanos;
+        this.numeroPuntos = numeroPuntos;
     }
 
     public static<T extends ImageSingleBand, D extends ImageSingleBand>
@@ -127,13 +156,14 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         landLine.add(0, found.get(0).a.x);
         landLine.add(1, found.get(0).a.y);
+
         landLine.add(2, found.get(0).b.x);
         landLine.add(3, found.get(0).b.y);
 
         return image;
     }
 
-    public static <T extends ImageFloat32>
+    public <T extends ImageFloat32>
     Bitmap detect( Bitmap image, Class<T> imageType , int nPuntos) {
 
         T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);

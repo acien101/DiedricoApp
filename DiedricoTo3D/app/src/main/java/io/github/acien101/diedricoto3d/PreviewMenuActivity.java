@@ -51,6 +51,7 @@ public class PreviewMenuActivity extends Activity{
     Spinner menuColor;
 
     List<Punto> puntos = new ArrayList<>();
+    List<Linea> lineas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,10 +129,9 @@ public class PreviewMenuActivity extends Activity{
                 funcionCualquiera("analizar");
 
                 Bitmap picBM = obj.getPic();
-                asdf = new LineSegment(pic, Integer.parseInt(nPuntos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()));
+                asdf = new LineSegment(getApplicationContext(), pic, Integer.parseInt(nPuntos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), menuTipo);
                 asdf.execute(picBM);
 
-                puntos = asdf.getPuntos();
                 return true;
             }
         });
@@ -237,3 +237,5 @@ public class PreviewMenuActivity extends Activity{
 
     }
 }
+
+
