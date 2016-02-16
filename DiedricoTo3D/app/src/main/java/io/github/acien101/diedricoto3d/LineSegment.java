@@ -38,6 +38,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     int nPlanos;
 
     static List<Punto> puntos = new ArrayList<>();
+    static List<Linea> lineas = new ArrayList<>();
 
     public Vector getVector() {
         return vector;
@@ -53,7 +54,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         myBM = detectLineSegments(detect(params[0], ImageFloat32.class, nPuntos*2), ImageFloat32.class, ImageFloat32.class);
 
-
+        /*
         Log.i("land line a x", Double.toString(landLine.get(0)));
         Log.i("land line a y", Double.toString(landLine.get(1)));
         Log.i("land line b x", Double.toString(landLine.get(2)));
@@ -72,6 +73,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         vector2.createVector(landLine.get(0), landLine.get(1), interestPoints.get(2), interestPoints.get(3), "AD");
         vector2.getAngle(vector2.getVector("AB"), vector2.getVector("AD"));
 
+        */
 
         return myBM;
 
@@ -118,6 +120,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         for(int i = 0; i<found.size();i++){
             canvas.drawLine(found.get(i).a.x,found.get(i).a.y, found.get(i).b.x,found.get(i).b.y,paintMax);
+            lineas.add(new Linea(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
         }
 
 
