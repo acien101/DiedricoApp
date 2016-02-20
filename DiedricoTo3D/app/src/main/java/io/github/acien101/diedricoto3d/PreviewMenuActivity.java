@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +32,6 @@ import java.util.List;
  * Created by amil101 on 12/02/16.
  */
 public class PreviewMenuActivity extends Activity{
-
     ImageView pic;
     String file;
     Bitmap bmImg;
@@ -50,8 +51,8 @@ public class PreviewMenuActivity extends Activity{
     Spinner menuNumero;
     Spinner menuColor;
 
-    List<Punto> puntos = new ArrayList<>();
-    List<Linea> lineas = new ArrayList<>();
+    List<Punto> puntosObj = new ArrayList<>();
+    List<Linea> lineasObj = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class PreviewMenuActivity extends Activity{
 
         pic = (ImageView) findViewById(R.id.imagePreview);
         bmImg = BitmapFactory.decodeFile(file);
+
 
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -129,7 +131,29 @@ public class PreviewMenuActivity extends Activity{
                 funcionCualquiera("analizar");
 
                 Bitmap picBM = obj.getPic();
-                asdf = new LineSegment(getApplicationContext(), pic, Integer.parseInt(nPuntos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), menuTipo);
+                asdf = new LineSegment(getApplicationContext(), pic, Integer.parseInt(nPuntos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), menuTipo, new LineSegment.AsyncResponse() {
+                    @Override
+                    public void processFinish(List<Punto> puntos, List<Linea> lineas, List<Double> planos) {
+
+                        puntosObj = puntos;
+                        lineasObj = lineas;
+
+                        List<String> pointsForSpinner = new ArrayList<String>();
+                        for(int i = 0; i< puntos.size(); i ++){
+
+                            pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Float.toString((float) puntosObj.get(i).getX()) + " Y:" + Float.toString((float) puntosObj.get(i).getY()));
+
+
+
+                            Log.i("puntos", "Punto " + Integer.toString(i) + " X:" + Double.toString(puntosObj.get(i).getX()) + " Y:" + Double.toString(puntosObj.get(i).getY()));
+                        }
+
+                        ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
+                        menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        menuTipo.setAdapter(menuNumeroArrayAdapter);
+
+                    }
+                });
                 asdf.execute(picBM);
 
                 return true;

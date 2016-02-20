@@ -42,9 +42,11 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     int nPlanos;
 
     List<Punto> puntos = new ArrayList<>();
-    static List<Linea> lineas = new ArrayList<>();
+    List<Linea> lineas = new ArrayList<>();
 
     Spinner numeroPuntos;
+
+    public AsyncResponse delegate = null;
 
     public Vector getVector() {
         return vector;
@@ -99,25 +101,12 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         bmPic = bitmap;
         pic.setImageBitmap(bitmap);
 
-        List<String> pointsForSpinner = new ArrayList<String>();
-        for(int i = 0; i< puntos.size(); i ++){
-
-                    pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Float.toString((float) puntos.get(i).getX()) + " Y:" + Float.toString((float) puntos.get(i).getY()));
-
-
-
-            Log.i("puntos", "Punto " + Integer.toString(i) + " X:" + Double.toString(puntos.get(i).getX()) + " Y:" + Double.toString(puntos.get(0).getY()));
-        }
-
-        ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, pointsForSpinner);
-        menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        numeroPuntos.setAdapter(menuNumeroArrayAdapter);
-
-
+        delegate.processFinish(puntos, lineas, null);
     }
 
-    public LineSegment(Context context, ImageView pic, int nPuntos, int nLineas, int nPlanos, Spinner numeroPuntos){
+    public LineSegment(Context context, ImageView pic, int nPuntos, int nLineas, int nPlanos, Spinner numeroPuntos, AsyncResponse delegate){
         super();
+        this.delegate = delegate;
         this.context = context;
         this.pic = pic;
         this.nPuntos = nPuntos;
@@ -126,7 +115,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         this.numeroPuntos = numeroPuntos;
     }
 
-    public static<T extends ImageSingleBand, D extends ImageSingleBand>
+    public <T extends ImageSingleBand, D extends ImageSingleBand>
     Bitmap detectLineSegments( Bitmap image ,
                              Class<T> imageType ,
                              Class<D> derivType )
@@ -183,14 +172,6 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         Canvas canvas = new Canvas(image);
 
-        /*
-        Punto asdf = new Punto();
-        asdf.setX(12);
-        asdf.setY(12);
-        puntos.add(asdf);
-        */
-
-
 
         for(int i = 0; i<detector.getNumberOfFeatures();i++){
             canvas.drawCircle((float) detector.getLocation(i).getX(), (float) detector.getLocation(i).getY(), 3, paintMax);
@@ -210,7 +191,8 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         return bmPic;
     }
 
-
-
+    public interface AsyncResponse{
+        void processFinish(List<Punto> puntos, List<Linea> lineas, List<Double> planos);
+    }
 
 }

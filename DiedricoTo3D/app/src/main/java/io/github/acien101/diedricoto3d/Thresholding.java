@@ -56,25 +56,4 @@ public class Thresholding extends AsyncTask<String,Integer,Bitmap>{
         return bmPic;
     }
 
-    /*
-    public static Bitmap threshold( String imageName, int radious) {
-        Bitmap image = BitmapFactory.decodeFile(imageName);
-
-        Bitmap image2 = Bitmap.createScaledBitmap(image, 100,100,false);
-
-        // convert into a usable format
-        ImageFloat32 input = ConvertBitmap.bitmapToGray(image2,(ImageFloat32)null,null);                    //(image, null, ImageFloat32.class);
-
-        ImageUInt8 binary = new ImageUInt8(input.width,input.height);
-
-        GThresholdImageOps.localSauvola(input, binary, radious, 0.3f, false);
-        VisualizeImageData.binaryToBitmap(binary, false, image2, null);
-
-        return image2;
-
-
-    }
-
-    */
-
 }
