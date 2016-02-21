@@ -54,6 +54,7 @@ public class PreviewMenuActivity extends Activity{
     List<Punto> puntosObj = new ArrayList<>();
     List<Linea> lineasObj = new ArrayList<>();
 
+    List<PuntoDiedrico> puntoDiedricos = new ArrayList<>();
 
     Bitmap originalBitmap;
 
@@ -144,15 +145,17 @@ public class PreviewMenuActivity extends Activity{
 
                         List<String> pointsForSpinner = new ArrayList<String>();
                         for(int i = 0; i< puntos.size(); i ++){
-
                             pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Float.toString((float) puntosObj.get(i).getX()) + " Y:" + Float.toString((float) puntosObj.get(i).getY()));
-
-
-
                             Log.i("puntos", "Punto " + Integer.toString(i) + " X:" + Double.toString(puntosObj.get(i).getX()) + " Y:" + Double.toString(puntosObj.get(i).getY()));
                         }
 
 
+                        // Adding points to pointsDiedrico. Most of the will be wrong, no problem, then with the GUI the user change that
+                        for(int i = 0; i<(puntos.size()/2); i+=2){
+                            puntoDiedricos.add(new PuntoDiedrico(puntosObj.get(i), puntosObj.get(i+1)));
+                        }
+
+                        /*
                         List<String> tipos = new ArrayList<String>();
                         tipos.add("Linea de tierra");
                         for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
@@ -165,12 +168,31 @@ public class PreviewMenuActivity extends Activity{
                             tipos.add("Plano nº " + i);
                         }
 
+                        */
+
+                        List<String> puntosSpinner = new ArrayList<String>();
+                        for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
+                            puntosSpinner.add("Punto nº " + i);
+                        }
+
+
                         //Is needed for ListenPoint
                         final Bitmap transformationBM;
 
-                        ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, tipos);
+                        ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, puntosSpinner);
                         menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                         menuTipo.setAdapter(menuTipoArrayAdapter);
+                        menuTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                new ListenPointDiedrico(pic, Bitmap.createBitmap(asdf.getPic()), puntoDiedricos.get(position));
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
 
 
                         ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
