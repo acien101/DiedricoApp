@@ -150,11 +150,6 @@ public class PreviewMenuActivity extends Activity{
                         }
 
 
-                        // Adding points to pointsDiedrico. Most of the will be wrong, no problem, then with the GUI the user change that
-                        for(int i = 0; i<(puntos.size()/2); i+=2){
-                            puntoDiedricos.add(new PuntoDiedrico(puntosObj.get(i), puntosObj.get(i+1)));
-                        }
-
                         /*
                         List<String> tipos = new ArrayList<String>();
                         tipos.add("Linea de tierra");
@@ -172,7 +167,8 @@ public class PreviewMenuActivity extends Activity{
 
                         List<String> puntosSpinner = new ArrayList<String>();
                         for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
-                            puntosSpinner.add("Punto nº " + i);
+                            puntosSpinner.add("Cota punto nº " + i);
+                            puntosSpinner.add("Alejamiento punto nº " + i);
                         }
 
 
