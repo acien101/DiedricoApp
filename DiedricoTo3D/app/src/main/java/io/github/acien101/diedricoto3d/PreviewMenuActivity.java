@@ -54,6 +54,9 @@ public class PreviewMenuActivity extends Activity{
     List<Punto> puntosObj = new ArrayList<>();
     List<Linea> lineasObj = new ArrayList<>();
 
+
+    Bitmap originalBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,13 +99,14 @@ public class PreviewMenuActivity extends Activity{
         nPlanos = (EditText) findViewById(R.id.nPlanos);
 
         // array of colors
-        String colors[] = {"Red","Blue","White","Yellow","Black", "Green","Purple","Orange","Grey"};
+        String colors[] = {"Linea de tierra", "punto 1"};
 
         //Set menuTipo to the view and then put an array
         menuTipo = (Spinner) findViewById(R.id.menu_tipo);
         ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colors);
         menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         menuTipo.setAdapter(menuTipoArrayAdapter);
+
 
         //Set menuNumero to the view and then put an array
         menuNumero = (Spinner) findViewById(R.id.menu_numero);
@@ -148,9 +152,42 @@ public class PreviewMenuActivity extends Activity{
                             Log.i("puntos", "Punto " + Integer.toString(i) + " X:" + Double.toString(puntosObj.get(i).getX()) + " Y:" + Double.toString(puntosObj.get(i).getY()));
                         }
 
+
+                        List<String> tipos = new ArrayList<String>();
+                        tipos.add("Linea de tierra");
+                        for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
+                            tipos.add("Punto nº " + i);
+                        }
+                        for(int i =0; i< Integer.parseInt(nLineas.getText().toString()); i++){
+                            tipos.add("Linea nº " + i);
+                        }
+                        for(int i =0; i< Integer.parseInt(nPlanos.getText().toString()); i++){
+                            tipos.add("Plano nº " + i);
+                        }
+
+                        //Is needed for ListenPoint
+                        final Bitmap transformationBM;
+
+                        ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, tipos);
+                        menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+                        menuTipo.setAdapter(menuTipoArrayAdapter);
+
+
                         ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
                         menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        menuTipo.setAdapter(menuNumeroArrayAdapter);
+                        menuNumero.setAdapter(menuNumeroArrayAdapter);
+
+                        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()),puntosObj.get(position));
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
 
                     }
                 });
