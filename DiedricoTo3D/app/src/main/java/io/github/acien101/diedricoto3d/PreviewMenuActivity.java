@@ -58,6 +58,10 @@ public class PreviewMenuActivity extends Activity{
 
     Bitmap originalBitmap;
 
+    int currentType;
+    List<Punto> cotas = new ArrayList<>();
+    List<Punto> alejamiento = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,10 +169,14 @@ public class PreviewMenuActivity extends Activity{
 
                         */
 
+
                         List<String> puntosSpinner = new ArrayList<String>();
                         for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
                             puntosSpinner.add("Cota punto nº " + i);
+                            cotas.add(puntosObj.get((i*2)));
                             puntosSpinner.add("Alejamiento punto nº " + i);
+                            alejamiento.add(puntosObj.get(((i*2)+1)));
+
                         }
 
 
@@ -181,7 +189,15 @@ public class PreviewMenuActivity extends Activity{
                         menuTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                new ListenPointDiedrico(pic, Bitmap.createBitmap(asdf.getPic()), puntoDiedricos.get(position));
+                                Log.i("info", "Toco " + position);
+                                currentType = position;
+                                if(position%2 == 0){
+                                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), cotas.get(position/2));
+                                }
+                                else{
+                                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), alejamiento.get(position/2));
+                                }
+
                             }
 
                             @Override
