@@ -6,11 +6,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.ImageView;
 
+import java.util.List;
+
 /**
  * Created by amil101 on 21/02/16.
  */
-public class ListenPoint {
-    public ListenPoint(ImageView imageView, Bitmap pic, Punto punto){
+public class ListenLine {
+    public ListenLine(ImageView imageView, Bitmap pic, Linea line){
         Bitmap transformation = pic;
 
         Paint paintMax;
@@ -20,7 +22,7 @@ public class ListenPoint {
 
         Canvas canvas = new Canvas(transformation);
 
-        canvas.drawCircle((float) punto.getX(), (float) punto.getY(), 3, paintMax);
+        canvas.drawLine((float)line.getXa(),(float)line.getXb(), (float)line.getYa(),(float)line.getYb(),paintMax);
 
         imageView.setImageBitmap(transformation);
     }

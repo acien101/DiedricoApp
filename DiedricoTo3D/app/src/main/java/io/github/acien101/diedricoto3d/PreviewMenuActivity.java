@@ -180,7 +180,7 @@ public class PreviewMenuActivity extends Activity{
                         menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()),puntosObj.get(position));
+                                new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntosObj.get(position));
                             }
 
                             @Override
@@ -188,7 +188,6 @@ public class PreviewMenuActivity extends Activity{
 
                             }
                         });
-
                     }
                 });
                 asdf.execute(picBM);
