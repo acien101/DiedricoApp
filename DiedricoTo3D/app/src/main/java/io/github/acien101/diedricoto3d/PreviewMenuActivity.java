@@ -62,6 +62,8 @@ public class PreviewMenuActivity extends Activity{
     List<Punto> cotas = new ArrayList<>();
     List<Punto> alejamiento = new ArrayList<>();
 
+    int typeOfPoint = 0;             // 0 means cota, 1 means alejamiento
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +172,9 @@ public class PreviewMenuActivity extends Activity{
                         */
 
 
+                        //Creamos la Spinner con los alejamientos y cotas que antes hemos indicado
+                        //We create a Spinner with the cotas(?) and alejamientos(?) that we early specificated
+
                         List<String> puntosSpinner = new ArrayList<String>();
                         for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
                             puntosSpinner.add("Cota punto nº " + i);
@@ -178,7 +183,6 @@ public class PreviewMenuActivity extends Activity{
                             alejamiento.add(puntosObj.get(((i*2)+1)));
 
                         }
-
 
                         //Is needed for ListenPoint
                         final Bitmap transformationBM;
@@ -191,11 +195,13 @@ public class PreviewMenuActivity extends Activity{
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Log.i("info", "Toco " + position);
                                 currentType = position;
-                                if(position%2 == 0){
+                                if(position%2 == 0){                        //if it is a cota(?)
                                     new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), cotas.get(position/2));
+                                    typeOfPoint = 0;
                                 }
-                                else{
+                                else{                                          // if it is a alejamiento(?)
                                     new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), alejamiento.get(position/2));
+                                    typeOfPoint = 1;
                                 }
 
                             }
@@ -207,14 +213,33 @@ public class PreviewMenuActivity extends Activity{
                         });
 
 
+                        //Creamos el Spinner con todos los puntos(por ahora) para seleccionar si son cotas o alejamientos
+                        //We create a Spinner with all the points (currently) for select later
+
+
                         ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
                         menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         menuNumero.setAdapter(menuNumeroArrayAdapter);
 
                         menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o alejamiento), with this way we specify what point is it
                                 new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntosObj.get(position));
+
+                                if(typeOfPoint == 0){           //the point we selected is a cota(?)
+
+                                    Punto necessaryPoint = puntosObj.get(position);
+                                    cotas.remove(0);
+                                    cotas.add(puntosObj.get(position));
+
+                                }
+                                else{                               //the point we selected is a alejamiento(?)
+
+                                    Punto necessaryPoint = puntosObj.get(position);
+                                    alejamiento.remove(0);
+                                    alejamiento.add(puntosObj.get(position));
+
+                                }
                             }
 
                             @Override
