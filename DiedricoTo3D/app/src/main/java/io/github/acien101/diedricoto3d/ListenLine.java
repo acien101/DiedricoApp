@@ -22,7 +22,7 @@ public class ListenLine {
 
         Canvas canvas = new Canvas(transformation);
 
-        canvas.drawLine((float)line.getXa(),(float)line.getXb(), (float)line.getYa(),(float)line.getYb(),paintMax);
+        canvas.drawLine(line.getXa(), line.getYa(), line.getXb(),line.getYb(),paintMax);
 
         imageView.setImageBitmap(transformation);
     }

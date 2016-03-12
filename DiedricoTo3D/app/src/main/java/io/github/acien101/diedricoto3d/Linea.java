@@ -5,48 +5,48 @@ package io.github.acien101.diedricoto3d;
  */
 public class Linea {
 
-    double xa;
-    double ya;
+    float xa;
+    float ya;
 
-    double xb;
-    double yb;
+    float xb;
+    float yb;
 
-    public Linea(double xa, double ya, double xb, double yb){
+    public Linea(float xa, float ya, float xb, float yb){
         this.xa = xa;
         this.ya = ya;
         this.xb = xb;
         this.yb = yb;
     }
 
-    public double getXa() {
+    public float getXa() {
         return xa;
     }
 
-    public void setXa(double xa) {
+    public void setXa(float xa) {
         this.xa = xa;
     }
 
-    public double getXb() {
+    public float getXb() {
         return xb;
     }
 
-    public void setXb(double xb) {
+    public void setXb(float xb) {
         this.xb = xb;
     }
 
-    public double getYa() {
+    public float getYa() {
         return ya;
     }
 
-    public void setYa(double ya) {
+    public void setYa(float ya) {
         this.ya = ya;
     }
 
-    public double getYb() {
+    public float getYb() {
         return yb;
     }
 
-    public void setYb(double yb) {
+    public void setYb(float yb) {
         this.yb = yb;
     }
 }

@@ -155,6 +155,12 @@ public class PreviewMenuActivity extends Activity{
                             Log.i("puntos", "Punto " + Integer.toString(i) + " X:" + Double.toString(puntosObj.get(i).getX()) + " Y:" + Double.toString(puntosObj.get(i).getY()));
                         }
 
+                        List<String> linesForSpinner = new ArrayList<>();
+                        for(int i = 0; i < lineas.size(); i++){
+                            linesForSpinner.add("Linea " + Integer.toString(i) + " Xa: " + Float.toString((float) lineasObj.get(i).getXa()) + " Ya: " + Float.toString((float) lineasObj.get(i).getYa()) + " Xb: "  + Float.toString((float) lineasObj.get(i).getXb()) + " Yb: " + Float.toString((float) lineasObj.get(i).getYb()));
+                        }
+
+
 
                         /*
                         List<String> tipos = new ArrayList<String>();
@@ -176,6 +182,9 @@ public class PreviewMenuActivity extends Activity{
                         //We create a Spinner with the cotas(?) and alejamientos(?) that we early specificated
 
                         List<String> puntosSpinner = new ArrayList<String>();
+                        for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i++){
+                            puntosSpinner.add("Linea " + i);
+                        }
                         for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
                             puntosSpinner.add("Cota punto nº " + i);
                             cotas.add(puntosObj.get((i*2)));
@@ -195,13 +204,19 @@ public class PreviewMenuActivity extends Activity{
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 Log.i("info", "Toco " + position);
                                 currentType = position;
-                                if(position%2 == 0){                        //if it is a cota(?)
-                                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), cotas.get(position/2));
+                                if((position - Integer.parseInt(nLineas.getText().toString())) >= 0 && (position - Integer.parseInt(nLineas.getText().toString()))%2 == 0){                        //if it is a cota(?)
+                                    Log.i("INFO", "COTA");
+                                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), cotas.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
                                     typeOfPoint = 0;
                                 }
-                                else{                                          // if it is a alejamiento(?)
-                                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), alejamiento.get(position/2));
+                                if((position - Integer.parseInt(nLineas.getText().toString())) >= 0 && (position - Integer.parseInt(nLineas.getText().toString()))%2 != 0){                                          // if it is a alejamiento(?)
+                                    Log.i("INFO", "ALEJAMIENTO");
+                                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), alejamiento.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
                                     typeOfPoint = 1;
+                                }
+                                if(position == 0){
+                                    Log.i("INFO", "LINE");
+                                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(0));
                                 }
 
                             }
