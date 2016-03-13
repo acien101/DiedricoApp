@@ -128,9 +128,10 @@ public class PreviewMenuActivity extends Activity{
         menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         menuNumero.setAdapter(menuNumeroArrayAdapter);
 
+
         //Set menuNumero to the view and then put an array
         menuColor = (Spinner) findViewById(R.id.menu_color);
-        ArrayAdapter<String> menuColorArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colors);
+        ArrayAdapter<CharSequence> menuColorArrayAdapter = ArrayAdapter.createFromResource(this, R.array.colorsSpinner, android.R.layout.simple_spinner_item);
         menuColorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         menuColor.setAdapter(menuColorArrayAdapter);
     }
