@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import io.github.acien101.diedricoto3d.openGL.Line;
 import io.github.acien101.diedricoto3d.openGL.OpenGlActivity;
 
 import java.io.FileInputStream;
@@ -62,7 +63,13 @@ public class PreviewMenuActivity extends Activity{
     List<Punto> cotas = new ArrayList<>();
     List<Punto> alejamiento = new ArrayList<>();
 
+    List<Linea> currentLine = new ArrayList<>();
+
     int typeOfPoint = 0;             // 0 means cota, 1 means alejamiento
+    int numberOfPoint = 0;
+
+    ArrayAdapter<String> menuPuntoArrayAdapter;
+    ArrayAdapter<String> menuLineaArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +156,9 @@ public class PreviewMenuActivity extends Activity{
                         puntosObj = puntos;
                         lineasObj = lineas;
 
+
+
+
                         List<String> pointsForSpinner = new ArrayList<String>();
                         for(int i = 0; i< puntos.size(); i ++){
                             pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Float.toString((float) puntosObj.get(i).getX()) + " Y:" + Float.toString((float) puntosObj.get(i).getY()));
@@ -160,6 +170,12 @@ public class PreviewMenuActivity extends Activity{
                             linesForSpinner.add("Linea " + Integer.toString(i) + " Xa: " + Float.toString((float) lineasObj.get(i).getXa()) + " Ya: " + Float.toString((float) lineasObj.get(i).getYa()) + " Xb: "  + Float.toString((float) lineasObj.get(i).getXb()) + " Yb: " + Float.toString((float) lineasObj.get(i).getYb()));
                         }
 
+
+                        menuPuntoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
+                        menuPuntoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        menuLineaArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, linesForSpinner);
+                        menuLineaArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
                         /*
@@ -184,6 +200,9 @@ public class PreviewMenuActivity extends Activity{
                         List<String> puntosSpinner = new ArrayList<String>();
                         for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i++){
                             puntosSpinner.add("Linea " + i);
+                            if(i == 0){
+                                currentLine.add(lineasObj.get(i));          //we need to put at least one, later we specify what line it is, in the second spinner
+                            }
                         }
                         for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
                             puntosSpinner.add("Cota punto nº " + i);
@@ -205,18 +224,32 @@ public class PreviewMenuActivity extends Activity{
                                 Log.i("info", "Toco " + position);
                                 currentType = position;
                                 if((position - Integer.parseInt(nLineas.getText().toString())) >= 0 && (position - Integer.parseInt(nLineas.getText().toString()))%2 == 0){                        //if it is a cota(?)
+                                    menuNumero.setAdapter(menuPuntoArrayAdapter);
+                                    menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(cotas.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
                                     Log.i("INFO", "COTA");
                                     new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), cotas.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
-                                    typeOfPoint = 0;
+
+                                    typeOfPoint = 0;                //what type it is, for later with the other spinner specify the point
+                                    numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
                                 }
-                                if((position - Integer.parseInt(nLineas.getText().toString())) >= 0 && (position - Integer.parseInt(nLineas.getText().toString()))%2 != 0){                                          // if it is a alejamiento(?)
+                                if((position - Integer.parseInt(nLineas.getText().toString())) >= 0 && (position - Integer.parseInt(nLineas.getText().toString())) % 2 != 0) {
+                                    menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a alejamiento(?)
+                                    menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(alejamiento.get((position - Integer.parseInt(nLineas.getText().toString()))/2)));
                                     Log.i("INFO", "ALEJAMIENTO");
                                     new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), alejamiento.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
-                                    typeOfPoint = 1;
+
+                                    typeOfPoint = 1;            //what type it is, for later with the other spinner specify the point
+                                    numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
                                 }
                                 if(position == 0){
                                     Log.i("INFO", "LINE");
-                                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(0));
+
+                                    menuNumero.setAdapter(menuLineaArrayAdapter);
+
+                                    menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
+                                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), currentLine.get(0));
+
+
                                 }
 
                             }
@@ -230,38 +263,6 @@ public class PreviewMenuActivity extends Activity{
 
                         //Creamos el Spinner con todos los puntos(por ahora) para seleccionar si son cotas o alejamientos
                         //We create a Spinner with all the points (currently) for select later
-
-
-                        ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
-                        menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        menuNumero.setAdapter(menuNumeroArrayAdapter);
-
-                        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o alejamiento), with this way we specify what point is it
-                                new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntosObj.get(position));
-
-                                if(typeOfPoint == 0){           //the point we selected is a cota(?)
-
-                                    Punto necessaryPoint = puntosObj.get(position);
-                                    cotas.remove(0);
-                                    cotas.add(puntosObj.get(position));
-
-                                }
-                                else{                               //the point we selected is a alejamiento(?)
-
-                                    Punto necessaryPoint = puntosObj.get(position);
-                                    alejamiento.remove(0);
-                                    alejamiento.add(puntosObj.get(position));
-
-                                }
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
                     }
                 });
                 asdf.execute(picBM);
@@ -330,6 +331,69 @@ public class PreviewMenuActivity extends Activity{
 
     void funcionCualquiera(String mensaje){
         Log.i("menuPreview", mensaje);
+    }
+
+    AdapterView.OnItemSelectedListener onMenuNumeroPointSelectedListener(Punto selectedPoint) {
+
+        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int contador = 0;
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o alejamiento), with this way we specify what point is it
+                if(contador != 0) {                         //when we create the listener, it activates alone. This don't let him!!
+                    Log.i("INFO", "TOCADOO MENUNUMERO");
+                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntosObj.get(position));
+
+                    if (typeOfPoint == 0) {           //the point we selected is a cota(?)
+
+                        Punto necessaryPoint = puntosObj.get(position);
+                        cotas.remove(numberOfPoint);
+                        cotas.add(numberOfPoint, puntosObj.get(position));
+
+                    } else {                               //the point we selected is a alejamiento(?)
+
+                        Punto necessaryPoint = puntosObj.get(position);
+                        alejamiento.remove(numberOfPoint);
+                        alejamiento.add(numberOfPoint, puntosObj.get(position));
+
+                    }
+                }
+                contador++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), selectedPoint);
+        return menuNumero.getOnItemSelectedListener();
+
+    }
+
+    AdapterView.OnItemSelectedListener onMenuNumeroLineSelectedListener() {
+        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int contador = 0;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o alejamiento), with this way we specify what point is it
+                if(contador != 0) {
+                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
+
+                    currentLine.remove(0);
+                    currentLine.add(lineasObj.get(position));
+
+                }
+                contador++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        return menuNumero.getOnItemSelectedListener();
     }
 
     private void copyFile(String inputFile, String outputPath) {
