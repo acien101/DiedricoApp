@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -288,6 +289,24 @@ public class PreviewMenuActivity extends Activity{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
+                ArrayList<PuntoVector> puntoVectors = new ArrayList<PuntoVector>();
+
+                for(int i = 0; i < Integer.parseInt(nPuntos.getText().toString()); i++){
+                    Vector vector = new Vector();
+                    vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), currentLine.get(0).getXb(), currentLine.get(0).getYb(), "AB");
+                    vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), cotas.get(i).getX(), cotas.get(i).getY(), "AC");
+                    vector.getAngle(vector.getVector("AB"), vector.getVector("AC"));
+
+                    Vector vector2 = new Vector();
+                    vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), currentLine.get(0).getXb(), currentLine.get(0).getYb(), "AB");
+                    vector2.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), alejamiento.get(i).getX(), alejamiento.get(i).getY(), "AD");
+                    vector2.getAngle(vector2.getVector("AB"), vector2.getVector("AD"));
+
+                    puntoVectors.add(new PuntoVector(vector.getHeight()/vector.getLandLine(), vector2.getHeight()/vector.getLandLine(),vector.getLenght()/vector.getLandLine()));
+
+                }
+
+                /*
                 funcionCualquiera("procesar");
 
                 double altura1;
@@ -301,14 +320,10 @@ public class PreviewMenuActivity extends Activity{
                 altura2 = (asdf.getVector2().getHeight()/asdf.getVector2().getLandLine());
                 Log.i("alturaaa", Double.toString(altura1));
 
+                */
 
                 Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);
-
-                Log.i("asdff", Double.toString(altura1));
-                intent.putExtra("altura1", altura1);
-                intent.putExtra("altura2", altura2);
-                intent.putExtra("longitud", longitud);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putParcelableArrayListExtra("vector", puntoVectors);
 
                 getApplicationContext().startActivity(intent);
 
