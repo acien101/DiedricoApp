@@ -2,8 +2,13 @@ package io.github.acien101.diedricoto3d.openGL;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
+import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import io.github.acien101.diedricoto3d.PuntoDiedrico;
+import io.github.acien101.diedricoto3d.PuntoVector;
 
 /**
  * Created by amil101 on 10/01/16.
@@ -13,7 +18,7 @@ class MyGLSurfaceView extends GLSurfaceView {
     private final MyGLRenderer mRenderer;
 
 
-    public MyGLSurfaceView(Context context, List<Double> coords){
+    public MyGLSurfaceView(Context context, List<PuntoVector> coords){
         super(context);
 
         // Create an OpenGL ES 2.0 context
@@ -35,7 +40,7 @@ class MyGLSurfaceView extends GLSurfaceView {
         requestRender();
     }
 
-    public void setPointCoords(List<Double> coords){
+    public void setPointCoords(List<PuntoVector> coords){
         mRenderer.setPointCoords(coords);
 
     }

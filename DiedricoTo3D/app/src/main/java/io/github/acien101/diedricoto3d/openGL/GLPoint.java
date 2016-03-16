@@ -1,15 +1,19 @@
 package io.github.acien101.diedricoto3d.openGL;
 
-import android.opengl.GLES20;
+/**
+ * Created by amil101 on 16/03/16.
+ */
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+        import android.opengl.GLES20;
+
+        import java.nio.ByteBuffer;
+        import java.nio.ByteOrder;
+        import java.nio.FloatBuffer;
 
 /**
  * Created by amil101 on 6/02/16.
  */
-public class Laboratorio {
+public class GLPoint {
 
     private final String vertexShaderCode =
             "uniform mat4 uMVPMatrix;" +
@@ -38,7 +42,7 @@ public class Laboratorio {
 
     private final int mProgram;
 
-    public Laboratorio(int stacks, int slices, float radius, float squash) {
+    public GLPoint(int stacks, int slices, float radius, float squash) {
 
         this.m_Stacks = stacks;
         this.m_Slices = slices;

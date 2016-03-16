@@ -3,12 +3,15 @@ package io.github.acien101.diedricoto3d.openGL;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import io.github.acien101.diedricoto3d.PuntoVector;
 
 /**
  * Created by amil101 on 10/01/16.
@@ -18,9 +21,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
     private Axis mAxis;
     private Axis mAxis2;
     private Line mLine;
-    private Laboratorio mLaboratorio;
+    private List<GLPoint> mPoints = new ArrayList<>();
 
-    private List<Double> pointCoords = new ArrayList<Double>();
+    private List<PuntoVector> puntoVectors = new ArrayList<>();
 
     static int zoom = 130;
 
@@ -50,7 +53,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         // initialize a triangle
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
-        mLaboratorio = new Laboratorio(10,10,0.01f, 0.7f);
+        for(int i = 0; i < puntoVectors.size(); i++){
+            mPoints.add(new GLPoint(10,10,0.01f, 0.7f));
+        }
     }
 
     public void onDrawFrame(GL10 unused) {
@@ -93,15 +98,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         // combine the model-view with the projection matrix
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
 
-        Matrix.setIdentityM(mTranslationMatrix, 0);
-        Matrix.translateM(mTranslationMatrix, 0, pointCoords.get(1).floatValue(), pointCoords.get(0).floatValue(), -pointCoords.get(2).floatValue());
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+        for(int i = 0; i < mPoints.size(); i++){
+            Matrix.setIdentityM(mTranslationMatrix, 0);
+            Matrix.translateM(mTranslationMatrix, 0, ((float) puntoVectors.get(i).getCota()), ((float) puntoVectors.get(i).getAlejamiento()), -((float) puntoVectors.get(i).getDistancia()));
+            Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+
+            mPoints.get(i).draw(scratch);
+        }
+
 
 
         // Draw shape
         mAxis.draw(mMVPMatrix);
         mAxis2.draw(mMVPMatrix);
-        mLaboratorio.draw(scratch);
+
     }
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
@@ -136,9 +146,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         this.zoom = zoom;
     }
 
-    public void setPointCoords(List<Double> pointCoords) {
-        this.pointCoords.add(0, pointCoords.get(0));
-        this.pointCoords.add(1, pointCoords.get(1));
-        this.pointCoords.add(2, pointCoords.get(2));
+    public void setPointCoords(List<PuntoVector> pointCoords) {
+        this.puntoVectors = pointCoords;
+
     }
 }

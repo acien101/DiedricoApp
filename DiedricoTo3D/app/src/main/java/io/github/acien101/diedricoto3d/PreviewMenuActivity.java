@@ -291,6 +291,7 @@ public class PreviewMenuActivity extends Activity{
 
                 ArrayList<PuntoVector> puntoVectors = new ArrayList<PuntoVector>();
 
+
                 for(int i = 0; i < Integer.parseInt(nPuntos.getText().toString()); i++){
                     Vector vector = new Vector();
                     vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), currentLine.get(0).getXb(), currentLine.get(0).getYb(), "AB");
@@ -300,30 +301,17 @@ public class PreviewMenuActivity extends Activity{
                     Vector vector2 = new Vector();
                     vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), currentLine.get(0).getXb(), currentLine.get(0).getYb(), "AB");
                     vector2.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), alejamiento.get(i).getX(), alejamiento.get(i).getY(), "AD");
-                    vector2.getAngle(vector2.getVector("AB"), vector2.getVector("AD"));
+                    vector2.getAngle(vector.getVector("AB"), vector2.getVector("AD"));
 
                     puntoVectors.add(new PuntoVector(vector.getHeight()/vector.getLandLine(), vector2.getHeight()/vector.getLandLine(),vector.getLenght()/vector.getLandLine()));
 
                 }
 
-                /*
-                funcionCualquiera("procesar");
-
-                double altura1;
-                double altura2;
-                double longitud;
-
-                longitud = (asdf.getVector().getLenght()/asdf.getVector().getLandLine());
-                Log.i("longituddd", Double.toString(longitud));
-                altura1 = (asdf.getVector().getHeight()/asdf.getVector().getLandLine());
-                Log.i("alturaaa", Double.toString(altura1));
-                altura2 = (asdf.getVector2().getHeight()/asdf.getVector2().getLandLine());
-                Log.i("alturaaa", Double.toString(altura1));
-
-                */
-
                 Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);
                 intent.putParcelableArrayListExtra("vector", puntoVectors);
+
+                Log.i("send", Integer.toString(puntoVectors.size()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 getApplicationContext().startActivity(intent);
 

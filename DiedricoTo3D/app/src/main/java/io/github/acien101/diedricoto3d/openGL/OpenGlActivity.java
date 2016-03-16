@@ -12,25 +12,28 @@ import android.widget.SeekBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.acien101.diedricoto3d.PuntoVector;
 import io.github.acien101.diedricoto3d.R;
 
 public class OpenGlActivity extends Activity {
 
     private GLSurfaceView mGLView;
     MyGLSurfaceView obj;
-    final List<Double> pointCoords= new ArrayList<Double>();
+    List<PuntoVector> puntos;
+
+    Intent intent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gllayout);
-        Intent intent = getIntent();
+        intent = getIntent();
 
-        pointCoords.add(0, intent.getDoubleExtra("altura1", 1));
-        pointCoords.add(1, intent.getDoubleExtra("altura2", 1));
-        pointCoords.add(2, intent.getDoubleExtra("longitud", 1));
+         puntos = intent.getParcelableArrayListExtra("vector");
 
-        mGLView = new MyGLSurfaceView(this, pointCoords);
+        Log.i("received", Integer.toString(puntos.size()));
+
+        mGLView = new MyGLSurfaceView(this, puntos);
         LinearLayout rootLayout = (LinearLayout)findViewById(R.id.rootLayout);
         rootLayout.addView(mGLView);
 
@@ -47,7 +50,7 @@ public class OpenGlActivity extends Activity {
 
                 Log.i("SeekBar", Integer.toString(progress));
 
-                obj = new MyGLSurfaceView(getApplicationContext(), pointCoords);
+                obj = new MyGLSurfaceView(getApplicationContext(), puntos);
                 obj.setRenderer(progress);
             }
 
