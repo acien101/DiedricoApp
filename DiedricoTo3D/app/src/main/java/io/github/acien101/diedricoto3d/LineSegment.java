@@ -159,6 +159,9 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         // Create a Fast Hessian detector from the SURF paper.
         // Other detectors can be used in this example too.
+
+        Log.i("nPuntos", Integer.toString(nPuntos));
+
         InterestPointDetector<T> detector = FactoryInterestPoint.fastHessian(
                 new ConfigFastHessian(30, 2, nPuntos, 2, 9, 3, 4));
 
