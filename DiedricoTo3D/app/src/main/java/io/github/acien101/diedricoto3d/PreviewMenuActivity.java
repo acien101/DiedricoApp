@@ -197,13 +197,6 @@ public class PreviewMenuActivity extends Activity{
                             puntosSpinner.add("Linea de Tierra");
                             currentLine.add(lineasObj.get(0));              //we need to put at least one (Linea de tierra), later we specify what line it is
 
-                            for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i++){
-                                puntosSpinner.add("Cota linea " + i);
-                                currentLine.add(lineasObj.get((i*2)+1));          //we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
-
-                                puntosSpinner.add("Alejamiento linea " + i);
-                                currentLine.add(lineasObj.get((i*2)+2));           
-                            }
                             for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
                                 puntosSpinner.add("Cota punto nº " + i);
                                 cotas.add(puntosObj.get((i*2)));
@@ -211,6 +204,15 @@ public class PreviewMenuActivity extends Activity{
                                 alejamiento.add(puntosObj.get(((i*2)+1)));
 
                             }
+
+                            for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i++){
+                                puntosSpinner.add("Cota linea " + i);
+                                currentLine.add(lineasObj.get((i*2)+1));          //we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
+
+                                puntosSpinner.add("Alejamiento linea " + i);
+                                currentLine.add(lineasObj.get((i*2)+2));
+                            }
+
 
                             //Is needed for ListenPoint
                             final Bitmap transformationBM;
@@ -223,26 +225,26 @@ public class PreviewMenuActivity extends Activity{
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     Log.i("info", "Toco " + position);
                                     currentType = position;
-                                    if((position - Integer.parseInt(nLineas.getText().toString())) >= 0 && (position - Integer.parseInt(nLineas.getText().toString()))%2 == 0){                        //if it is a cota(?)
+                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && (position - 1)%2 == 0){                        //if it is a cota(?) of a point
                                         menuNumero.setAdapter(menuPuntoArrayAdapter);
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(cotas.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
-                                        Log.i("INFO", "COTA");
+                                        Log.i("INFO", "COTA PUNTO");
                                         new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), cotas.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
 
                                         typeOfPoint = 0;                //what type it is, for later with the other spinner specify the point
                                         numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
                                     }
-                                    if((position - Integer.parseInt(nLineas.getText().toString())) >= 0 && (position - Integer.parseInt(nLineas.getText().toString())) % 2 != 0) {
-                                        menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a alejamiento(?)
+                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && (position - 1)%2 != 0) {
+                                        menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a alejamiento(?) of a point
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(alejamiento.get((position - Integer.parseInt(nLineas.getText().toString()))/2)));
-                                        Log.i("INFO", "ALEJAMIENTO");
+                                        Log.i("INFO", "ALEJAMIENTO PUNTO");
                                         new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), alejamiento.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
 
                                         typeOfPoint = 1;            //what type it is, for later with the other spinner specify the point
                                         numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
                                     }
                                     if(position == 0){
-                                        Log.i("INFO", "LINE");
+                                        Log.i("INFO", "LINEA TIERRA");
 
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
@@ -251,6 +253,10 @@ public class PreviewMenuActivity extends Activity{
 
 
                                     }
+                                    /* if((position - Integer.parseInt(nLineas.getText().toString())) >= 0){
+
+                                    }*/
+
 
                                 }
 
