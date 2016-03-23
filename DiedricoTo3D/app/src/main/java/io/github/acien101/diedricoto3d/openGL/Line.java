@@ -48,7 +48,10 @@ public class Line {
     private final int vertexCount = 6 / COORS_PER_VERTEX;
     private final int vertexStride = COORS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    public Line(float[] lineCoords){
+    public Line(float xA, float yA, float zA, float xB, float yB, float zB){
+
+        float[] lineCoords = {xA, yA, zA, xB, yB, zB};
+
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 lineCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
