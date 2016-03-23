@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +18,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import io.github.acien101.diedricoto3d.openGL.Line;
 import io.github.acien101.diedricoto3d.openGL.OpenGlActivity;
 
 import java.io.FileInputStream;
@@ -63,13 +61,17 @@ public class PreviewMenuActivity extends Activity{
     Bitmap originalBitmap;
 
     int currentType;
-    List<Punto> cotas = new ArrayList<>();
-    List<Punto> alejamiento = new ArrayList<>();
+    List<Punto> puntoCotas = new ArrayList<>();
+    List<Punto> puntoAlejamientos = new ArrayList<>();
 
-    List<Linea> currentLine = new ArrayList<>();
+    Linea lineaDeTierra;
+    List<Linea> lineaCota = new ArrayList<>();
+    List<Linea> lineaAlejamiento = new ArrayList<>();
 
-    int typeOfPoint = 0;             // 0 means cota, 1 means alejamiento
+    int typeOfPoint = 0;             // 0 means cota, 1 means puntoAlejamientos
+    int typeOfLine = 0;
     int numberOfPoint = 0;
+    int numberOfLine = 0;
 
     ArrayAdapter<String> menuPuntoArrayAdapter;
     ArrayAdapter<String> menuLineaArrayAdapter;
@@ -195,22 +197,22 @@ public class PreviewMenuActivity extends Activity{
                             List<String> puntosSpinner = new ArrayList<String>();
 
                             puntosSpinner.add("Linea de Tierra");
-                            currentLine.add(lineasObj.get(0));              //we need to put at least one (Linea de tierra), later we specify what line it is
+                            lineaDeTierra = lineasObj.get(0);              //we need to put at least one (Linea de tierra), later we specify what line it is
 
                             for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
                                 puntosSpinner.add("Cota punto nº " + i);
-                                cotas.add(puntosObj.get((i*2)));
+                                puntoCotas.add(puntosObj.get((i * 2)));
                                 puntosSpinner.add("Alejamiento punto nº " + i);
-                                alejamiento.add(puntosObj.get(((i*2)+1)));
+                                puntoAlejamientos.add(puntosObj.get(((i * 2) + 1)));
 
                             }
 
                             for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i++){
                                 puntosSpinner.add("Cota linea " + i);
-                                currentLine.add(lineasObj.get((i*2)+1));          //we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
+                                lineaCota.add(lineasObj.get((i*2)+1));          //we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
 
                                 puntosSpinner.add("Alejamiento linea " + i);
-                                currentLine.add(lineasObj.get((i*2)+2));
+                                lineaAlejamiento.add(lineasObj.get((i*2)+2));
                             }
 
 
@@ -227,18 +229,18 @@ public class PreviewMenuActivity extends Activity{
                                     currentType = position;
                                     if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && (position - 1)%2 == 0){                        //if it is a cota(?) of a point
                                         menuNumero.setAdapter(menuPuntoArrayAdapter);
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(cotas.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoCotas.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
                                         Log.i("INFO", "COTA PUNTO");
-                                        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), cotas.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
+                                        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoCotas.get((position - 1)/2));
 
                                         typeOfPoint = 0;                //what type it is, for later with the other spinner specify the point
                                         numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
                                     }
                                     if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && (position - 1)%2 != 0) {
-                                        menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a alejamiento(?) of a point
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(alejamiento.get((position - Integer.parseInt(nLineas.getText().toString()))/2)));
+                                        menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a puntoAlejamientos(?) of a point
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoAlejamientos.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
                                         Log.i("INFO", "ALEJAMIENTO PUNTO");
-                                        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), alejamiento.get((position - Integer.parseInt(nLineas.getText().toString()))/2));
+                                        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoAlejamientos.get((position - 1)/2));
 
                                         typeOfPoint = 1;            //what type it is, for later with the other spinner specify the point
                                         numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
@@ -248,16 +250,28 @@ public class PreviewMenuActivity extends Activity{
 
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), currentLine.get(0));
-
-
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineaDeTierraSelectedListener());
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaDeTierra);
                                     }
                                     if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 == 0){
-                                        
+                                        menuNumero.setAdapter(menuLineaArrayAdapter);
+
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaCota.get((position - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+
+                                        typeOfLine = 0;
+                                        numberOfLine = (position - (Integer.parseInt(nPuntos.getText().toString())*2))/2;
+
                                         Log.i("INFO", "COTA LINEA");
                                     }
-                                    if(position > ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){
+                                        menuNumero.setAdapter(menuLineaArrayAdapter);
+
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaAlejamiento.get((position - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+
+                                        typeOfLine = 1;
+                                        numberOfLine = (position - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;
 
                                         Log.i("INFO", "ALEJAMIENTO LINEA");
                                     }
@@ -308,13 +322,13 @@ public class PreviewMenuActivity extends Activity{
 
                 for(int i = 0; i < Integer.parseInt(nPuntos.getText().toString()); i++){
                     Vector vector = new Vector();
-                    vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), currentLine.get(0).getXb(), currentLine.get(0).getYb(), "AB");
-                    vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), cotas.get(i).getX(), cotas.get(i).getY(), "AC");
+                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");
+                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), puntoCotas.get(i).getX(), puntoCotas.get(i).getY(), "AC");
                     vector.getAngle(vector.getVector("AB"), vector.getVector("AC"));
 
                     Vector vector2 = new Vector();
-                    vector.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), currentLine.get(0).getXb(), currentLine.get(0).getYb(), "AB");
-                    vector2.createVector(currentLine.get(0).getXa(), currentLine.get(0).getYa(), alejamiento.get(i).getX(), alejamiento.get(i).getY(), "AD");
+                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");
+                    vector2.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), puntoAlejamientos.get(i).getX(), puntoAlejamientos.get(i).getY(), "AD");
                     vector2.getAngle(vector.getVector("AB"), vector2.getVector("AD"));
 
                     puntoVectors.add(new PuntoVector(vector.getHeight()/vector.getLandLine(), vector2.getHeight()/vector.getLandLine(),vector.getLenght()/vector.getLandLine()));
@@ -356,7 +370,7 @@ public class PreviewMenuActivity extends Activity{
         menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int contador = 0;
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o alejamiento), with this way we specify what point is it
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
                 if(contador != 0) {                         //when we create the listener, it activates alone. This don't let him!!
                     Log.i("INFO", "TOCADOO MENUNUMERO");
                     new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntosObj.get(position));
@@ -364,14 +378,14 @@ public class PreviewMenuActivity extends Activity{
                     if (typeOfPoint == 0) {           //the point we selected is a cota(?)
 
                         Punto necessaryPoint = puntosObj.get(position);
-                        cotas.remove(numberOfPoint);
-                        cotas.add(numberOfPoint, puntosObj.get(position));
+                        puntoCotas.remove(numberOfPoint);
+                        puntoCotas.add(numberOfPoint, puntosObj.get(position));
 
-                    } else {                               //the point we selected is a alejamiento(?)
+                    } else {                               //the point we selected is a puntoAlejamientos(?)
 
                         Punto necessaryPoint = puntosObj.get(position);
-                        alejamiento.remove(numberOfPoint);
-                        alejamiento.add(numberOfPoint, puntosObj.get(position));
+                        puntoAlejamientos.remove(numberOfPoint);
+                        puntoAlejamientos.add(numberOfPoint, puntosObj.get(position));
 
                     }
                 }
@@ -394,13 +408,41 @@ public class PreviewMenuActivity extends Activity{
             int contador = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o alejamiento), with this way we specify what point is it
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
                 if(contador != 0) {
                     new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
 
-                    currentLine.remove(0);
-                    currentLine.add(lineasObj.get(position));
+                    if(typeOfLine == 0){                //the line we selected is a cota
+                        lineaCota.remove(numberOfLine);
+                        lineaCota.add(numberOfLine, lineasObj.get(position));
+                    }
+                    else{                               //the line we selected is a alejamiento
+                        lineaAlejamiento.remove(numberOfLine);
+                        lineaAlejamiento.add(numberOfLine, lineasObj.get(position));
+                    }
+                }
+                contador++;
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        return menuNumero.getOnItemSelectedListener();
+    }
+
+    AdapterView.OnItemSelectedListener onMenuNumeroLineaDeTierraSelectedListener() {
+        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int contador = 0;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
+                if(contador != 0) {
+                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
+
+                    lineaDeTierra = lineasObj.get(position);
                 }
                 contador++;
             }
