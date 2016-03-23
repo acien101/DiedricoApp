@@ -253,10 +253,14 @@ public class PreviewMenuActivity extends Activity{
 
 
                                     }
-                                    /* if((position - Integer.parseInt(nLineas.getText().toString())) >= 0){
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 == 0){
+                                        
+                                        Log.i("INFO", "COTA LINEA");
+                                    }
+                                    if(position > ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){
 
-                                    }*/
-
+                                        Log.i("INFO", "ALEJAMIENTO LINEA");
+                                    }
 
                                 }
 
