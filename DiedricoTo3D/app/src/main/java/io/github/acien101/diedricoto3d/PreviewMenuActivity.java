@@ -175,6 +175,7 @@ public class PreviewMenuActivity extends Activity{
                         }
 
 
+
                         menuPuntoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
                         menuPuntoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -192,11 +193,16 @@ public class PreviewMenuActivity extends Activity{
 
                         if(puntosObj.size() >= (Integer.parseInt(nPuntos.getText().toString())*2)){                 //we need to have equal or more points in nPuntos and puntosObj
                             List<String> puntosSpinner = new ArrayList<String>();
+
+                            puntosSpinner.add("Linea de Tierra");
+                            currentLine.add(lineasObj.get(0));              //we need to put at least one (Linea de tierra), later we specify what line it is
+
                             for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i++){
-                                puntosSpinner.add("Linea " + i);
-                                if(i == 0){
-                                    currentLine.add(lineasObj.get(i));          //we need to put at least one, later we specify what line it is, in the second spinner
-                                }
+                                puntosSpinner.add("Cota linea " + i);
+                                currentLine.add(lineasObj.get((i*2)+1));          //we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
+
+                                puntosSpinner.add("Alejamiento linea " + i);
+                                currentLine.add(lineasObj.get((i*2)+2));           
                             }
                             for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
                                 puntosSpinner.add("Cota punto nº " + i);
