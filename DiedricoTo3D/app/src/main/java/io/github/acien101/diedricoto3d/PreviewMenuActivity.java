@@ -350,12 +350,12 @@ public class PreviewMenuActivity extends Activity{
                     Vector vector3 = new Vector();
                     vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
                     vector3.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaCota.get(i).getXb(), lineaCota.get(i).getYb(), "AE");       //vector LandLine to second point of cota line
-                    vector3.getAngle(vector.getVector("AB"), vector.getVector("AE"));
+                    vector3.getAngle(vector.getVector("AB"), vector3.getVector("AE"));
 
                     Vector vector4 = new Vector();
                     vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
                     vector4.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaAlejamiento.get(i).getXb(), lineaAlejamiento.get(i).getYb(), "AF");         //vector of LandLine to second point of alejamiento line
-                    vector4.getAngle(vector.getVector("AB"), vector2.getVector("AF"));
+                    vector4.getAngle(vector.getVector("AB"), vector4.getVector("AF"));
 
                     lineaVectors.add(new LineaVector((float)(vector.getHeight()/vector.getLandLine()), (float)(vector2.getHeight()/vector.getLandLine()), (float)(vector.getLenght()/vector.getLandLine()), (float)(vector3.getHeight()/vector.getLandLine()), (float)(vector4.getHeight()/vector.getLandLine()), (float)(vector3.getLenght()/vector2.getLandLine())));
                 }

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoto3d.LineaVector;
 import io.github.acien101.diedricoto3d.PuntoVector;
 
 /**
@@ -20,10 +21,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
 
     private Axis mAxis;
     private Axis mAxis2;
-    private Line mLine;
+
     private List<GLPoint> mPoints = new ArrayList<>();
+    private List<Line> mLines = new ArrayList<>();
 
     private List<PuntoVector> puntoVectors = new ArrayList<>();
+    private List<LineaVector> lineaVectors = new ArrayList<>();
 
     static int zoom = 130;
 
@@ -55,6 +58,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         mAxis2 = new Axis(squareCoords2);
         for(int i = 0; i < puntoVectors.size(); i++){
             mPoints.add(new GLPoint(10,10,0.01f, 0.7f));
+        }
+        for(int i = 0; i< lineaVectors.size(); i++){
+            mLines.add(new Line(lineaVectors.get(i).getCotaA(),lineaVectors.get(i).getAlejamientoA(), -lineaVectors.get(i).getDistanciaA(), lineaVectors.get(i).getCotaB(), lineaVectors.get(i).getAlejamientoB(), -lineaVectors.get(i).getDistanciaB()));
         }
     }
 
@@ -106,7 +112,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
             mPoints.get(i).draw(scratch);
         }
 
-
+        for(int i = 0; i < mLines.size(); i++){
+            mLines.get(i).draw(mMVPMatrix);
+        }
 
         // Draw shape
         mAxis.draw(mMVPMatrix);
@@ -150,4 +158,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         this.puntoVectors = pointCoords;
 
     }
+
+    public void setLineaVectors(List<LineaVector> lineaVectors) {
+        this.lineaVectors = lineaVectors;
+    }
+
 }

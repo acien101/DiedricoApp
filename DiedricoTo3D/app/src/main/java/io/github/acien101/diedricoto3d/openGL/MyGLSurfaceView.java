@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.acien101.diedricoto3d.LineaVector;
 import io.github.acien101.diedricoto3d.PuntoDiedrico;
 import io.github.acien101.diedricoto3d.PuntoVector;
 
@@ -18,7 +19,7 @@ class MyGLSurfaceView extends GLSurfaceView {
     private final MyGLRenderer mRenderer;
 
 
-    public MyGLSurfaceView(Context context, List<PuntoVector> coords){
+    public MyGLSurfaceView(Context context, List<PuntoVector> coords, List<LineaVector> lineaVectors){
         super(context);
 
         // Create an OpenGL ES 2.0 context
@@ -26,6 +27,7 @@ class MyGLSurfaceView extends GLSurfaceView {
 
         mRenderer = new MyGLRenderer();
         mRenderer.setPointCoords(coords);
+        mRenderer.setLineaVectors(lineaVectors);
 
         // Set the Renderer for drawing on the GLSurfaceView
         setRenderer(mRenderer);
