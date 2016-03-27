@@ -66,7 +66,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
             mLines.add(new Line(lineaVectors.get(i).getCotaA(),lineaVectors.get(i).getAlejamientoA(), -lineaVectors.get(i).getDistanciaA(), lineaVectors.get(i).getCotaB(), lineaVectors.get(i).getAlejamientoB(), -lineaVectors.get(i).getDistanciaB()));
         }
         for(int i = 0; i < planoVectors.size(); i++){
-            mPlano.add(new Plano(planoVectors.get(i).getDesplazamientoPlanoOrigen(), planoVectors.get(i).getCota(), planoVectors.get(i).getAlejamiento(), planoVectors.get(i).getDesplazamiento()));
+            mPlano.add(new Plano(-planoVectors.get(i).getDesplazamientoPlanoOrigen(), planoVectors.get(i).getCota(), planoVectors.get(i).getAlejamiento(), -planoVectors.get(i).getDesplazamiento()));
         }
     }
 
