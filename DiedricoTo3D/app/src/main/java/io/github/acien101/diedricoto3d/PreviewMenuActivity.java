@@ -247,7 +247,7 @@ public class PreviewMenuActivity extends Activity{
                                         new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoCotas.get((position - 1)/2));
 
                                         typeOfPoint = 0;                //what type it is, for later with the other spinner specify the point
-                                        numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
+                                        numberOfPoint = (position - 1)/2;          //what number of point it is
                                     }
                                     if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 != 0) {
                                         menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a puntoAlejamientos(?) of a point
@@ -256,7 +256,7 @@ public class PreviewMenuActivity extends Activity{
                                         new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoAlejamientos.get((position - 1)/2));
 
                                         typeOfPoint = 1;            //what type it is, for later with the other spinner specify the point
-                                        numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
+                                        numberOfPoint = (position - 1)/2;          //what number of point it is
                                     }
                                     if(position == 0){
                                         Log.i("INFO", "LINEA TIERRA");
@@ -273,7 +273,7 @@ public class PreviewMenuActivity extends Activity{
                                         new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaCota.get((position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 0;
-                                        numberOfLine = (position - (Integer.parseInt(nPuntos.getText().toString())*2))/2;
+                                        numberOfLine = (position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
 
                                         Log.i("INFO", "COTA LINEA");
                                     }
@@ -284,7 +284,7 @@ public class PreviewMenuActivity extends Activity{
                                         new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaAlejamiento.get((position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 1;
-                                        numberOfLine = (position - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;
+                                        numberOfLine = (position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
 
                                         Log.i("INFO", "ALEJAMIENTO LINEA");
                                     }
@@ -296,7 +296,7 @@ public class PreviewMenuActivity extends Activity{
                                         new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoCota.get((position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 0;
-                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;
+                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
 
                                         Log.i("INFO", "COTA PLANO");
                                     }
@@ -305,10 +305,10 @@ public class PreviewMenuActivity extends Activity{
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoAlejamiento.get((position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoAlejamiento.get((position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 1;
-                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;
+                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
 
                                         Log.i("INFO", "ALEJAMIENTO PLANO");
                                     }
