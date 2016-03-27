@@ -68,6 +68,9 @@ public class PreviewMenuActivity extends Activity{
     List<Linea> lineaCota = new ArrayList<>();
     List<Linea> lineaAlejamiento = new ArrayList<>();
 
+    List<Linea> planoCota = new ArrayList<>();
+    List<Linea> planoAlejamiento = new ArrayList<>();
+
     int typeOfPoint = 0;             // 0 means cota, 1 means puntoAlejamientos
     int typeOfLine = 0;
     int numberOfPoint = 0;
@@ -215,6 +218,16 @@ public class PreviewMenuActivity extends Activity{
                                 lineaAlejamiento.add(lineasObj.get((i*2)+2));
                             }
 
+                            int currentLinesAdded = Integer.parseInt(nLineas.getText().toString())*2;
+
+                            for(int i = 0; i < Integer.parseInt(nPlanos.getText().toString()); i++){
+                                puntosSpinner.add("Cota plano " + i);
+                                planoCota.add(lineasObj.get((i*2) + currentLinesAdded + 1));
+
+                                puntosSpinner.add("Alejamiento plano " + i);
+                                planoAlejamiento.add(lineasObj.get((i*2) + currentLinesAdded +2));
+                            }
+
 
                             //Is needed for ListenPoint
                             final Bitmap transformationBM;
@@ -227,7 +240,7 @@ public class PreviewMenuActivity extends Activity{
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     Log.i("info", "Toco " + position);
                                     currentType = position;
-                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && (position - 1)%2 == 0){                        //if it is a cota(?) of a point
+                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 == 0){                        //if it is a cota(?) of a point
                                         menuNumero.setAdapter(menuPuntoArrayAdapter);
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoCotas.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
                                         Log.i("INFO", "COTA PUNTO");
@@ -236,7 +249,7 @@ public class PreviewMenuActivity extends Activity{
                                         typeOfPoint = 0;                //what type it is, for later with the other spinner specify the point
                                         numberOfPoint = (position - Integer.parseInt(nLineas.getText().toString()))/2;          //what number of point it is
                                     }
-                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && (position - 1)%2 != 0) {
+                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 != 0) {
                                         menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a puntoAlejamientos(?) of a point
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoAlejamientos.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
                                         Log.i("INFO", "ALEJAMIENTO PUNTO");
@@ -253,7 +266,7 @@ public class PreviewMenuActivity extends Activity{
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineaDeTierraSelectedListener());
                                         new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaDeTierra);
                                     }
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 == 0){
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 == 0){           //It the cota of a line
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
@@ -264,7 +277,7 @@ public class PreviewMenuActivity extends Activity{
 
                                         Log.i("INFO", "COTA LINEA");
                                     }
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){             //It is le alejemiento of a Line
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
@@ -276,6 +289,13 @@ public class PreviewMenuActivity extends Activity{
                                         Log.i("INFO", "ALEJAMIENTO LINEA");
                                     }
 
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 == 0))){                   //if it is the cota of a plano
+                                        Log.i("INFO", "COTA PLANO");
+                                    }
+
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 != 0))){                   //if it is the cota of a plano
+                                        Log.i("INFO", "ALEJAMIENTO PLANO");
+                                    }
                                 }
 
                                 @Override
