@@ -292,7 +292,7 @@ public class PreviewMenuActivity extends Activity{
                                     if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 == 0))){                   //if it is the cota of a plano
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());
                                         new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoCota.get((position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 0;
@@ -304,7 +304,7 @@ public class PreviewMenuActivity extends Activity{
                                     if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 != 0))){                   //if it is the cota of a plano
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());
                                         new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoAlejamiento.get((position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 1;
@@ -499,6 +499,36 @@ public class PreviewMenuActivity extends Activity{
                     else{                               //the line we selected is a alejamiento
                         lineaAlejamiento.remove(numberOfLine);
                         lineaAlejamiento.add(numberOfLine, lineasObj.get(position));
+                    }
+                }
+                contador++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        return menuNumero.getOnItemSelectedListener();
+    }
+
+    AdapterView.OnItemSelectedListener onMenuNumeroPlanoSelectedListener() {
+        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            int contador = 0;
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
+                if(contador != 0) {
+                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
+
+                    if(typeOfLine == 0){                //the line of the plano we selected is a cota
+                        planoCota.remove(numberOfLine);
+                        planoCota.add(numberOfLine, lineasObj.get(position));
+                    }
+                    else{                               //the line we selected is a alejamiento
+                        planoAlejamiento.remove(numberOfLine);
+                        planoAlejamiento.add(numberOfLine, lineasObj.get(position));
                     }
                 }
                 contador++;
