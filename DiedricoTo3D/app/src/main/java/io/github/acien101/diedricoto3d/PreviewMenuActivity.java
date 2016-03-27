@@ -290,10 +290,26 @@ public class PreviewMenuActivity extends Activity{
                                     }
 
                                     if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 == 0))){                   //if it is the cota of a plano
+                                        menuNumero.setAdapter(menuLineaArrayAdapter);
+
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoCota.get((position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+
+                                        typeOfLine = 0;
+                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;
+
                                         Log.i("INFO", "COTA PLANO");
                                     }
 
                                     if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 != 0))){                   //if it is the cota of a plano
+                                        menuNumero.setAdapter(menuLineaArrayAdapter);
+
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoAlejamiento.get((position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+
+                                        typeOfLine = 1;
+                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;
+
                                         Log.i("INFO", "ALEJAMIENTO PLANO");
                                     }
                                 }
@@ -309,10 +325,6 @@ public class PreviewMenuActivity extends Activity{
                             Toast.makeText(getApplicationContext(), "No se han encontrado tantos resultado, vuelve a intentarlo", Toast.LENGTH_SHORT).show();
 
                         }
-                        //Creamos el Spinner con todos los puntos(por ahora) para seleccionar si son cotas o alejamientos
-                        //We create a Spinner with all the points (currently) for select later
-
-
                     }
                 });
                 asdf.execute(picBM);
