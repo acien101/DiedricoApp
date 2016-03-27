@@ -392,9 +392,30 @@ public class PreviewMenuActivity extends Activity{
                     lineaVectors.add(new LineaVector((float)(vector.getHeight()/vector.getLandLine()), (float)(vector2.getHeight()/vector.getLandLine()), (float)(vector.getLenght()/vector.getLandLine()), (float)(vector3.getHeight()/vector.getLandLine()), (float)(vector4.getHeight()/vector.getLandLine()), (float)(vector3.getLenght()/vector2.getLandLine())));
                 }
 
+                ArrayList<PlanoVector> planoVectors = new ArrayList<PlanoVector>();
+                for(int i = 0; i < Integer.parseInt(nPlanos.getText().toString()); i++){
+                    Vector vector = new Vector();
+                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");          //vector of LandLine
+                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaCota.get(i).getXa(), lineaCota.get(i).getYa(), "AC");        //vector LandLine to first point of cota line
+                    vector.getAngle(vector.getVector("AB"), vector.getVector("AC"));
+
+                    Vector vector2 = new Vector();
+                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
+                    vector2.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaCota.get(i).getXb(), lineaCota.get(i).getYb(), "AD");       //vector LandLine to second point of cota line
+                    vector2.getAngle(vector.getVector("AB"), vector2.getVector("AD"));
+
+                    Vector vector3 = new Vector();
+                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
+                    vector3.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaAlejamiento.get(i).getXb(), lineaAlejamiento.get(i).getYb(), "AE");         //vector of LandLine to second point of alejamiento line
+                    vector3.getAngle(vector.getVector("AB"), vector3.getVector("AE"));
+
+                    planoVectors.add(new PlanoVector((float)(vector.getLenght()/vector.getLandLine()), (float)(vector2.getHeight()/vector.getLandLine()), (float)(vector3.getHeight()/vector.getLandLine()), (float)(vector2.getLenght()/vector.getLandLine())));
+                }
+
                 Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);
                 intent.putParcelableArrayListExtra("vector", puntoVectors);
                 intent.putParcelableArrayListExtra("lines", lineaVectors);
+                intent.putParcelableArrayListExtra("planos", planoVectors);
 
                 Log.i("send", Integer.toString(puntoVectors.size()));
 
