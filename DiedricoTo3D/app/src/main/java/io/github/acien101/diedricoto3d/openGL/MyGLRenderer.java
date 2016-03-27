@@ -12,6 +12,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import io.github.acien101.diedricoto3d.LineaVector;
+import io.github.acien101.diedricoto3d.PlanoVector;
 import io.github.acien101.diedricoto3d.PuntoVector;
 
 /**
@@ -24,9 +25,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
 
     private List<GLPoint> mPoints = new ArrayList<>();
     private List<Line> mLines = new ArrayList<>();
+    private List<Plano> mPlano = new ArrayList<>();
 
     private List<PuntoVector> puntoVectors = new ArrayList<>();
     private List<LineaVector> lineaVectors = new ArrayList<>();
+    private List<PlanoVector> planoVectors = new ArrayList<>();
 
     static int zoom = 130;
 
@@ -61,6 +64,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         }
         for(int i = 0; i< lineaVectors.size(); i++){
             mLines.add(new Line(lineaVectors.get(i).getCotaA(),lineaVectors.get(i).getAlejamientoA(), -lineaVectors.get(i).getDistanciaA(), lineaVectors.get(i).getCotaB(), lineaVectors.get(i).getAlejamientoB(), -lineaVectors.get(i).getDistanciaB()));
+        }
+        for(int i = 0; i < planoVectors.size(); i++){
+            mPlano.add(new Plano(planoVectors.get(i).getDesplazamientoPlanoOrigen(), planoVectors.get(i).getCota(), planoVectors.get(i).getAlejamiento(), planoVectors.get(i).getDesplazamiento()));
         }
     }
 
@@ -116,6 +122,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
             mLines.get(i).draw(mMVPMatrix);
         }
 
+        for(int i = 0; i < mPlano.size(); i++){
+            mPlano.get(i).draw(mMVPMatrix);
+        }
+
         // Draw shape
         mAxis.draw(mMVPMatrix);
         mAxis2.draw(mMVPMatrix);
@@ -161,6 +171,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
 
     public void setLineaVectors(List<LineaVector> lineaVectors) {
         this.lineaVectors = lineaVectors;
+    }
+
+    public void setPlanoVectors(List<PlanoVector> planoVectors) {
+        this.planoVectors = planoVectors;
     }
 
 }

@@ -251,7 +251,7 @@ public class PreviewMenuActivity extends Activity{
                                     }
                                     if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 != 0) {
                                         menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a puntoAlejamientos(?) of a point
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoAlejamientos.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
+                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoAlejamientos.get((position - 1)/2)));
                                         Log.i("INFO", "ALEJAMIENTO PUNTO");
                                         new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoAlejamientos.get((position - 1)/2));
 
@@ -270,7 +270,7 @@ public class PreviewMenuActivity extends Activity{
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaCota.get((position - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaCota.get((position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 0;
                                         numberOfLine = (position - (Integer.parseInt(nPuntos.getText().toString())*2))/2;
@@ -281,7 +281,7 @@ public class PreviewMenuActivity extends Activity{
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaAlejamiento.get((position - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaAlejamiento.get((position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 1;
                                         numberOfLine = (position - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;
@@ -293,7 +293,7 @@ public class PreviewMenuActivity extends Activity{
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoCota.get((position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2));
+                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoCota.get((position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
 
                                         typeOfLine = 0;
                                         numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString())+1)*2) - ((Integer.parseInt(nPuntos.getText().toString())+1)*2))/2;

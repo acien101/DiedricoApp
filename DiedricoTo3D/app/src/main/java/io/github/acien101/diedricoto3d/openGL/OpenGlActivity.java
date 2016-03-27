@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.acien101.diedricoto3d.LineaVector;
+import io.github.acien101.diedricoto3d.PlanoVector;
 import io.github.acien101.diedricoto3d.PuntoVector;
 import io.github.acien101.diedricoto3d.R;
 
@@ -22,6 +23,7 @@ public class OpenGlActivity extends Activity {
     MyGLSurfaceView obj;
     List<PuntoVector> puntos;
     List<LineaVector> lineaVectors;
+    List<PlanoVector> planoVectors;
 
     Intent intent;
 
@@ -33,11 +35,12 @@ public class OpenGlActivity extends Activity {
 
         puntos = intent.getParcelableArrayListExtra("vector");
         lineaVectors = intent.getParcelableArrayListExtra("lines");
+        planoVectors = intent.getParcelableArrayListExtra("planos");
 
         Log.i("received", Integer.toString(puntos.size()));
         Log.i("LINE", Integer.toString(lineaVectors.size()));
 
-        mGLView = new MyGLSurfaceView(this, puntos, lineaVectors);
+        mGLView = new MyGLSurfaceView(this, puntos, lineaVectors, planoVectors);
         LinearLayout rootLayout = (LinearLayout)findViewById(R.id.rootLayout);
         rootLayout.addView(mGLView);
 
@@ -54,7 +57,7 @@ public class OpenGlActivity extends Activity {
 
                 Log.i("SeekBar", Integer.toString(progress));
 
-                obj = new MyGLSurfaceView(getApplicationContext(), puntos, lineaVectors);
+                obj = new MyGLSurfaceView(getApplicationContext(), puntos, lineaVectors, planoVectors);
                 obj.setRenderer(progress);
             }
 
