@@ -21,7 +21,7 @@ import android.util.AttributeSet;
 import android.view.TextureView;
 
 /**
- * A {@link TextureView} that can be adjusted to a specified aspect ratio.
+ * A {@link TextureView} that can be adjusted to firstPoint specified aspect ratio.
  */
 public class AutoFitTextureView extends TextureView {
 

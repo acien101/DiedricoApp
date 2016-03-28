@@ -42,7 +42,7 @@ public class PuntoVector implements Parcelable{
         this.distancia = data[2];
     }
 
-    public PuntoVector(double alejamiento, double cota, double distancia) {
+    public PuntoVector(double cota, double alejamiento, double distancia) {
         this.alejamiento = alejamiento;
         this.cota = cota;
         this.distancia = distancia;

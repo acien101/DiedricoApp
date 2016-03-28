@@ -1,15 +1,53 @@
 package io.github.acien101.diedricoto3d;
 
-import android.util.Log;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by amil101 on 5/02/16.
  */
 public class Vector {
 
+    private double x;
+    private double y;
+
+    Punto firstPoint;
+    Punto secondPoint;
+
+    public Vector(Punto firstPoint, Punto secondPoint) {
+        this.x = (secondPoint.getX()) - (firstPoint.getX());
+        this.y = (secondPoint.getY()) - (firstPoint.getY());
+
+        this.firstPoint = firstPoint;
+        this.secondPoint = secondPoint;
+    }
+
+
+    public double getModule(){
+        double module = Math.sqrt(Math.pow(x,2)+ Math.pow(y,2));
+
+        return module;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public Punto getSecondPoint() {
+        return secondPoint;
+    }
+
+
+    /*
     double hip;
     double angle;
     double height;
@@ -61,4 +99,8 @@ public class Vector {
     public double getLandLine() {
         return landLine;
     }
+
+    */
+
+
 }

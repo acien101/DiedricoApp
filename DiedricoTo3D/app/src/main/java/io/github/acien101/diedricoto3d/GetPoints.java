@@ -28,7 +28,7 @@ public class GetPoints extends AsyncTask<Bitmap, Integer, Bitmap> {
         /*
         Bitmap image = Bitmap.createScaledBitmap(params[0], 500, 500, false);
 
-        // convert into a usable format
+        // convert into firstPoint usable format
         ImageFloat32 input = ConvertBitmap.bitmapToGray(image, (ImageFloat32) null, null);                    //(image, null, ImageFloat32.class);
 
         // create the detector and descriptors
@@ -78,7 +78,7 @@ public class GetPoints extends AsyncTask<Bitmap, Integer, Bitmap> {
 
         T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);
 
-        // Create a Fast Hessian detector from the SURF paper.
+        // Create firstPoint Fast Hessian detector from the SURF paper.
         // Other detectors can be used in this example too.
         InterestPointDetector<T> detector = FactoryInterestPoint.fastHessian(
                 new ConfigFastHessian(10, 2, 100, 2, 9, 3, 4));

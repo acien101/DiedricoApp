@@ -189,7 +189,7 @@ public class PreviewMenuActivity extends Activity{
 
 
                         //Creamos la Spinner con los alejamientos y cotas que antes hemos indicado
-                        //We create a Spinner with the cotas(?) and alejamientos(?) that we early specificated
+                        //We create firstPoint Spinner with the cotas(?) and alejamientos(?) that we early specificated
 
                         Log.i("puntosObj", Integer.toString(puntosObj.size()));
                         Log.i("nPuntos", Integer.toString(Integer.parseInt(nPuntos.getText().toString()) * 2));
@@ -240,7 +240,7 @@ public class PreviewMenuActivity extends Activity{
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     Log.i("info", "Toco " + position);
                                     currentType = position;
-                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 == 0){                        //if it is a cota(?) of a point
+                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 == 0){                        //if it is firstPoint cota(?) of firstPoint point
                                         menuNumero.setAdapter(menuPuntoArrayAdapter);
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoCotas.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
                                         Log.i("INFO", "COTA PUNTO");
@@ -250,7 +250,7 @@ public class PreviewMenuActivity extends Activity{
                                         numberOfPoint = (position - 1)/2;          //what number of point it is
                                     }
                                     if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 != 0) {
-                                        menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is a puntoAlejamientos(?) of a point
+                                        menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is firstPoint puntoAlejamientos(?) of firstPoint point
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoAlejamientos.get((position - 1)/2)));
                                         Log.i("INFO", "ALEJAMIENTO PUNTO");
                                         new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoAlejamientos.get((position - 1)/2));
@@ -266,7 +266,7 @@ public class PreviewMenuActivity extends Activity{
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineaDeTierraSelectedListener());
                                         new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaDeTierra);
                                     }
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 == 0){           //It the cota of a line
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 == 0){           //It the cota of firstPoint line
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
@@ -277,7 +277,7 @@ public class PreviewMenuActivity extends Activity{
 
                                         Log.i("INFO", "COTA LINEA");
                                     }
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){             //It is le alejemiento of a Line
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){             //It is le alejemiento of firstPoint Line
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
@@ -289,7 +289,7 @@ public class PreviewMenuActivity extends Activity{
                                         Log.i("INFO", "ALEJAMIENTO LINEA");
                                     }
 
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 == 0))){                   //if it is the cota of a plano
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 == 0))){                   //if it is the cota of firstPoint plano
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());
@@ -301,7 +301,7 @@ public class PreviewMenuActivity extends Activity{
                                         Log.i("INFO", "COTA PLANO");
                                     }
 
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 != 0))){                   //if it is the cota of a plano
+                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 != 0))){                   //if it is the cota of firstPoint plano
                                         menuNumero.setAdapter(menuLineaArrayAdapter);
 
                                         menuNumero.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());
@@ -322,7 +322,7 @@ public class PreviewMenuActivity extends Activity{
                         }
                         else{                   //if we have less points on nPuntos than puntosObj we need to retry the scan
 
-                            Toast.makeText(getApplicationContext(), "No se han encontrado tantos resultado, vuelve a intentarlo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "No se han encontrado tantos resultado, vuelve firstPoint intentarlo", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -350,7 +350,20 @@ public class PreviewMenuActivity extends Activity{
             public boolean onMenuItemClick(MenuItem item) {
 
                 ArrayList<PuntoVector> puntoVectors = new ArrayList<PuntoVector>();
+                for(int i = 0; i < Integer.parseInt(nPuntos.getText().toString()); i++){
+                    Vector AB = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaDeTierra.getXb(), lineaDeTierra.getYb()));
+                    Vector AC = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(puntoCotas.get(i).getX(), puntoCotas.get(i).getY()));
+                    Vector AD = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(puntoAlejamientos.get(i).getX(), puntoAlejamientos.get(i).getY()));
+                    ScalarProduct scalarProductForCota = new ScalarProduct(AB, AC);
+                    ScalarProduct scalarProductForAlejamiento = new ScalarProduct(AB, AD);
+                    puntoVectors.add(new PuntoVector(scalarProductForCota.getHeight(), scalarProductForAlejamiento.getHeight(), scalarProductForCota.getLength()));
 
+                    Log.i("DATA", "Cota " + i + " :" + Double.toString(puntoVectors.get(i).getCota()));
+                    Log.i("DATA", "Alejamiento " + i + " :" + Double.toString(puntoVectors.get(i).getAlejamiento()));
+                    Log.i("DATA", "Distancia " + i + " :" + Double.toString(puntoVectors.get(i).getDistancia()));
+                }
+
+                /*
                 for(int i = 0; i < Integer.parseInt(nPuntos.getText().toString()); i++){
                     Vector vector = new Vector();
                     vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");
@@ -423,6 +436,7 @@ public class PreviewMenuActivity extends Activity{
 
                 getApplicationContext().startActivity(intent);
 
+                */
                 return true;
             }
         });
@@ -433,7 +447,7 @@ public class PreviewMenuActivity extends Activity{
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // as you specify firstPoint parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
 
@@ -450,18 +464,18 @@ public class PreviewMenuActivity extends Activity{
         menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int contador = 0;
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
                 if(contador != 0) {                         //when we create the listener, it activates alone. This don't let him!!
                     Log.i("INFO", "TOCADOO MENUNUMERO");
                     new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntosObj.get(position));
 
-                    if (typeOfPoint == 0) {           //the point we selected is a cota(?)
+                    if (typeOfPoint == 0) {           //the point we selected is firstPoint cota(?)
 
                         Punto necessaryPoint = puntosObj.get(position);
                         puntoCotas.remove(numberOfPoint);
                         puntoCotas.add(numberOfPoint, puntosObj.get(position));
 
-                    } else {                               //the point we selected is a puntoAlejamientos(?)
+                    } else {                               //the point we selected is firstPoint puntoAlejamientos(?)
 
                         Punto necessaryPoint = puntosObj.get(position);
                         puntoAlejamientos.remove(numberOfPoint);
@@ -488,15 +502,15 @@ public class PreviewMenuActivity extends Activity{
             int contador = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
                 if(contador != 0) {
                     new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
 
-                    if(typeOfLine == 0){                //the line we selected is a cota
+                    if(typeOfLine == 0){                //the line we selected is firstPoint cota
                         lineaCota.remove(numberOfLine);
                         lineaCota.add(numberOfLine, lineasObj.get(position));
                     }
-                    else{                               //the line we selected is a alejamiento
+                    else{                               //the line we selected is firstPoint alejamiento
                         lineaAlejamiento.remove(numberOfLine);
                         lineaAlejamiento.add(numberOfLine, lineasObj.get(position));
                     }
@@ -518,15 +532,15 @@ public class PreviewMenuActivity extends Activity{
             int contador = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
                 if(contador != 0) {
                     new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
 
-                    if(typeOfLine == 0){                //the line of the plano we selected is a cota
+                    if(typeOfLine == 0){                //the line of the plano we selected is firstPoint cota
                         planoCota.remove(numberOfLine);
                         planoCota.add(numberOfLine, lineasObj.get(position));
                     }
-                    else{                               //the line we selected is a alejamiento
+                    else{                               //the line we selected is firstPoint alejamiento
                         planoAlejamiento.remove(numberOfLine);
                         planoAlejamiento.add(numberOfLine, lineasObj.get(position));
                     }
@@ -548,7 +562,7 @@ public class PreviewMenuActivity extends Activity{
             int contador = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
                 if(contador != 0) {
                     new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
 

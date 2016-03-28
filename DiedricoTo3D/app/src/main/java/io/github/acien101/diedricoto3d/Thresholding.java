@@ -34,7 +34,7 @@ public class Thresholding extends AsyncTask<String,Integer,Bitmap>{
 
         Bitmap image2 = Bitmap.createScaledBitmap(image, 500, 500, false);
 
-        // convert into a usable format
+        // convert into firstPoint usable format
         ImageFloat32 input = ConvertBitmap.bitmapToGray(image2,(ImageFloat32)null,null);                    //(image, null, ImageFloat32.class);
 
         ImageUInt8 binary = new ImageUInt8(input.width,input.height);

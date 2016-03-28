@@ -67,10 +67,10 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         myBM = detectLineSegments(detect(params[0], ImageFloat32.class, nPuntos*2), ImageFloat32.class, ImageFloat32.class);
 
         /*
-        Log.i("land line a x", Double.toString(landLine.get(0)));
-        Log.i("land line a y", Double.toString(landLine.get(1)));
-        Log.i("land line b x", Double.toString(landLine.get(2)));
-        Log.i("land line b y", Double.toString(landLine.get(3)));
+        Log.i("land line firstPoint x", Double.toString(landLine.get(0)));
+        Log.i("land line firstPoint y", Double.toString(landLine.get(1)));
+        Log.i("land line secondPoint x", Double.toString(landLine.get(2)));
+        Log.i("land line secondPoint y", Double.toString(landLine.get(3)));
 
         Log.i("punto interesante x", Double.toString(interestPoints.get(0)));
         Log.i("punto interesante y", Double.toString(interestPoints.get(1)));
@@ -120,10 +120,10 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
                              Class<T> imageType ,
                              Class<D> derivType )
     {
-        // convert the line into a single band image
+        // convert the line into firstPoint single band image
         T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);
 
-        // Comment/uncomment to try a different type of line detector
+        // Comment/uncomment to try firstPoint different type of line detector
         DetectLineSegmentsGridRansac<T,D> detector = FactoryDetectLineAlgs.lineRansac(40, 10, 1, true, imageType, derivType);
 
         List<LineSegment2D_F32> found = detector.detect(input);
@@ -157,7 +157,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);
 
-        // Create a Fast Hessian detector from the SURF paper.
+        // Create firstPoint Fast Hessian detector from the SURF paper.
         // Other detectors can be used in this example too.
 
         Log.i("nPuntos", Integer.toString(nPuntos));
