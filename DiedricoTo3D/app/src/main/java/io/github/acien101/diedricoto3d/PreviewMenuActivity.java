@@ -367,54 +367,32 @@ public class PreviewMenuActivity extends Activity{
 
 
                 ArrayList<LineaVector> lineaVectors = new ArrayList<LineaVector>();
-/*
                 for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i ++){
-                    Vector vector = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");          //vector of LandLine
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaCota.get(i).getXa(), lineaCota.get(i).getYa(), "AC");        //vector LandLine to first point of cota line
-                    vector.getAngle(vector.getVector("AB"), vector.getVector("AC"));
+                    Vector AB = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaDeTierra.getXb(), lineaDeTierra.getYb()));
+                    Vector AC = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaCota.get(i).getXa(), lineaCota.get(i).getYa()));
+                    Vector AD = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaAlejamiento.get(i).getXa(), lineaAlejamiento.get(i).getYa()));
+                    Vector AE = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaCota.get(i).getXb(), lineaCota.get(i).getYb()));
+                    Vector AF = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaAlejamiento.get(i).getXb(), lineaAlejamiento.get(i).getYb()));
 
-                    Vector vector2 = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");          //vector of LandLine
-                    vector2.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaAlejamiento.get(i).getXa(), lineaAlejamiento.get(i).getYa(), "AD");         //vector LandLine to first point of alejamiento line
-                    vector2.getAngle(vector.getVector("AB"), vector2.getVector("AD"));
-
-                    Vector vector3 = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
-                    vector3.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaCota.get(i).getXb(), lineaCota.get(i).getYb(), "AE");       //vector LandLine to second point of cota line
-                    vector3.getAngle(vector.getVector("AB"), vector3.getVector("AE"));
-
-                    Vector vector4 = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
-                    vector4.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaAlejamiento.get(i).getXb(), lineaAlejamiento.get(i).getYb(), "AF");         //vector of LandLine to second point of alejamiento line
-                    vector4.getAngle(vector.getVector("AB"), vector4.getVector("AF"));
-
-                    lineaVectors.add(new LineaVector((float)(vector.getHeight()/vector.getLandLine()), (float)(vector2.getHeight()/vector.getLandLine()), (float)(vector.getLenght()/vector.getLandLine()), (float)(vector3.getHeight()/vector.getLandLine()), (float)(vector4.getHeight()/vector.getLandLine()), (float)(vector3.getLenght()/vector2.getLandLine())));
+                    ScalarProduct scalarProductCotaA = new ScalarProduct(AB, AC);
+                    ScalarProduct scalarProductAlejamientoA = new ScalarProduct(AB, AD);
+                    ScalarProduct scalarProductCotaB = new ScalarProduct(AB, AE);
+                    ScalarProduct scalarProductAlejamientoB = new ScalarProduct(AB, AF);
+                    lineaVectors.add(new LineaVector((float)(scalarProductCotaA.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoA.getHeight()/AB.getModule()), (float)(scalarProductCotaA.getLength()/AB.getModule()), (float)(scalarProductCotaB.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoB.getHeight()/AB.getModule()), (float)(scalarProductCotaB.getLength()/AB.getModule())));
                 }
-*/
+
                 ArrayList<PlanoVector> planoVectors = new ArrayList<PlanoVector>();
-
-                /*
                 for(int i = 0; i < Integer.parseInt(nPlanos.getText().toString()); i++){
-                    Vector vector = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");          //vector of LandLine
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), planoCota.get(i).getXb(), planoCota.get(i).getYb(), "AC");        //vector LandLine to first point of cota line
-                    vector.getAngle(vector.getVector("AB"), vector.getVector("AC"));
+                    Vector AB = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaDeTierra.getXb(), lineaDeTierra.getYb()));
+                    Vector AC = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(planoCota.get(i).getXa(), planoCota.get(i).getYa()));
+                    Vector AD = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(planoCota.get(i).getXb(), planoCota.get(i).getYb()));
+                    Vector AE = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(planoAlejamiento.get(i).getXb(), planoAlejamiento.get(i).getYb()));
 
-                    Vector vector2 = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
-                    vector2.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), planoCota.get(i).getXa(), planoCota.get(i).getYa(), "AD");       //vector LandLine to second point of cota line
-                    vector2.getAngle(vector.getVector("AB"), vector2.getVector("AD"));
-
-                    Vector vector3 = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");              //vector of LandLine
-                    vector3.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), planoAlejamiento.get(i).getXa(), planoAlejamiento.get(i).getYa(), "AE");         //vector of LandLine to second point of alejamiento line
-                    vector3.getAngle(vector.getVector("AB"), vector3.getVector("AE"));
-
-                    planoVectors.add(new PlanoVector((float)(vector.getLenght()/vector.getLandLine()), (float)(vector2.getHeight()/vector.getLandLine()), (float)(vector3.getHeight()/vector.getLandLine()), (float)(vector2.getLenght()/vector.getLandLine())));
+                    ScalarProduct scalarProductPlanoOrigen = new ScalarProduct(AB, AC);
+                    ScalarProduct scalarProductCota = new ScalarProduct(AB, AD);
+                    ScalarProduct scalarProductAlejamiento = new ScalarProduct(AB, AE);
+                    planoVectors.add(new PlanoVector((float)(scalarProductPlanoOrigen.getLength()/AB.getModule()), (float)(scalarProductCota.getHeight()/AB.getModule()), (float)(scalarProductAlejamiento.getHeight()/AB.getModule()), (float)(scalarProductCota.getLength()/AB.getModule())));
                 }
-
-                */
 
                 Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);
                 intent.putParcelableArrayListExtra("vector", puntoVectors);
