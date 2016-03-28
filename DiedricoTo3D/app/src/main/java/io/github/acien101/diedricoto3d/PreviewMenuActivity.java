@@ -356,31 +356,18 @@ public class PreviewMenuActivity extends Activity{
                     Vector AD = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(puntoAlejamientos.get(i).getX(), puntoAlejamientos.get(i).getY()));
                     ScalarProduct scalarProductForCota = new ScalarProduct(AB, AC);
                     ScalarProduct scalarProductForAlejamiento = new ScalarProduct(AB, AD);
-                    puntoVectors.add(new PuntoVector(scalarProductForCota.getHeight(), scalarProductForAlejamiento.getHeight(), scalarProductForCota.getLength()));
+                    puntoVectors.add(new PuntoVector(scalarProductForCota.getHeight()/AB.getModule(), scalarProductForAlejamiento.getHeight()/AB.getModule(), scalarProductForCota.getLength()/AB.getModule()));
 
                     Log.i("DATA", "Cota " + i + " :" + Double.toString(puntoVectors.get(i).getCota()));
                     Log.i("DATA", "Alejamiento " + i + " :" + Double.toString(puntoVectors.get(i).getAlejamiento()));
                     Log.i("DATA", "Distancia " + i + " :" + Double.toString(puntoVectors.get(i).getDistancia()));
                 }
 
-                /*
-                for(int i = 0; i < Integer.parseInt(nPuntos.getText().toString()); i++){
-                    Vector vector = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), puntoCotas.get(i).getX(), puntoCotas.get(i).getY(), "AC");
-                    vector.getAngle(vector.getVector("AB"), vector.getVector("AC"));
 
-                    Vector vector2 = new Vector();
-                    vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");
-                    vector2.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), puntoAlejamientos.get(i).getX(), puntoAlejamientos.get(i).getY(), "AD");
-                    vector2.getAngle(vector.getVector("AB"), vector2.getVector("AD"));
 
-                    puntoVectors.add(new PuntoVector(vector.getHeight()/vector.getLandLine(), vector2.getHeight()/vector.getLandLine(),vector.getLenght()/vector.getLandLine()));
-
-                }
 
                 ArrayList<LineaVector> lineaVectors = new ArrayList<LineaVector>();
-
+/*
                 for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i ++){
                     Vector vector = new Vector();
                     vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");          //vector of LandLine
@@ -404,8 +391,10 @@ public class PreviewMenuActivity extends Activity{
 
                     lineaVectors.add(new LineaVector((float)(vector.getHeight()/vector.getLandLine()), (float)(vector2.getHeight()/vector.getLandLine()), (float)(vector.getLenght()/vector.getLandLine()), (float)(vector3.getHeight()/vector.getLandLine()), (float)(vector4.getHeight()/vector.getLandLine()), (float)(vector3.getLenght()/vector2.getLandLine())));
                 }
-
+*/
                 ArrayList<PlanoVector> planoVectors = new ArrayList<PlanoVector>();
+
+                /*
                 for(int i = 0; i < Integer.parseInt(nPlanos.getText().toString()); i++){
                     Vector vector = new Vector();
                     vector.createVector(lineaDeTierra.getXa(), lineaDeTierra.getYa(), lineaDeTierra.getXb(), lineaDeTierra.getYb(), "AB");          //vector of LandLine
@@ -425,6 +414,8 @@ public class PreviewMenuActivity extends Activity{
                     planoVectors.add(new PlanoVector((float)(vector.getLenght()/vector.getLandLine()), (float)(vector2.getHeight()/vector.getLandLine()), (float)(vector3.getHeight()/vector.getLandLine()), (float)(vector2.getLenght()/vector.getLandLine())));
                 }
 
+                */
+
                 Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);
                 intent.putParcelableArrayListExtra("vector", puntoVectors);
                 intent.putParcelableArrayListExtra("lines", lineaVectors);
@@ -436,7 +427,7 @@ public class PreviewMenuActivity extends Activity{
 
                 getApplicationContext().startActivity(intent);
 
-                */
+
                 return true;
             }
         });
