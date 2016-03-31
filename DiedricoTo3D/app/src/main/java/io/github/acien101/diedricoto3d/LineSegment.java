@@ -34,8 +34,6 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     static List<Double> interestPoints = new ArrayList<Double>();
     static List<Float> landLine = new ArrayList<Float>();
     private static Bitmap myBM;
-    Vector vector;
-    Vector vector2;
 
     int nPuntos;
     int nLineas;
@@ -48,46 +46,10 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
     public AsyncResponse delegate = null;
 
-    public Vector getVector() {
-        return vector;
-    }
-    public Vector getVector2() { return  vector2;}
-
-    public List<Punto> getPuntos() {
-        return puntos;
-    }
-
-    public List<Linea> getLineas() {
-        return lineas;
-    }
-
     @Override
     protected Bitmap doInBackground(Bitmap... params) {
 
         myBM = detectLineSegments(detect(params[0], ImageFloat32.class, nPuntos*2), ImageFloat32.class, ImageFloat32.class);
-
-        /*
-        Log.i("land line firstPoint x", Double.toString(landLine.get(0)));
-        Log.i("land line firstPoint y", Double.toString(landLine.get(1)));
-        Log.i("land line secondPoint x", Double.toString(landLine.get(2)));
-        Log.i("land line secondPoint y", Double.toString(landLine.get(3)));
-
-        Log.i("punto interesante x", Double.toString(interestPoints.get(0)));
-        Log.i("punto interesante y", Double.toString(interestPoints.get(1)));
-
-        vector = new Vector();
-        vector.createVector(landLine.get(0), landLine.get(1), landLine.get(2), landLine.get(3), "AB");
-        vector.createVector(landLine.get(0), landLine.get(1), interestPoints.get(0), interestPoints.get(1), "AC");
-        vector.getAngle(vector.getVector("AB"), vector.getVector("AC"));
-
-        vector2 = new Vector();
-        vector2.createVector(landLine.get(0), landLine.get(1), landLine.get(2), landLine.get(3), "AB");
-        vector2.createVector(landLine.get(0), landLine.get(1), interestPoints.get(2), interestPoints.get(3), "AD");
-        vector2.getAngle(vector2.getVector("AB"), vector2.getVector("AD"));
-
-        */
-
-        Log.i("info", Integer.toString(puntos.size()));
 
         return myBM;
 

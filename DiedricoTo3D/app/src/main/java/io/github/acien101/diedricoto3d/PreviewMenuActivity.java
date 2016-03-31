@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import io.github.acien101.diedricoto3d.openGL.OpenGlActivity;
 
@@ -37,9 +36,8 @@ public class PreviewMenuActivity extends Activity{
     ImageView pic;
     String file;
     Bitmap bmImg;
-    Thresholding obj;
-    int radious;
-    TextView text;
+    Thresholding thresholding;
+    int radiousSeekBar;
     LineSegment asdf;
 
     SeekBar seekBar;
@@ -56,10 +54,6 @@ public class PreviewMenuActivity extends Activity{
     List<Punto> puntosObj = new ArrayList<>();
     List<Linea> lineasObj = new ArrayList<>();
 
-    List<PuntoDiedrico> puntoDiedricos = new ArrayList<>();
-
-    Bitmap originalBitmap;
-
     int currentType;
     List<Punto> puntoCotas = new ArrayList<>();
     List<Punto> puntoAlejamientos = new ArrayList<>();
@@ -71,8 +65,8 @@ public class PreviewMenuActivity extends Activity{
     List<Linea> planoCota = new ArrayList<>();
     List<Linea> planoAlejamiento = new ArrayList<>();
 
-    int typeOfPoint = 0;             // 0 means cota, 1 means puntoAlejamientos
-    int typeOfLine = 0;
+    int typeOfPoint = 0;             // 0 means Y, 1 means X
+    int typeOfLine = 0;              // 0 means Y, 1 means X
     int numberOfPoint = 0;
     int numberOfLine = 0;
 
@@ -85,20 +79,20 @@ public class PreviewMenuActivity extends Activity{
         setContentView(R.layout.preview_menu);
 
         Intent intent = getIntent();
-        String originalFile = intent.getStringExtra("file");
+        String originalFile = intent.getStringExtra("file");                                            //we receive te file of the picture
         file = "/storage/emulated/0/Android/data/io.github.acien101.diedricoto3d/files/pic2.jpg";
 
-        copyFile(originalFile, file);
+        copyFile(originalFile, file);                                                                   //we have to copy the pic for modifying with BOOFCV
 
-        pic = (ImageView) findViewById(R.id.imagePreview);
-        bmImg = BitmapFactory.decodeFile(file);
+        pic = (ImageView) findViewById(R.id.imagePreview);                                              //the ImageView
+        bmImg = BitmapFactory.decodeFile(file);                                                         //We convert the file to Bitmap, for BoofCV
 
 
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar = (SeekBar) findViewById(R.id.seekBar);                                                 //our SeekBar
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {                      //the listener for our SeekBar
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                radious = progress;
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {            //we need to know the progress and then we modify our pic
+                radiousSeekBar = progress;
             }
 
             @Override
@@ -109,16 +103,14 @@ public class PreviewMenuActivity extends Activity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
-                obj = new Thresholding(pic, radious);
-                obj.execute(file);
-
-                Log.i("seek", String.valueOf(radious));
+                thresholding = new Thresholding(pic, radiousSeekBar);                                                   //We pass the image to a filter to where blacks are more blacks and whites more whites
+                thresholding.execute(file);
             }
         });
 
-        nPuntos = (EditText) findViewById(R.id.nPuntos);
-        nLineas = (EditText) findViewById(R.id.nLineas);
-        nPlanos = (EditText) findViewById(R.id.nPlanos);
+        nPuntos = (EditText) findViewById(R.id.nPuntos);                                                //The editText where the user specify the number of points
+        nLineas = (EditText) findViewById(R.id.nLineas);                                                //The editText where the user specify the number of lines
+        nPlanos = (EditText) findViewById(R.id.nPlanos);                                                //The editText where the user specify the number of planes
 
         // array of colors
         String colors[] = {"Linea de tierra", "punto 1"};
@@ -157,7 +149,7 @@ public class PreviewMenuActivity extends Activity{
 
                 funcionCualquiera("analizar");
 
-                Bitmap picBM = obj.getPic();
+                Bitmap picBM = thresholding.getPic();
                 asdf = new LineSegment(getApplicationContext(), pic, Integer.parseInt(nPuntos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), menuTipo, new LineSegment.AsyncResponse() {
                     @Override
                     public void processFinish(List<Punto> puntos, List<Linea> lineas, List<Double> planos) {

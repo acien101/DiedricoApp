@@ -835,8 +835,8 @@ public class Camera2BasicFragment extends Fragment
                     Log.d(TAG, mFile.toString());
                     unlockFocus();
 
-                    Intent intent = new Intent(getActivity(), PreviewMenuActivity.class);
-                    intent.putExtra("file", mFile.toString());
+                    Intent intent = new Intent(getActivity(), PreviewMenuActivity.class);                   //When we have the picture, we go to PreviewMenuActivity with the name of the file
+                    intent.putExtra("file", mFile.toString());                                              //we pass the name of the pic, better than the picture, because is better for not crashing the app
 
                     getActivity().startActivity(intent);
                 }
