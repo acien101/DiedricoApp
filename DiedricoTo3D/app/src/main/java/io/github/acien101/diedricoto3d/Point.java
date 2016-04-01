@@ -3,12 +3,12 @@ package io.github.acien101.diedricoto3d;
 /**
  * Created by amil101 on 13/02/16.
  */
-public class Punto {
+public class Point {
 
     double x;
     double y;
 
-    public Punto(double x, double y) {
+    public Point(double x, double y) {
         this.x = x;
         this.y = y;
     }

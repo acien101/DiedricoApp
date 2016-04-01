@@ -10,7 +10,7 @@ import android.widget.ImageView;
  * Created by amil101 on 21/02/16.
  */
 public class ListenPointDiedrico {
-    public ListenPointDiedrico(ImageView imageView, Bitmap pic, PuntoDiedrico puntoDiedrico){
+    public ListenPointDiedrico(ImageView imageView, Bitmap pic, PointDiedrico pointDiedrico){
         Bitmap transformation = pic;
 
         Paint paintMax;
@@ -20,8 +20,8 @@ public class ListenPointDiedrico {
 
         Canvas canvas = new Canvas(transformation);
 
-        canvas.drawCircle((float) puntoDiedrico.cota.getX(), (float) puntoDiedrico.cota.getY(), 3, paintMax);
-        canvas.drawCircle((float) puntoDiedrico.alejamiento.getX(), (float) puntoDiedrico.alejamiento.getY(), 3, paintMax);
+        canvas.drawCircle((float) pointDiedrico.cota.getX(), (float) pointDiedrico.cota.getY(), 3, paintMax);
+        canvas.drawCircle((float) pointDiedrico.alejamiento.getX(), (float) pointDiedrico.alejamiento.getY(), 3, paintMax);
 
 
         imageView.setImageBitmap(transformation);

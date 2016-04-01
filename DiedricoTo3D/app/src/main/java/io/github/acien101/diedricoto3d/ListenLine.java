@@ -6,13 +6,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.ImageView;
 
-import java.util.List;
-
 /**
  * Created by amil101 on 21/02/16.
  */
 public class ListenLine {
-    public ListenLine(ImageView imageView, Bitmap pic, Linea line){
+    public ListenLine(ImageView imageView, Bitmap pic, Line line){
         Bitmap transformation = pic;
 
         Paint paintMax;

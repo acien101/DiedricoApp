@@ -10,7 +10,7 @@ import android.widget.ImageView;
  * Created by amil101 on 21/02/16.
  */
 public class ListenPoint {
-    public ListenPoint(ImageView imageView, Bitmap pic, Punto punto){
+    public ListenPoint(ImageView imageView, Bitmap pic, Point point){
         Bitmap transformation = pic;
 
         Paint paintMax;
@@ -20,7 +20,7 @@ public class ListenPoint {
 
         Canvas canvas = new Canvas(transformation);
 
-        canvas.drawCircle((float) punto.getX(), (float) punto.getY(), 3, paintMax);
+        canvas.drawCircle((float) point.getX(), (float) point.getY(), 3, paintMax);
 
         imageView.setImageBitmap(transformation);
     }

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by amil101 on 27/03/16.
  */
-public class PlanoVector implements Parcelable{
+public class PlaneVector implements Parcelable{
     float desplazamientoPlanoOrigen;
     float cota;
     float alejamiento;
@@ -25,19 +25,19 @@ public class PlanoVector implements Parcelable{
                                         this.desplazamiento});
     }
 
-    public static final Parcelable.Creator<PlanoVector> CREATOR = new Creator<PlanoVector>() {
+    public static final Parcelable.Creator<PlaneVector> CREATOR = new Creator<PlaneVector>() {
         @Override
-        public PlanoVector createFromParcel(Parcel in) {
-            return new PlanoVector(in);
+        public PlaneVector createFromParcel(Parcel in) {
+            return new PlaneVector(in);
         }
 
         @Override
-        public PlanoVector[] newArray(int size) {
-            return new PlanoVector[size];
+        public PlaneVector[] newArray(int size) {
+            return new PlaneVector[size];
         }
     };
 
-    public PlanoVector(Parcel in){
+    public PlaneVector(Parcel in){
         float[] data = new float[4];
 
         in.readFloatArray(data);
@@ -48,7 +48,7 @@ public class PlanoVector implements Parcelable{
 
     }
 
-    public PlanoVector(float desplazamientoPlanoOrigen, float cota, float alejamiento, float desplazamiento){
+    public PlaneVector(float desplazamientoPlanoOrigen, float cota, float alejamiento, float desplazamiento){
 
         this.desplazamientoPlanoOrigen = desplazamientoPlanoOrigen;
         this.cota = cota;

@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -35,12 +34,12 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     static List<Float> landLine = new ArrayList<Float>();
     private static Bitmap myBM;
 
-    int nPuntos;
-    int nLineas;
-    int nPlanos;
+    int nPoints;
+    int nLines;
+    int nPlanes;
 
-    List<Punto> puntos = new ArrayList<>();
-    List<Linea> lineas = new ArrayList<>();
+    List<Point> points = new ArrayList<>();
+    List<Line> lines = new ArrayList<>();
 
     Spinner numeroPuntos;
 
@@ -49,7 +48,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     @Override
     protected Bitmap doInBackground(Bitmap... params) {
 
-        myBM = detectLineSegments(detect(params[0], ImageFloat32.class, nPuntos*2), ImageFloat32.class, ImageFloat32.class);
+        myBM = detectLineSegments(detect(params[0], ImageFloat32.class, nPoints *2), ImageFloat32.class, ImageFloat32.class);
 
         return myBM;
 
@@ -63,17 +62,17 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         bmPic = bitmap;
         pic.setImageBitmap(bitmap);
 
-        delegate.processFinish(puntos, lineas, null);
+        delegate.processFinish(points, lines, null);
     }
 
-    public LineSegment(Context context, ImageView pic, int nPuntos, int nLineas, int nPlanos, Spinner numeroPuntos, AsyncResponse delegate){
+    public LineSegment(Context context, ImageView pic, int nPoints, int nLineas, int nPlanes, Spinner numeroPuntos, AsyncResponse delegate){
         super();
         this.delegate = delegate;
         this.context = context;
         this.pic = pic;
-        this.nPuntos = nPuntos;
-        this.nLineas = nLineas;
-        this.nPlanos = nPlanos;
+        this.nPoints = nPoints;
+        this.nLines = nLineas;
+        this.nPlanes = nPlanes;
         this.numeroPuntos = numeroPuntos;
     }
 
@@ -100,7 +99,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         for(int i = 0; i<found.size();i++){
             canvas.drawLine(found.get(i).a.x,found.get(i).a.y, found.get(i).b.x,found.get(i).b.y,paintMax);
-            lineas.add(new Linea(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
+            lines.add(new Line(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
         }
 
 
@@ -122,7 +121,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         // Create firstPoint Fast Hessian detector from the SURF paper.
         // Other detectors can be used in this example too.
 
-        Log.i("nPuntos", Integer.toString(nPuntos));
+        Log.i("nPoints", Integer.toString(nPuntos));
 
         InterestPointDetector<T> detector = FactoryInterestPoint.fastHessian(
                 new ConfigFastHessian(30, 2, nPuntos, 2, 9, 3, 4));
@@ -140,7 +139,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         for(int i = 0; i<detector.getNumberOfFeatures();i++){
             canvas.drawCircle((float) detector.getLocation(i).getX(), (float) detector.getLocation(i).getY(), 3, paintMax);
-            puntos.add(new Punto(detector.getLocation(i).getX(), detector.getLocation(i).getY()));
+            points.add(new Point(detector.getLocation(i).getX(), detector.getLocation(i).getY()));
         }
 
         interestPoints.add(0, detector.getLocation(0).getX());
@@ -157,7 +156,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     }
 
     public interface AsyncResponse{
-        void processFinish(List<Punto> puntos, List<Linea> lineas, List<Double> planos);
+        void processFinish(List<Point> points, List<Line> lines, List<Double> planos);
     }
 
 }

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by amil101 on 13/03/16.
  */
-public class PuntoVector implements Parcelable{
+public class PointVector implements Parcelable{
 
     private double cota;
     private double alejamiento;
@@ -22,18 +22,18 @@ public class PuntoVector implements Parcelable{
                 this.distancia});
     }
 
-    public static final Parcelable.Creator<PuntoVector> CREATOR
-            = new Parcelable.Creator<PuntoVector>() {
-        public PuntoVector createFromParcel(Parcel in) {
-            return new PuntoVector(in);
+    public static final Parcelable.Creator<PointVector> CREATOR
+            = new Parcelable.Creator<PointVector>() {
+        public PointVector createFromParcel(Parcel in) {
+            return new PointVector(in);
         }
 
-        public PuntoVector[] newArray(int size) {
-            return new PuntoVector[size];
+        public PointVector[] newArray(int size) {
+            return new PointVector[size];
         }
     };
 
-    public PuntoVector(Parcel in) {
+    public PointVector(Parcel in) {
         double[] data = new double[3];
 
         in.readDoubleArray(data);
@@ -42,7 +42,7 @@ public class PuntoVector implements Parcelable{
         this.distancia = data[2];
     }
 
-    public PuntoVector(double alejamiento, double cota, double distancia) {
+    public PointVector(double alejamiento, double cota, double distancia) {
         this.alejamiento = alejamiento;
         this.cota = cota;
         this.distancia = distancia;

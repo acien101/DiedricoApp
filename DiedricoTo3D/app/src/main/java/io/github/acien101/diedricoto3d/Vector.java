@@ -8,10 +8,10 @@ public class Vector {
     private double x;
     private double y;
 
-    Punto firstPoint;
-    Punto secondPoint;
+    Point firstPoint;
+    Point secondPoint;
 
-    public Vector(Punto firstPoint, Punto secondPoint) {
+    public Vector(Point firstPoint, Point secondPoint) {
         this.x = (secondPoint.getX()) - (firstPoint.getX());
         this.y = (secondPoint.getY()) - (firstPoint.getY());
 
@@ -42,7 +42,7 @@ public class Vector {
         this.y = y;
     }
 
-    public Punto getSecondPoint() {
+    public Point getSecondPoint() {
         return secondPoint;
     }
 

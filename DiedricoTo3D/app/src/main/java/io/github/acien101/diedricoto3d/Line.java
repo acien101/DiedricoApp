@@ -3,7 +3,7 @@ package io.github.acien101.diedricoto3d;
 /**
  * Created by amil101 on 16/02/16.
  */
-public class Linea {
+public class Line {
 
     float xa;
     float ya;
@@ -11,7 +11,7 @@ public class Linea {
     float xb;
     float yb;
 
-    public Linea(float xa, float ya, float xb, float yb){
+    public Line(float xa, float ya, float xb, float yb){
         this.xa = xa;
         this.ya = ya;
         this.xb = xb;

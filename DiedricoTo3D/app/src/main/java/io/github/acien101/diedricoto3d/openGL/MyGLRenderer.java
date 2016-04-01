@@ -3,7 +3,6 @@ package io.github.acien101.diedricoto3d.openGL;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +10,9 @@ import java.util.List;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import io.github.acien101.diedricoto3d.LineaVector;
-import io.github.acien101.diedricoto3d.PlanoVector;
-import io.github.acien101.diedricoto3d.PuntoVector;
+import io.github.acien101.diedricoto3d.LineVector;
+import io.github.acien101.diedricoto3d.PlaneVector;
+import io.github.acien101.diedricoto3d.PointVector;
 
 /**
  * Created by amil101 on 10/01/16.
@@ -27,9 +26,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
     private List<Line> mLines = new ArrayList<>();
     private List<Plano> mPlano = new ArrayList<>();
 
-    private List<PuntoVector> puntoVectors = new ArrayList<>();
-    private List<LineaVector> lineaVectors = new ArrayList<>();
-    private List<PlanoVector> planoVectors = new ArrayList<>();
+    private List<PointVector> pointVectors = new ArrayList<>();
+    private List<LineVector> lineVectors = new ArrayList<>();
+    private List<PlaneVector> planeVectors = new ArrayList<>();
 
     static int zoom = 130;
 
@@ -59,14 +58,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         // initialize a triangle
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
-        for(int i = 0; i < puntoVectors.size(); i++){
+        for(int i = 0; i < pointVectors.size(); i++){
             mPoints.add(new GLPoint(10,10,0.01f, 0.7f));
         }
-        for(int i = 0; i< lineaVectors.size(); i++){
-            mLines.add(new Line(lineaVectors.get(i).getCotaA(),lineaVectors.get(i).getAlejamientoA(), -lineaVectors.get(i).getDistanciaA(), lineaVectors.get(i).getCotaB(), lineaVectors.get(i).getAlejamientoB(), -lineaVectors.get(i).getDistanciaB()));
+        for(int i = 0; i< lineVectors.size(); i++){
+            mLines.add(new Line(lineVectors.get(i).getCotaA(), lineVectors.get(i).getAlejamientoA(), -lineVectors.get(i).getDistanciaA(), lineVectors.get(i).getCotaB(), lineVectors.get(i).getAlejamientoB(), -lineVectors.get(i).getDistanciaB()));
         }
-        for(int i = 0; i < planoVectors.size(); i++){
-            mPlano.add(new Plano(-planoVectors.get(i).getDesplazamientoPlanoOrigen(), planoVectors.get(i).getCota(), planoVectors.get(i).getAlejamiento(), -planoVectors.get(i).getDesplazamiento()));
+        for(int i = 0; i < planeVectors.size(); i++){
+            mPlano.add(new Plano(-planeVectors.get(i).getDesplazamientoPlanoOrigen(), planeVectors.get(i).getCota(), planeVectors.get(i).getAlejamiento(), -planeVectors.get(i).getDesplazamiento()));
         }
     }
 
@@ -112,7 +111,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
 
         for(int i = 0; i < mPoints.size(); i++){
             Matrix.setIdentityM(mTranslationMatrix, 0);
-            Matrix.translateM(mTranslationMatrix, 0, ((float) puntoVectors.get(i).getCota()), ((float) puntoVectors.get(i).getAlejamiento()), -((float) puntoVectors.get(i).getDistancia()));
+            Matrix.translateM(mTranslationMatrix, 0, ((float) pointVectors.get(i).getCota()), ((float) pointVectors.get(i).getAlejamiento()), -((float) pointVectors.get(i).getDistancia()));
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
 
             mPoints.get(i).draw(scratch);
@@ -164,17 +163,17 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         this.zoom = zoom;
     }
 
-    public void setPointCoords(List<PuntoVector> pointCoords) {
-        this.puntoVectors = pointCoords;
+    public void setPointCoords(List<PointVector> pointCoords) {
+        this.pointVectors = pointCoords;
 
     }
 
-    public void setLineaVectors(List<LineaVector> lineaVectors) {
-        this.lineaVectors = lineaVectors;
+    public void setLineVectors(List<LineVector> lineVectors) {
+        this.lineVectors = lineVectors;
     }
 
-    public void setPlanoVectors(List<PlanoVector> planoVectors) {
-        this.planoVectors = planoVectors;
+    public void setPlaneVectors(List<PlaneVector> planeVectors) {
+        this.planeVectors = planeVectors;
     }
 
 }

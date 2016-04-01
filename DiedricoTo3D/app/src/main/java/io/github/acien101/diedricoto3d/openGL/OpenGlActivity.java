@@ -9,21 +9,20 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.github.acien101.diedricoto3d.LineaVector;
-import io.github.acien101.diedricoto3d.PlanoVector;
-import io.github.acien101.diedricoto3d.PuntoVector;
+import io.github.acien101.diedricoto3d.LineVector;
+import io.github.acien101.diedricoto3d.PlaneVector;
+import io.github.acien101.diedricoto3d.PointVector;
 import io.github.acien101.diedricoto3d.R;
 
 public class OpenGlActivity extends Activity {
 
     private GLSurfaceView mGLView;
     MyGLSurfaceView obj;
-    List<PuntoVector> puntos;
-    List<LineaVector> lineaVectors;
-    List<PlanoVector> planoVectors;
+    List<PointVector> puntos;
+    List<LineVector> lineVectors;
+    List<PlaneVector> planeVectors;
 
     Intent intent;
 
@@ -34,13 +33,13 @@ public class OpenGlActivity extends Activity {
         intent = getIntent();
 
         puntos = intent.getParcelableArrayListExtra("vector");
-        lineaVectors = intent.getParcelableArrayListExtra("lines");
-        planoVectors = intent.getParcelableArrayListExtra("planos");
+        lineVectors = intent.getParcelableArrayListExtra("lines");
+        planeVectors = intent.getParcelableArrayListExtra("planos");
 
         Log.i("received", Integer.toString(puntos.size()));
-        Log.i("LINE", Integer.toString(lineaVectors.size()));
+        Log.i("LINE", Integer.toString(lineVectors.size()));
 
-        mGLView = new MyGLSurfaceView(this, puntos, lineaVectors, planoVectors);
+        mGLView = new MyGLSurfaceView(this, puntos, lineVectors, planeVectors);
         LinearLayout rootLayout = (LinearLayout)findViewById(R.id.rootLayout);
         rootLayout.addView(mGLView);
 
@@ -57,7 +56,7 @@ public class OpenGlActivity extends Activity {
 
                 Log.i("SeekBar", Integer.toString(progress));
 
-                obj = new MyGLSurfaceView(getApplicationContext(), puntos, lineaVectors, planoVectors);
+                obj = new MyGLSurfaceView(getApplicationContext(), puntos, lineVectors, planeVectors);
                 obj.setRenderer(progress);
             }
 

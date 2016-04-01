@@ -2,15 +2,12 @@ package io.github.acien101.diedricoto3d.openGL;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.github.acien101.diedricoto3d.LineaVector;
-import io.github.acien101.diedricoto3d.PlanoVector;
-import io.github.acien101.diedricoto3d.PuntoDiedrico;
-import io.github.acien101.diedricoto3d.PuntoVector;
+import io.github.acien101.diedricoto3d.LineVector;
+import io.github.acien101.diedricoto3d.PlaneVector;
+import io.github.acien101.diedricoto3d.PointVector;
 
 /**
  * Created by amil101 on 10/01/16.
@@ -20,7 +17,7 @@ class MyGLSurfaceView extends GLSurfaceView {
     private final MyGLRenderer mRenderer;
 
 
-    public MyGLSurfaceView(Context context, List<PuntoVector> coords, List<LineaVector> lineaVectors, List<PlanoVector> planoVectors){
+    public MyGLSurfaceView(Context context, List<PointVector> coords, List<LineVector> lineVectors, List<PlaneVector> planeVectors){
         super(context);
 
         // Create an OpenGL ES 2.0 context
@@ -28,8 +25,8 @@ class MyGLSurfaceView extends GLSurfaceView {
 
         mRenderer = new MyGLRenderer();
         mRenderer.setPointCoords(coords);
-        mRenderer.setLineaVectors(lineaVectors);
-        mRenderer.setPlanoVectors(planoVectors);
+        mRenderer.setLineVectors(lineVectors);
+        mRenderer.setPlaneVectors(planeVectors);
 
         // Set the Renderer for drawing on the GLSurfaceView
         setRenderer(mRenderer);
@@ -44,7 +41,7 @@ class MyGLSurfaceView extends GLSurfaceView {
         requestRender();
     }
 
-    public void setPointCoords(List<PuntoVector> coords){
+    public void setPointCoords(List<PointVector> coords){
         mRenderer.setPointCoords(coords);
 
     }

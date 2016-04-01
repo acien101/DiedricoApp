@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by amil101 on 23/03/16.
  */
-public class LineaVector implements Parcelable{
+public class LineVector implements Parcelable{
     float cotaA;
     float alejamientoA;
     float distanciaA;
@@ -30,19 +30,19 @@ public class LineaVector implements Parcelable{
                 this.distanciaB});
     }
 
-    public static final Parcelable.Creator<LineaVector> CREATOR = new Creator<LineaVector>() {
+    public static final Parcelable.Creator<LineVector> CREATOR = new Creator<LineVector>() {
         @Override
-        public LineaVector createFromParcel(Parcel in) {
-            return new LineaVector(in);
+        public LineVector createFromParcel(Parcel in) {
+            return new LineVector(in);
         }
 
         @Override
-        public LineaVector[] newArray(int size) {
-            return new LineaVector[size];
+        public LineVector[] newArray(int size) {
+            return new LineVector[size];
         }
     };
 
-    public LineaVector(Parcel in){
+    public LineVector(Parcel in){
         float[] data = new float[6];
 
         in.readFloatArray(data);
@@ -56,7 +56,7 @@ public class LineaVector implements Parcelable{
 
     }
 
-    public LineaVector(float cotaA, float alejamientoA, float distanciaA, float cotaB, float alejamientoB, float distanciaB){
+    public LineVector(float cotaA, float alejamientoA, float distanciaA, float cotaB, float alejamientoB, float distanciaB){
 
         this.cotaA = cotaA;
         this.alejamientoA = alejamientoA;

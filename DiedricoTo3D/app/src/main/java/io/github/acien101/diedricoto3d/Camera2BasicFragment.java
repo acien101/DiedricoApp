@@ -430,7 +430,7 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+        mFile = new File(getActivity().getExternalFilesDir(null), "ImageView.jpg");
     }
 
     @Override
@@ -836,7 +836,7 @@ public class Camera2BasicFragment extends Fragment
                     unlockFocus();
 
                     Intent intent = new Intent(getActivity(), PreviewMenuActivity.class);                   //When we have the picture, we go to PreviewMenuActivity with the name of the file
-                    intent.putExtra("file", mFile.toString());                                              //we pass the name of the pic, better than the picture, because is better for not crashing the app
+                    intent.putExtra("file", mFile.toString());                                              //we pass the name of the ImageView, better than the picture, because is better for not crashing the app
 
                     getActivity().startActivity(intent);
                 }

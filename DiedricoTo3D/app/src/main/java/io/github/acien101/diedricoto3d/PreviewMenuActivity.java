@@ -33,45 +33,45 @@ import android.widget.Toast;
  * Created by amil101 on 12/02/16.
  */
 public class PreviewMenuActivity extends Activity{
-    ImageView pic;
-    String file;
-    Bitmap bmImg;
-    Thresholding thresholding;
+    ImageView ImageView;                                //the imageView where  be placed the picture
+    String file;                                        //picture file name
+    Bitmap bmImg;                                        //Bitmap of the picture
+    Thresholding thresholding;                             //object of thresholding, the pictur pass to a filter where blacks are more blacks and whites more whites
     int radiousSeekBar;
-    LineSegment asdf;
+    LineSegment lineSegment;                                //object, to scan interesting points and interesting lines
 
     SeekBar seekBar;
 
-    EditText nPuntos;
-    EditText nLineas;
-    EditText nPlanos;
+    EditText nPoints;                                   //where we specify the number of points
+    EditText nLines;                                    //where we specify the number of lines
+    EditText nPlanes;                                   //where we specify the number of planes
 
+    Spinner menuType;                                   //where will be the types of points, lines or planes that we already specified
+    Spinner menuNumber;                                 //where will be the points, lines or planes found
+    Spinner menuColor;                                  //where we will specify the color
 
-    Spinner menuTipo;
-    Spinner menuNumero;
-    Spinner menuColor;
+    List<Point> pointObj = new ArrayList<>();               //whre we will put all the interested points found with BoofCV
+    List<Line> lineObj = new ArrayList<>();                 //where will be all the interested lines found with BoofDC
 
-    List<Punto> puntosObj = new ArrayList<>();
-    List<Linea> lineasObj = new ArrayList<>();
+    List<Point> pointY = new ArrayList<>();                 //Y of all points, we differ then with the key
+    List<Point> pointX = new ArrayList<>();                 //X of all lines, we differ then with the key
 
-    int currentType;
-    List<Punto> puntoCotas = new ArrayList<>();
-    List<Punto> puntoAlejamientos = new ArrayList<>();
+    Line landLine;              //is the XY line. Is the intersection line between the vertical plane and the horizontal plane
+    List<Line> lineY = new ArrayList<>();                   //Y of all lines, we differ then with the key
+    List<Line> lineX = new ArrayList<>();                   //X of all lines, we differ then with the key
 
-    Linea lineaDeTierra;
-    List<Linea> lineaCota = new ArrayList<>();
-    List<Linea> lineaAlejamiento = new ArrayList<>();
-
-    List<Linea> planoCota = new ArrayList<>();
-    List<Linea> planoAlejamiento = new ArrayList<>();
+    List<Line> planeY = new ArrayList<>();                  //Y of all planes, we differ then with the key       PLANES ARE LINES BUT WE TREAT THEN LIKE PLANES
+    List<Line> planeX = new ArrayList<>();                  //X of all planes, we differ then with the key       PLANES ARE LINES BUT WE TREAT THEN LIKE PLANES
 
     int typeOfPoint = 0;             // 0 means Y, 1 means X
     int typeOfLine = 0;              // 0 means Y, 1 means X
     int numberOfPoint = 0;
     int numberOfLine = 0;
 
-    ArrayAdapter<String> menuPuntoArrayAdapter;
-    ArrayAdapter<String> menuLineaArrayAdapter;
+    ArrayAdapter<String> menuPointArrayAdapter;             //array adapter of all interesting points, where the user can choose the type(x of point or y of point) of the point
+    ArrayAdapter<String> menuLineArrayAdapter;              //array adapter of all interesting lines, where the user can choose the type(x of line, y of line, x of plane or y of plane) of the line
+
+    List<String> typeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,16 +82,16 @@ public class PreviewMenuActivity extends Activity{
         String originalFile = intent.getStringExtra("file");                                            //we receive te file of the picture
         file = "/storage/emulated/0/Android/data/io.github.acien101.diedricoto3d/files/pic2.jpg";
 
-        copyFile(originalFile, file);                                                                   //we have to copy the pic for modifying with BOOFCV
+        copyFile(originalFile, file);                                                                   //we have to copy the ImageView for modifying with BOOFCV
 
-        pic = (ImageView) findViewById(R.id.imagePreview);                                              //the ImageView
+        ImageView = (ImageView) findViewById(R.id.imagePreview);                                              //the ImageView
         bmImg = BitmapFactory.decodeFile(file);                                                         //We convert the file to Bitmap, for BoofCV
 
 
         seekBar = (SeekBar) findViewById(R.id.seekBar);                                                 //our SeekBar
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {                      //the listener for our SeekBar
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {            //we need to know the progress and then we modify our pic
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {            //we need to know the progress and then we modify our ImageView
                 radiousSeekBar = progress;
             }
 
@@ -103,33 +103,33 @@ public class PreviewMenuActivity extends Activity{
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
-                thresholding = new Thresholding(pic, radiousSeekBar);                                                   //We pass the image to a filter to where blacks are more blacks and whites more whites
+                thresholding = new Thresholding(ImageView, radiousSeekBar);                                                   //We pass the image to a filter to where blacks are more blacks and whites more whites
                 thresholding.execute(file);
             }
         });
 
-        nPuntos = (EditText) findViewById(R.id.nPuntos);                                                //The editText where the user specify the number of points
-        nLineas = (EditText) findViewById(R.id.nLineas);                                                //The editText where the user specify the number of lines
-        nPlanos = (EditText) findViewById(R.id.nPlanos);                                                //The editText where the user specify the number of planes
+        nPoints = (EditText) findViewById(R.id.nPuntos);                                                //The editText where the user specify the number of points
+        nLines = (EditText) findViewById(R.id.nLineas);                                                //The editText where the user specify the number of lines
+        nPlanes = (EditText) findViewById(R.id.nPlanos);                                                //The editText where the user specify the number of planes
 
         // array of colors
-        String colors[] = {"Linea de tierra", "punto 1"};
+        String colors[] = {"Line de tierra", "punto 1"};
 
-        //Set menuTipo to the view and then put an array
-        menuTipo = (Spinner) findViewById(R.id.menu_tipo);
+        //Set menuType to the view and then put an array
+        menuType = (Spinner) findViewById(R.id.menu_tipo);
         ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colors);
         menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        menuTipo.setAdapter(menuTipoArrayAdapter);
+        menuType.setAdapter(menuTipoArrayAdapter);
 
 
-        //Set menuNumero to the view and then put an array
-        menuNumero = (Spinner) findViewById(R.id.menu_numero);
+        //Set menuNumber to the view and then put an array
+        menuNumber = (Spinner) findViewById(R.id.menu_numero);
         ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colors);
         menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        menuNumero.setAdapter(menuNumeroArrayAdapter);
+        menuNumber.setAdapter(menuNumeroArrayAdapter);
 
 
-        //Set menuNumero to the view and then put an array
+        //Set menuNumber to the view and then put an array
         menuColor = (Spinner) findViewById(R.id.menu_color);
         ArrayAdapter<CharSequence> menuColorArrayAdapter = ArrayAdapter.createFromResource(this, R.array.colorsSpinner, android.R.layout.simple_spinner_item);
         menuColorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -150,159 +150,132 @@ public class PreviewMenuActivity extends Activity{
                 funcionCualquiera("analizar");
 
                 Bitmap picBM = thresholding.getPic();
-                asdf = new LineSegment(getApplicationContext(), pic, Integer.parseInt(nPuntos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), Integer.parseInt(nPlanos.getText().toString()), menuTipo, new LineSegment.AsyncResponse() {
+                lineSegment = new LineSegment(getApplicationContext(), ImageView, Integer.parseInt(nPoints.getText().toString()), Integer.parseInt(nPlanes.getText().toString()), Integer.parseInt(nPlanes.getText().toString()), menuType, new LineSegment.AsyncResponse() {
                     @Override
-                    public void processFinish(List<Punto> puntos, List<Linea> lineas, List<Double> planos) {
+                    public void processFinish(List<Point> points, List<Line> lines, List<Double> planos) {
 
-                        puntosObj = puntos;
-                        lineasObj = lineas;
+                        pointObj = points;          //we receive all the points found
+                        lineObj = lines;            //we receive all the lines found
 
-
-
-
-                        List<String> pointsForSpinner = new ArrayList<String>();
-                        for(int i = 0; i< puntos.size(); i ++){
-                            pointsForSpinner.add("Punto " + Integer.toString(i) + " X:" + Float.toString((float) puntosObj.get(i).getX()) + " Y:" + Float.toString((float) puntosObj.get(i).getY()));
-                            Log.i("puntos", "Punto " + Integer.toString(i) + " X:" + Double.toString(puntosObj.get(i).getX()) + " Y:" + Double.toString(puntosObj.get(i).getY()));
+                        List<String> pointsForSpinner = new ArrayList<String>();            //we put all the points to the Spinner
+                        for(int i = 0; i< points.size(); i ++){
+                            pointsForSpinner.add("Point " + Integer.toString(i) + " X:" + Float.toString((float) pointObj.get(i).getX()) + " Y:" + Float.toString((float) pointObj.get(i).getY()));
+                            Log.i("points", "Point " + Integer.toString(i) + " X:" + Double.toString(pointObj.get(i).getX()) + " Y:" + Double.toString(pointObj.get(i).getY()));
                         }
 
-                        List<String> linesForSpinner = new ArrayList<>();
-                        for(int i = 0; i < lineas.size(); i++){
-                            linesForSpinner.add("Linea " + Integer.toString(i) + " Xa: " + Float.toString((float) lineasObj.get(i).getXa()) + " Ya: " + Float.toString((float) lineasObj.get(i).getYa()) + " Xb: "  + Float.toString((float) lineasObj.get(i).getXb()) + " Yb: " + Float.toString((float) lineasObj.get(i).getYb()));
+                        List<String> linesForSpinner = new ArrayList<>();               //we put all the lines to the spinner
+                        for(int i = 0; i < lines.size(); i++){
+                            linesForSpinner.add("Line " + Integer.toString(i) + " Xa: " + Float.toString((float) lineObj.get(i).getXa()) + " Ya: " + Float.toString((float) lineObj.get(i).getYa()) + " Xb: "  + Float.toString((float) lineObj.get(i).getXb()) + " Yb: " + Float.toString((float) lineObj.get(i).getYb()));
                         }
 
 
+                        //the Adapter with the points
+                        menuPointArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
+                        menuPointArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                        menuPuntoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
-                        menuPuntoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        //the adapter with the lines
+                        menuLineArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, linesForSpinner);
+                        menuLineArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                        menuLineaArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, linesForSpinner);
-                        menuLineaArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        if(pointObj.size() >= (Integer.parseInt(nPoints.getText().toString())*2)){                 //we need to have equal or more points in nPoints and pointObj
+                            typeSpinner = new ArrayList<String>();                                       //We create a Spinner with the X's and Y's of points, lines and planes that we specificated in nPoints, nLines and nPlanes
 
+                            typeSpinner.add("Line de Tierra");
+                            landLine = lineObj.get(0);              //we need to put at least one landLines, later the user specify what line it is
 
-                        //Creamos la Spinner con los alejamientos y cotas que antes hemos indicado
-                        //We create firstPoint Spinner with the cotas(?) and alejamientos(?) that we early specificated
+                            for(int i =0; i< Integer.parseInt(nPoints.getText().toString()); i++){          //we put the points in the Spinner and we add to pointX or pointY
+                                typeSpinner.add("X point nº " + i);
+                                pointX.add(pointObj.get(((i * 2) + 1)));
 
-                        Log.i("puntosObj", Integer.toString(puntosObj.size()));
-                        Log.i("nPuntos", Integer.toString(Integer.parseInt(nPuntos.getText().toString()) * 2));
-
-
-
-                        if(puntosObj.size() >= (Integer.parseInt(nPuntos.getText().toString())*2)){                 //we need to have equal or more points in nPuntos and puntosObj
-                            List<String> puntosSpinner = new ArrayList<String>();
-
-                            puntosSpinner.add("Linea de Tierra");
-                            lineaDeTierra = lineasObj.get(0);              //we need to put at least one (Linea de tierra), later we specify what line it is
-
-                            for(int i =0; i< Integer.parseInt(nPuntos.getText().toString()); i++){
-                                puntosSpinner.add("Cota punto nº " + i);
-                                puntoCotas.add(puntosObj.get((i * 2)));
-                                puntosSpinner.add("Alejamiento punto nº " + i);
-                                puntoAlejamientos.add(puntosObj.get(((i * 2) + 1)));
+                                typeSpinner.add("Y point nº " + i);
+                                pointY.add(pointObj.get((i * 2)));
 
                             }
 
-                            for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i++){
-                                puntosSpinner.add("Cota linea " + i);
-                                lineaCota.add(lineasObj.get((i*2)+1));          //we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
+                            for(int i = 0; i < Integer.parseInt(nLines.getText().toString()); i++){         //we put the lines in the Spinner and we add to lineX or lineY
+                                typeSpinner.add("X line " + i);//we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
+                                lineX.add(lineObj.get((i * 2) + 2));
 
-                                puntosSpinner.add("Alejamiento linea " + i);
-                                lineaAlejamiento.add(lineasObj.get((i*2)+2));
+                                typeSpinner.add("Y line " + i);
+                                lineY.add(lineObj.get((i * 2) + 1));          //we need to put at least one, later we specify what line it is, in the second spinner. It needs to be increase by one, becase before we put the linea de tierra
+
                             }
 
-                            int currentLinesAdded = Integer.parseInt(nLineas.getText().toString())*2;
+                            int currentLinesAdded = Integer.parseInt(nLines.getText().toString())*2;            //we need to know how many lines we added for matching the planes(they are also lines but treated like planes)
 
-                            for(int i = 0; i < Integer.parseInt(nPlanos.getText().toString()); i++){
-                                puntosSpinner.add("Cota plano " + i);
-                                planoCota.add(lineasObj.get((i*2) + currentLinesAdded + 1));
+                            for(int i = 0; i < Integer.parseInt(nPlanes.getText().toString()); i++){            //we put the planes in the Spinner and we add to planeX or planeY
+                                typeSpinner.add("Alejamiento plano " + i);
+                                planeX.add(lineObj.get((i * 2) + currentLinesAdded + 2));
 
-                                puntosSpinner.add("Alejamiento plano " + i);
-                                planoAlejamiento.add(lineasObj.get((i*2) + currentLinesAdded +2));
+                                typeSpinner.add("Cota plano " + i);
+                                planeY.add(lineObj.get((i * 2) + currentLinesAdded + 1));
                             }
 
 
-                            //Is needed for ListenPoint
-                            final Bitmap transformationBM;
-
-                            ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, puntosSpinner);
+                            ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, typeSpinner);           //we create the adapter for menuType Spinner with typeSpinner
                             menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                            menuTipo.setAdapter(menuTipoArrayAdapter);
-                            menuTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            menuType.setAdapter(menuTipoArrayAdapter);
+                            menuType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {                           //listener of menuType
                                 @Override
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                    Log.i("info", "Toco " + position);
-                                    currentType = position;
-                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 == 0){                        //if it is firstPoint cota(?) of firstPoint point
-                                        menuNumero.setAdapter(menuPuntoArrayAdapter);
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoCotas.get((position - Integer.parseInt(nLineas.getText().toString())) / 2)));
-                                        Log.i("INFO", "COTA PUNTO");
-                                        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoCotas.get((position - 1)/2));
+                                    if ((position - 1) >= 0 && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - 1) % 2 == 0) {                        //if it the Y of a point
+                                        menuNumber.setAdapter(menuPointArrayAdapter);                                       //we put menuNumber with the interesting points
+                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(pointY.get((position - Integer.parseInt(nLines.getText().toString())) / 2)));            //we set the listener
+                                        new ListenPoint(ImageView, Bitmap.createBitmap(lineSegment.getPic()), pointY.get((position - 1) / 2));                                  // we change the color of the point that was selected in pointY
 
-                                        typeOfPoint = 0;                //what type it is, for later with the other spinner specify the point
-                                        numberOfPoint = (position - 1)/2;          //what number of point it is
+                                        typeOfPoint = 0;                                                                    //what type it is, for later with the other spinner specify the point
+                                        numberOfPoint = (position - 1) / 2;                                                  //what number of point it is
                                     }
-                                    if((position - 1) >= 0 && position < ((Integer.parseInt(nPuntos.getText().toString())*2)+1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - 1)%2 != 0) {
-                                        menuNumero.setAdapter(menuPuntoArrayAdapter);// if it is firstPoint puntoAlejamientos(?) of firstPoint point
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(puntoAlejamientos.get((position - 1)/2)));
-                                        Log.i("INFO", "ALEJAMIENTO PUNTO");
-                                        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntoAlejamientos.get((position - 1)/2));
+                                    if ((position - 1) >= 0 && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - 1) % 2 != 0) {                       //if it is the X of a point
+                                        menuNumber.setAdapter(menuPointArrayAdapter);                  //we put menuNumber with the interesting points
+                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(pointX.get((position - 1) / 2)));                //we set the listener
+                                        new ListenPoint(ImageView, Bitmap.createBitmap(lineSegment.getPic()), pointX.get((position - 1) / 2));                  // we change the color of the point that was selected in pointX
 
                                         typeOfPoint = 1;            //what type it is, for later with the other spinner specify the point
-                                        numberOfPoint = (position - 1)/2;          //what number of point it is
+                                        numberOfPoint = (position - 1) / 2;          //what number of point it is
                                     }
-                                    if(position == 0){
-                                        Log.i("INFO", "LINEA TIERRA");
+                                    if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - (Integer.parseInt(nPoints.getText().toString()) * 2) + 1) % 2 == 0) {           //It the Y of a line
+                                        menuNumber.setAdapter(menuLineArrayAdapter);
+                                        menuNumber.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());                       //we set the listener
+                                        new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineY.get((position - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));               // we change the color of the line that was selected in lineY
 
-                                        menuNumero.setAdapter(menuLineaArrayAdapter);
-
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineaDeTierraSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaDeTierra);
+                                        typeOfLine = 0;             //what type it is, for later with the other spinner specify the line
+                                        numberOfLine = (position - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2;
                                     }
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 == 0){           //It the cota of firstPoint line
-                                        menuNumero.setAdapter(menuLineaArrayAdapter);
+                                    if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - (Integer.parseInt(nPoints.getText().toString()) * 2) + 1) % 2 != 0) {             //It is the X of a line
+                                        menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaCota.get((position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
+                                        menuNumber.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());                   //we set the listener
+                                        new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineX.get((position - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));               // we change the color of the line that was selected in lineX
 
-                                        typeOfLine = 0;
-                                        numberOfLine = (position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
-
-                                        Log.i("INFO", "COTA LINEA");
-                                    }
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + 1) && position < ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (position - (Integer.parseInt(nPuntos.getText().toString())*2)+1)%2 != 0){             //It is le alejemiento of firstPoint Line
-                                        menuNumero.setAdapter(menuLineaArrayAdapter);
-
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineaAlejamiento.get((position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
-
-                                        typeOfLine = 1;
-                                        numberOfLine = (position - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
-
-                                        Log.i("INFO", "ALEJAMIENTO LINEA");
+                                        typeOfLine = 1;         //what type it is, for later with the other spinner specify the line
+                                        numberOfLine = (position - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2;
                                     }
 
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 == 0))){                   //if it is the cota of firstPoint plano
-                                        menuNumero.setAdapter(menuLineaArrayAdapter);
+                                    if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (((position - ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1)) % 2 == 0))) {                   //if it is the Y of a plane
+                                        menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoCota.get((position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
+                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());              //we set the listener
+                                        new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), planeY.get((position - ((Integer.parseInt(nLines.getText().toString())) * 2) - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));          // we change the color of the line that was selected in planeY
 
-                                        typeOfLine = 0;
-                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
-
-                                        Log.i("INFO", "COTA PLANO");
+                                        typeOfLine = 0;                     //what type it is, for later with the other spinner specify the line
+                                        numberOfLine = (position - ((Integer.parseInt(nLines.getText().toString())) * 2) - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2;
                                     }
 
-                                    if(position >= ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) + 1) && (((position - ((Integer.parseInt(nPuntos.getText().toString())*2) + (Integer.parseInt(nLineas.getText().toString())*2) +1))%2 != 0))){                   //if it is the cota of firstPoint plano
-                                        menuNumero.setAdapter(menuLineaArrayAdapter);
+                                    if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (((position - ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1)) % 2 != 0))) {                   //if it is the X of a plane
+                                        menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        menuNumero.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());
-                                        new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), planoAlejamiento.get((position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2));
+                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());              //we set the listener
+                                        new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), planeX.get((position - ((Integer.parseInt(nLines.getText().toString())) * 2) - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));          // we change the color of the line that was selected in planeX
 
-                                        typeOfLine = 1;
-                                        numberOfLine = (position - ((Integer.parseInt(nLineas.getText().toString()))*2) - ((Integer.parseInt(nPuntos.getText().toString()))*2) - 1)/2;
+                                        typeOfLine = 1;                 //what type it is, for later with the other spinner specify the line
+                                        numberOfLine = (position - ((Integer.parseInt(nLines.getText().toString())) * 2) - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2;
+                                    }
+                                    if (position == 0) {                //If it is the landLine
+                                        menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        Log.i("INFO", "ALEJAMIENTO PLANO");
+                                        menuNumber.setOnItemSelectedListener(onMenuNumeroLineaDeTierraSelectedListener());          //set the listener
+                                        new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), landLine);                  // we change the color of the landLine
                                     }
                                 }
 
@@ -312,14 +285,14 @@ public class PreviewMenuActivity extends Activity{
                                 }
                             });
                         }
-                        else{                   //if we have less points on nPuntos than puntosObj we need to retry the scan
+                        else{                   //if we have less points on nPoints than pointObj we need to retry the scan
 
-                            Toast.makeText(getApplicationContext(), "No se han encontrado tantos resultado, vuelve firstPoint intentarlo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "We haven't found many points", Toast.LENGTH_SHORT).show();
 
                         }
                     }
                 });
-                asdf.execute(picBM);
+                lineSegment.execute(picBM);
 
                 return true;
             }
@@ -341,57 +314,53 @@ public class PreviewMenuActivity extends Activity{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                ArrayList<PuntoVector> puntoVectors = new ArrayList<PuntoVector>();
-                for(int i = 0; i < Integer.parseInt(nPuntos.getText().toString()); i++){
-                    Vector AB = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaDeTierra.getXb(), lineaDeTierra.getYb()));
-                    Vector AC = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(puntoCotas.get(i).getX(), puntoCotas.get(i).getY()));
-                    Vector AD = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(puntoAlejamientos.get(i).getX(), puntoAlejamientos.get(i).getY()));
+                ArrayList<PointVector> pointVectors = new ArrayList<PointVector>();       //we pass the points to PointVector to know his X, his Y and his Z
+                for(int i = 0; i < Integer.parseInt(nPoints.getText().toString()); i++){
+                    Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
+                    Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(pointY.get(i).getX(), pointY.get(i).getY()));
+                    Vector AD = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(pointX.get(i).getX(), pointX.get(i).getY()));
                     ScalarProduct scalarProductForCota = new ScalarProduct(AB, AC);
                     ScalarProduct scalarProductForAlejamiento = new ScalarProduct(AB, AD);
-                    puntoVectors.add(new PuntoVector(scalarProductForCota.getHeight()/AB.getModule(), scalarProductForAlejamiento.getHeight()/AB.getModule(), scalarProductForCota.getLength()/AB.getModule()));
-
-                    Log.i("DATA", "Cota " + i + " :" + Double.toString(puntoVectors.get(i).getCota()));
-                    Log.i("DATA", "Alejamiento " + i + " :" + Double.toString(puntoVectors.get(i).getAlejamiento()));
-                    Log.i("DATA", "Distancia " + i + " :" + Double.toString(puntoVectors.get(i).getDistancia()));
+                    pointVectors.add(new PointVector(scalarProductForCota.getHeight() / AB.getModule(), scalarProductForAlejamiento.getHeight() / AB.getModule(), scalarProductForCota.getLength() / AB.getModule()));
                 }
 
 
 
 
-                ArrayList<LineaVector> lineaVectors = new ArrayList<LineaVector>();
-                for(int i = 0; i < Integer.parseInt(nLineas.getText().toString()); i ++){
-                    Vector AB = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaDeTierra.getXb(), lineaDeTierra.getYb()));
-                    Vector AC = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaCota.get(i).getXa(), lineaCota.get(i).getYa()));
-                    Vector AD = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaAlejamiento.get(i).getXa(), lineaAlejamiento.get(i).getYa()));
-                    Vector AE = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaCota.get(i).getXb(), lineaCota.get(i).getYb()));
-                    Vector AF = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaAlejamiento.get(i).getXb(), lineaAlejamiento.get(i).getYb()));
+                ArrayList<LineVector> lineVectors = new ArrayList<LineVector>();        //we pass the lines to PointVector to know his X, his Y and his Z
+                for(int i = 0; i < Integer.parseInt(nLines.getText().toString()); i ++){
+                    Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
+                    Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(lineY.get(i).getXa(), lineY.get(i).getYa()));
+                    Vector AD = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(lineX.get(i).getXa(), lineX.get(i).getYa()));
+                    Vector AE = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(lineY.get(i).getXb(), lineY.get(i).getYb()));
+                    Vector AF = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(lineX.get(i).getXb(), lineX.get(i).getYb()));
 
                     ScalarProduct scalarProductCotaA = new ScalarProduct(AB, AC);
                     ScalarProduct scalarProductAlejamientoA = new ScalarProduct(AB, AD);
                     ScalarProduct scalarProductCotaB = new ScalarProduct(AB, AE);
                     ScalarProduct scalarProductAlejamientoB = new ScalarProduct(AB, AF);
-                    lineaVectors.add(new LineaVector((float)(scalarProductCotaA.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoA.getHeight()/AB.getModule()), (float)(scalarProductCotaA.getLength()/AB.getModule()), (float)(scalarProductCotaB.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoB.getHeight()/AB.getModule()), (float)(scalarProductCotaB.getLength()/AB.getModule())));
+                    lineVectors.add(new LineVector((float)(scalarProductCotaA.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoA.getHeight()/AB.getModule()), (float)(scalarProductCotaA.getLength()/AB.getModule()), (float)(scalarProductCotaB.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoB.getHeight()/AB.getModule()), (float)(scalarProductCotaB.getLength()/AB.getModule())));
                 }
 
-                ArrayList<PlanoVector> planoVectors = new ArrayList<PlanoVector>();
-                for(int i = 0; i < Integer.parseInt(nPlanos.getText().toString()); i++){
-                    Vector AB = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(lineaDeTierra.getXb(), lineaDeTierra.getYb()));
-                    Vector AC = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(planoCota.get(i).getXa(), planoCota.get(i).getYa()));
-                    Vector AD = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(planoCota.get(i).getXb(), planoCota.get(i).getYb()));
-                    Vector AE = new Vector(new Punto(lineaDeTierra.getXa(), lineaDeTierra.getYa()), new Punto(planoAlejamiento.get(i).getXb(), planoAlejamiento.get(i).getYb()));
+                ArrayList<PlaneVector> planeVectors = new ArrayList<PlaneVector>();         //we pass the planes to PointVector to know his X, his Y and his Z
+                for(int i = 0; i < Integer.parseInt(nPlanes.getText().toString()); i++){
+                    Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
+                    Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeY.get(i).getXa(), planeY.get(i).getYa()));
+                    Vector AD = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeY.get(i).getXb(), planeY.get(i).getYb()));
+                    Vector AE = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeX.get(i).getXb(), planeX.get(i).getYb()));
 
                     ScalarProduct scalarProductPlanoOrigen = new ScalarProduct(AB, AC);
                     ScalarProduct scalarProductCota = new ScalarProduct(AB, AD);
                     ScalarProduct scalarProductAlejamiento = new ScalarProduct(AB, AE);
-                    planoVectors.add(new PlanoVector((float)(scalarProductPlanoOrigen.getLength()/AB.getModule()), (float)(scalarProductCota.getHeight()/AB.getModule()), (float)(scalarProductAlejamiento.getHeight()/AB.getModule()), (float)(scalarProductCota.getLength()/AB.getModule())));
+                    planeVectors.add(new PlaneVector((float)(scalarProductPlanoOrigen.getLength()/AB.getModule()), (float)(scalarProductCota.getHeight()/AB.getModule()), (float)(scalarProductAlejamiento.getHeight()/AB.getModule()), (float)(scalarProductCota.getLength()/AB.getModule())));
                 }
 
-                Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);
-                intent.putParcelableArrayListExtra("vector", puntoVectors);
-                intent.putParcelableArrayListExtra("lines", lineaVectors);
-                intent.putParcelableArrayListExtra("planos", planoVectors);
+                Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);              //we pass the vector to OpenGL
+                intent.putParcelableArrayListExtra("vector", pointVectors);
+                intent.putParcelableArrayListExtra("lines", lineVectors);
+                intent.putParcelableArrayListExtra("planos", planeVectors);
 
-                Log.i("send", Integer.toString(puntoVectors.size()));
+                Log.i("send", Integer.toString(pointVectors.size()));
 
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -420,27 +389,23 @@ public class PreviewMenuActivity extends Activity{
         Log.i("menuPreview", mensaje);
     }
 
-    AdapterView.OnItemSelectedListener onMenuNumeroPointSelectedListener(Punto selectedPoint) {
+    AdapterView.OnItemSelectedListener onMenuNumeroPointSelectedListener(Point selectedPoint) {
 
-        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int contador = 0;
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o pointX), with this way we specify what point is it
                 if(contador != 0) {                         //when we create the listener, it activates alone. This don't let him!!
                     Log.i("INFO", "TOCADOO MENUNUMERO");
-                    new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), puntosObj.get(position));
+                    new ListenPoint(ImageView, Bitmap.createBitmap(lineSegment.getPic()), pointObj.get(position));
 
-                    if (typeOfPoint == 0) {           //the point we selected is firstPoint cota(?)
+                    if (typeOfPoint == 0) {           //the point we selected is a Y
+                        pointY.remove(numberOfPoint);
+                        pointY.add(numberOfPoint, pointObj.get(position));
 
-                        Punto necessaryPoint = puntosObj.get(position);
-                        puntoCotas.remove(numberOfPoint);
-                        puntoCotas.add(numberOfPoint, puntosObj.get(position));
-
-                    } else {                               //the point we selected is firstPoint puntoAlejamientos(?)
-
-                        Punto necessaryPoint = puntosObj.get(position);
-                        puntoAlejamientos.remove(numberOfPoint);
-                        puntoAlejamientos.add(numberOfPoint, puntosObj.get(position));
+                    } else {                               //the point we selected is a X
+                        pointX.remove(numberOfPoint);
+                        pointX.add(numberOfPoint, pointObj.get(position));
 
                     }
                 }
@@ -453,27 +418,26 @@ public class PreviewMenuActivity extends Activity{
             }
         });
 
-        new ListenPoint(pic, Bitmap.createBitmap(asdf.getPic()), selectedPoint);
-        return menuNumero.getOnItemSelectedListener();
+        new ListenPoint(ImageView, Bitmap.createBitmap(lineSegment.getPic()), selectedPoint);
+        return menuNumber.getOnItemSelectedListener();
 
     }
 
     AdapterView.OnItemSelectedListener onMenuNumeroLineSelectedListener() {
-        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int contador = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
-                if(contador != 0) {
-                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Y o X), with this way we specify what point is it
+                if (contador != 0) {
+                    new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineObj.get(position));
 
-                    if(typeOfLine == 0){                //the line we selected is firstPoint cota
-                        lineaCota.remove(numberOfLine);
-                        lineaCota.add(numberOfLine, lineasObj.get(position));
-                    }
-                    else{                               //the line we selected is firstPoint alejamiento
-                        lineaAlejamiento.remove(numberOfLine);
-                        lineaAlejamiento.add(numberOfLine, lineasObj.get(position));
+                    if (typeOfLine == 0) {                //the line we selected is a Y
+                        lineY.remove(numberOfLine);
+                        lineY.add(numberOfLine, lineObj.get(position));
+                    } else {                               //the line we selected is a X
+                        lineX.remove(numberOfLine);
+                        lineX.add(numberOfLine, lineObj.get(position));
                     }
                 }
                 contador++;
@@ -485,25 +449,24 @@ public class PreviewMenuActivity extends Activity{
             }
         });
 
-        return menuNumero.getOnItemSelectedListener();
+        return menuNumber.getOnItemSelectedListener();
     }
 
     AdapterView.OnItemSelectedListener onMenuNumeroPlanoSelectedListener() {
-        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int contador = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
-                if(contador != 0) {
-                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Y o X), with this way we specify what point is it
+                if (contador != 0) {
+                    new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineObj.get(position));
 
-                    if(typeOfLine == 0){                //the line of the plano we selected is firstPoint cota
-                        planoCota.remove(numberOfLine);
-                        planoCota.add(numberOfLine, lineasObj.get(position));
-                    }
-                    else{                               //the line we selected is firstPoint alejamiento
-                        planoAlejamiento.remove(numberOfLine);
-                        planoAlejamiento.add(numberOfLine, lineasObj.get(position));
+                    if (typeOfLine == 0) {                //the line of the plano we selected is firstPoint cota
+                        planeY.remove(numberOfLine);
+                        planeY.add(numberOfLine, lineObj.get(position));
+                    } else {                               //the line we selected is firstPoint alejamiento
+                        planeX.remove(numberOfLine);
+                        planeX.add(numberOfLine, lineObj.get(position));
                     }
                 }
                 contador++;
@@ -515,19 +478,19 @@ public class PreviewMenuActivity extends Activity{
             }
         });
 
-        return menuNumero.getOnItemSelectedListener();
+        return menuNumber.getOnItemSelectedListener();
     }
 
     AdapterView.OnItemSelectedListener onMenuNumeroLineaDeTierraSelectedListener() {
-        menuNumero.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             int contador = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o puntoAlejamientos), with this way we specify what point is it
-                if(contador != 0) {
-                    new ListenLine(pic, Bitmap.createBitmap(asdf.getPic()), lineasObj.get(position));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o pointX), with this way we specify what point is it
+                if (contador != 0) {
+                    new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineObj.get(position));
 
-                    lineaDeTierra = lineasObj.get(position);
+                    landLine = lineObj.get(position);
                 }
                 contador++;
             }
@@ -538,7 +501,7 @@ public class PreviewMenuActivity extends Activity{
             }
         });
 
-        return menuNumero.getOnItemSelectedListener();
+        return menuNumber.getOnItemSelectedListener();
     }
 
     private void copyFile(String inputFile, String outputPath) {
