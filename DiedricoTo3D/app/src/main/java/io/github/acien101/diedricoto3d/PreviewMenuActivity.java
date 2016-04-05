@@ -108,12 +108,12 @@ public class PreviewMenuActivity extends Activity{
             }
         });
 
-        nPoints = (EditText) findViewById(R.id.nPuntos);                                                //The editText where the user specify the number of points
-        nLines = (EditText) findViewById(R.id.nLineas);                                                //The editText where the user specify the number of lines
-        nPlanes = (EditText) findViewById(R.id.nPlanos);                                                //The editText where the user specify the number of planes
+        nPoints = (EditText) findViewById(R.id.nPoints);                                                //The editText where the user specify the number of points
+        nLines = (EditText) findViewById(R.id.nLines);                                                //The editText where the user specify the number of lines
+        nPlanes = (EditText) findViewById(R.id.nPlanes);                                                //The editText where the user specify the number of planes
 
-        // array of colors
-        String colors[] = {"Line de tierra", "punto 1"};
+        //array of color
+        String colors[] = {"Red", "Green", "Blue"};
 
         //Set menuType to the view and then put an array
         menuType = (Spinner) findViewById(R.id.menu_tipo);
@@ -147,12 +147,10 @@ public class PreviewMenuActivity extends Activity{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                funcionCualquiera("analizar");
-
                 Bitmap picBM = thresholding.getPic();
                 lineSegment = new LineSegment(getApplicationContext(), ImageView, Integer.parseInt(nPoints.getText().toString()), Integer.parseInt(nPlanes.getText().toString()), Integer.parseInt(nPlanes.getText().toString()), menuType, new LineSegment.AsyncResponse() {
                     @Override
-                    public void processFinish(List<Point> points, List<Line> lines, List<Double> planos) {
+                    public void processFinish(List<Point> points, List<Line> lines, List<Double> planes) {
 
                         pointObj = points;          //we receive all the points found
                         lineObj = lines;            //we receive all the lines found
@@ -180,7 +178,7 @@ public class PreviewMenuActivity extends Activity{
                         if(pointObj.size() >= (Integer.parseInt(nPoints.getText().toString())*2)){                 //we need to have equal or more points in nPoints and pointObj
                             typeSpinner = new ArrayList<String>();                                       //We create a Spinner with the X's and Y's of points, lines and planes that we specificated in nPoints, nLines and nPlanes
 
-                            typeSpinner.add("Line de Tierra");
+                            typeSpinner.add("Land Line");
                             landLine = lineObj.get(0);              //we need to put at least one landLines, later the user specify what line it is
 
                             for(int i =0; i< Integer.parseInt(nPoints.getText().toString()); i++){          //we put the points in the Spinner and we add to pointX or pointY
@@ -204,10 +202,10 @@ public class PreviewMenuActivity extends Activity{
                             int currentLinesAdded = Integer.parseInt(nLines.getText().toString())*2;            //we need to know how many lines we added for matching the planes(they are also lines but treated like planes)
 
                             for(int i = 0; i < Integer.parseInt(nPlanes.getText().toString()); i++){            //we put the planes in the Spinner and we add to planeX or planeY
-                                typeSpinner.add("Alejamiento plano " + i);
+                                typeSpinner.add("X plane " + i);
                                 planeX.add(lineObj.get((i * 2) + currentLinesAdded + 2));
 
-                                typeSpinner.add("Cota plano " + i);
+                                typeSpinner.add("Y plane " + i);
                                 planeY.add(lineObj.get((i * 2) + currentLinesAdded + 1));
                             }
 
@@ -220,7 +218,7 @@ public class PreviewMenuActivity extends Activity{
                                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                     if ((position - 1) >= 0 && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - 1) % 2 == 0) {                        //if it the Y of a point
                                         menuNumber.setAdapter(menuPointArrayAdapter);                                       //we put menuNumber with the interesting points
-                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(pointY.get((position - Integer.parseInt(nLines.getText().toString())) / 2)));            //we set the listener
+                                        menuNumber.setOnItemSelectedListener(onMenuNumberPointSelectedListener(pointY.get((position - Integer.parseInt(nLines.getText().toString())) / 2)));            //we set the listener
                                         new ListenPoint(ImageView, Bitmap.createBitmap(lineSegment.getPic()), pointY.get((position - 1) / 2));                                  // we change the color of the point that was selected in pointY
 
                                         typeOfPoint = 0;                                                                    //what type it is, for later with the other spinner specify the point
@@ -228,7 +226,7 @@ public class PreviewMenuActivity extends Activity{
                                     }
                                     if ((position - 1) >= 0 && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - 1) % 2 != 0) {                       //if it is the X of a point
                                         menuNumber.setAdapter(menuPointArrayAdapter);                  //we put menuNumber with the interesting points
-                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPointSelectedListener(pointX.get((position - 1) / 2)));                //we set the listener
+                                        menuNumber.setOnItemSelectedListener(onMenuNumberPointSelectedListener(pointX.get((position - 1) / 2)));                //we set the listener
                                         new ListenPoint(ImageView, Bitmap.createBitmap(lineSegment.getPic()), pointX.get((position - 1) / 2));                  // we change the color of the point that was selected in pointX
 
                                         typeOfPoint = 1;            //what type it is, for later with the other spinner specify the point
@@ -236,7 +234,7 @@ public class PreviewMenuActivity extends Activity{
                                     }
                                     if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - (Integer.parseInt(nPoints.getText().toString()) * 2) + 1) % 2 == 0) {           //It the Y of a line
                                         menuNumber.setAdapter(menuLineArrayAdapter);
-                                        menuNumber.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());                       //we set the listener
+                                        menuNumber.setOnItemSelectedListener(onMenuNumberLineSelectedListener());                       //we set the listener
                                         new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineY.get((position - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));               // we change the color of the line that was selected in lineY
 
                                         typeOfLine = 0;             //what type it is, for later with the other spinner specify the line
@@ -245,7 +243,7 @@ public class PreviewMenuActivity extends Activity{
                                     if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + 1) && position < ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (position - (Integer.parseInt(nPoints.getText().toString()) * 2) + 1) % 2 != 0) {             //It is the X of a line
                                         menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        menuNumber.setOnItemSelectedListener(onMenuNumeroLineSelectedListener());                   //we set the listener
+                                        menuNumber.setOnItemSelectedListener(onMenuNumberLineSelectedListener());                   //we set the listener
                                         new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineX.get((position - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));               // we change the color of the line that was selected in lineX
 
                                         typeOfLine = 1;         //what type it is, for later with the other spinner specify the line
@@ -255,7 +253,7 @@ public class PreviewMenuActivity extends Activity{
                                     if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (((position - ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1)) % 2 == 0))) {                   //if it is the Y of a plane
                                         menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());              //we set the listener
+                                        menuNumber.setOnItemSelectedListener(onMenuNumberPlaneSelecterListener());              //we set the listener
                                         new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), planeY.get((position - ((Integer.parseInt(nLines.getText().toString())) * 2) - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));          // we change the color of the line that was selected in planeY
 
                                         typeOfLine = 0;                     //what type it is, for later with the other spinner specify the line
@@ -265,7 +263,7 @@ public class PreviewMenuActivity extends Activity{
                                     if (position >= ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1) && (((position - ((Integer.parseInt(nPoints.getText().toString()) * 2) + (Integer.parseInt(nLines.getText().toString()) * 2) + 1)) % 2 != 0))) {                   //if it is the X of a plane
                                         menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        menuNumber.setOnItemSelectedListener(onMenuNumeroPlanoSelectedListener());              //we set the listener
+                                        menuNumber.setOnItemSelectedListener(onMenuNumberPlaneSelecterListener());              //we set the listener
                                         new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), planeX.get((position - ((Integer.parseInt(nLines.getText().toString())) * 2) - ((Integer.parseInt(nPoints.getText().toString())) * 2) - 1) / 2));          // we change the color of the line that was selected in planeX
 
                                         typeOfLine = 1;                 //what type it is, for later with the other spinner specify the line
@@ -274,7 +272,7 @@ public class PreviewMenuActivity extends Activity{
                                     if (position == 0) {                //If it is the landLine
                                         menuNumber.setAdapter(menuLineArrayAdapter);
 
-                                        menuNumber.setOnItemSelectedListener(onMenuNumeroLineaDeTierraSelectedListener());          //set the listener
+                                        menuNumber.setOnItemSelectedListener(onMenuNumberLandLineSelectedListener());          //set the listener
                                         new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), landLine);                  // we change the color of the landLine
                                     }
                                 }
@@ -302,9 +300,6 @@ public class PreviewMenuActivity extends Activity{
         info.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
-                funcionCualquiera("info");
-
                 return true;
             }
         });
@@ -319,9 +314,10 @@ public class PreviewMenuActivity extends Activity{
                     Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
                     Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(pointY.get(i).getX(), pointY.get(i).getY()));
                     Vector AD = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(pointX.get(i).getX(), pointX.get(i).getY()));
-                    ScalarProduct scalarProductForCota = new ScalarProduct(AB, AC);
-                    ScalarProduct scalarProductForAlejamiento = new ScalarProduct(AB, AD);
-                    pointVectors.add(new PointVector(scalarProductForCota.getHeight() / AB.getModule(), scalarProductForAlejamiento.getHeight() / AB.getModule(), scalarProductForCota.getLength() / AB.getModule()));
+                    ScalarProduct scalarProductForX = new ScalarProduct(AB, AD);
+                    ScalarProduct scalarProductForY = new ScalarProduct(AB, AC);
+
+                    pointVectors.add(new PointVector(scalarProductForY.getHeight() / AB.getModule(), scalarProductForX.getHeight() / AB.getModule(), scalarProductForY.getLength() / AB.getModule()));
                 }
 
 
@@ -335,11 +331,12 @@ public class PreviewMenuActivity extends Activity{
                     Vector AE = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(lineY.get(i).getXb(), lineY.get(i).getYb()));
                     Vector AF = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(lineX.get(i).getXb(), lineX.get(i).getYb()));
 
-                    ScalarProduct scalarProductCotaA = new ScalarProduct(AB, AC);
-                    ScalarProduct scalarProductAlejamientoA = new ScalarProduct(AB, AD);
-                    ScalarProduct scalarProductCotaB = new ScalarProduct(AB, AE);
-                    ScalarProduct scalarProductAlejamientoB = new ScalarProduct(AB, AF);
-                    lineVectors.add(new LineVector((float)(scalarProductCotaA.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoA.getHeight()/AB.getModule()), (float)(scalarProductCotaA.getLength()/AB.getModule()), (float)(scalarProductCotaB.getHeight()/AB.getModule()), (float)(scalarProductAlejamientoB.getHeight()/AB.getModule()), (float)(scalarProductCotaB.getLength()/AB.getModule())));
+                    ScalarProduct scalarProductXA = new ScalarProduct(AB, AD);
+                    ScalarProduct scalarProductYA = new ScalarProduct(AB, AC);
+                    ScalarProduct scalarProductXB = new ScalarProduct(AB, AF);
+                    ScalarProduct scalarProductYB = new ScalarProduct(AB, AE);
+
+                    lineVectors.add(new LineVector((float)(scalarProductYA.getHeight()/AB.getModule()), (float)(scalarProductXA.getHeight()/AB.getModule()), (float)(scalarProductYA.getLength()/AB.getModule()), (float)(scalarProductYB.getHeight()/AB.getModule()), (float)(scalarProductXB.getHeight()/AB.getModule()), (float)(scalarProductYB.getLength()/AB.getModule())));
                 }
 
                 ArrayList<PlaneVector> planeVectors = new ArrayList<PlaneVector>();         //we pass the planes to PointVector to know his X, his Y and his Z
@@ -349,18 +346,16 @@ public class PreviewMenuActivity extends Activity{
                     Vector AD = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeY.get(i).getXb(), planeY.get(i).getYb()));
                     Vector AE = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeX.get(i).getXb(), planeX.get(i).getYb()));
 
-                    ScalarProduct scalarProductPlanoOrigen = new ScalarProduct(AB, AC);
-                    ScalarProduct scalarProductCota = new ScalarProduct(AB, AD);
-                    ScalarProduct scalarProductAlejamiento = new ScalarProduct(AB, AE);
-                    planeVectors.add(new PlaneVector((float)(scalarProductPlanoOrigen.getLength()/AB.getModule()), (float)(scalarProductCota.getHeight()/AB.getModule()), (float)(scalarProductAlejamiento.getHeight()/AB.getModule()), (float)(scalarProductCota.getLength()/AB.getModule())));
+                    ScalarProduct scalarProductBeginningPlane = new ScalarProduct(AB, AC);
+                    ScalarProduct scalarProductX = new ScalarProduct(AB, AE);
+                    ScalarProduct scalarProductY = new ScalarProduct(AB, AD);
+                    planeVectors.add(new PlaneVector((float)(scalarProductBeginningPlane.getLength()/AB.getModule()), (float)(scalarProductY.getHeight()/AB.getModule()), (float)(scalarProductX.getHeight()/AB.getModule()), (float)(scalarProductY.getLength()/AB.getModule())));
                 }
 
                 Intent intent = new Intent(getApplicationContext(), OpenGlActivity.class);              //we pass the vector to OpenGL
-                intent.putParcelableArrayListExtra("vector", pointVectors);
+                intent.putParcelableArrayListExtra("points", pointVectors);
                 intent.putParcelableArrayListExtra("lines", lineVectors);
-                intent.putParcelableArrayListExtra("planos", planeVectors);
-
-                Log.i("send", Integer.toString(pointVectors.size()));
+                intent.putParcelableArrayListExtra("planes", planeVectors);
 
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -377,7 +372,7 @@ public class PreviewMenuActivity extends Activity{
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify firstPoint parent activity in AndroidManifest.xml.
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
 
@@ -385,18 +380,13 @@ public class PreviewMenuActivity extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
-    void funcionCualquiera(String mensaje){
-        Log.i("menuPreview", mensaje);
-    }
-
-    AdapterView.OnItemSelectedListener onMenuNumeroPointSelectedListener(Point selectedPoint) {
+    AdapterView.OnItemSelectedListener onMenuNumberPointSelectedListener(Point selectedPoint) {
 
         menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            int contador = 0;
+            int counter = 0;
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o pointX), with this way we specify what point is it
-                if(contador != 0) {                         //when we create the listener, it activates alone. This don't let him!!
-                    Log.i("INFO", "TOCADOO MENUNUMERO");
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (X or Y), with this way we specify what point is it
+                if(counter != 0) {                         //when we create the listener, it activates alone. This don't let him!!
                     new ListenPoint(ImageView, Bitmap.createBitmap(lineSegment.getPic()), pointObj.get(position));
 
                     if (typeOfPoint == 0) {           //the point we selected is a Y
@@ -409,7 +399,7 @@ public class PreviewMenuActivity extends Activity{
 
                     }
                 }
-                contador++;
+                counter++;
             }
 
             @Override
@@ -423,13 +413,13 @@ public class PreviewMenuActivity extends Activity{
 
     }
 
-    AdapterView.OnItemSelectedListener onMenuNumeroLineSelectedListener() {
+    AdapterView.OnItemSelectedListener onMenuNumberLineSelectedListener() {
         menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            int contador = 0;
+            int counter = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Y o X), with this way we specify what point is it
-                if (contador != 0) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a lin e, it converts in the type of the previous Spinner (Y o X), with this way we specify what line is it
+                if (counter != 0) {                                  //when we create the listener, it activates alone. This don't let him!!
                     new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineObj.get(position));
 
                     if (typeOfLine == 0) {                //the line we selected is a Y
@@ -440,7 +430,7 @@ public class PreviewMenuActivity extends Activity{
                         lineX.add(numberOfLine, lineObj.get(position));
                     }
                 }
-                contador++;
+                counter++;
             }
 
             @Override
@@ -452,24 +442,24 @@ public class PreviewMenuActivity extends Activity{
         return menuNumber.getOnItemSelectedListener();
     }
 
-    AdapterView.OnItemSelectedListener onMenuNumeroPlanoSelectedListener() {
+    AdapterView.OnItemSelectedListener onMenuNumberPlaneSelecterListener() {
         menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            int contador = 0;
+            int counter = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a point, it converts in the type of the previous Spinner (Y o X), with this way we specify what point is it
-                if (contador != 0) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a plane, it converts in the type of the previous Spinner (Y o X), with this way we specify what plane is it
+                if (counter != 0) {                              //when we create the listener, it activates alone. This don't let him!!
                     new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineObj.get(position));
 
-                    if (typeOfLine == 0) {                //the line of the plano we selected is firstPoint cota
+                    if (typeOfLine == 0) {                //the line of the plano we selected is a Y
                         planeY.remove(numberOfLine);
                         planeY.add(numberOfLine, lineObj.get(position));
-                    } else {                               //the line we selected is firstPoint alejamiento
+                    } else {                               //the line we selected is a X
                         planeX.remove(numberOfLine);
                         planeX.add(numberOfLine, lineObj.get(position));
                     }
                 }
-                contador++;
+                counter++;
             }
 
             @Override
@@ -481,18 +471,18 @@ public class PreviewMenuActivity extends Activity{
         return menuNumber.getOnItemSelectedListener();
     }
 
-    AdapterView.OnItemSelectedListener onMenuNumeroLineaDeTierraSelectedListener() {
+    AdapterView.OnItemSelectedListener onMenuNumberLandLineSelectedListener() {
         menuNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            int contador = 0;
+            int counter = 0;
 
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select firstPoint point, it converts in the type of the previous Spinner (Cota o pointX), with this way we specify what point is it
-                if (contador != 0) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {               //if we select a landLine, it converts in the type of the previous Spinner (Y o X), with this way we specify what line is it
+                if (counter != 0) {                              //when we create the listener, it activates alone. This don't let him!!
                     new ListenLine(ImageView, Bitmap.createBitmap(lineSegment.getPic()), lineObj.get(position));
 
                     landLine = lineObj.get(position);
                 }
-                contador++;
+                counter++;
             }
 
             @Override
@@ -509,15 +499,6 @@ public class PreviewMenuActivity extends Activity{
         InputStream in = null;
         OutputStream out = null;
         try {
-                /*
-                //create output directory if it doesn't exist
-                File dir = new File (outputPath);
-                if (!dir.exists())
-                {
-                    dir.mkdirs();
-                }
-                */
-
             in = new FileInputStream(inputFile);
             out = new FileOutputStream(outputPath);
 
@@ -527,12 +508,10 @@ public class PreviewMenuActivity extends Activity{
                 out.write(buffer, 0, read);
             }
             in.close();
-            in = null;
 
             // write the output file (You have now copied the file)
             out.flush();
             out.close();
-            out = null;
 
         }  catch (FileNotFoundException fnfe1) {
             Log.e("tag", fnfe1.getMessage());

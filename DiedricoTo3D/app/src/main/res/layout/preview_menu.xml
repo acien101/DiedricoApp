@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Nº de points"/>
+            android:text="@string/nPoint"/>
 
         <EditText
             android:layout_width="50dp"
@@ -52,13 +52,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Nº de lines"/>
+            android:text= "@string/nLine"/>
 
         <EditText
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:id="@+id/nLineas"
+            android:id="@+id/nLines"
             android:text="0"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"/>
@@ -74,7 +74,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Nº de planos"/>
+            android:text="@string/nPlane"/>
 
         <EditText
             android:layout_width="50dp"

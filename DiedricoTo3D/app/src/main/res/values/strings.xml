@@ -19,4 +19,12 @@
     <string name="request_permission">This sample needs camera permission.</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
     <string name="title_activity_preview_menu_main">PreviewMenuMainActivity</string>
+
+    <string name="nPoint">Nº Point</string>
+    <string name="nLine">Nº Line</string>
+    <string name="nPlane">Nº Plane</string>
+
+    <string name="analyze">Analyze</string>
+    <string name="info">Info</string>
+    <string name="process">Process</string>
 </resources>

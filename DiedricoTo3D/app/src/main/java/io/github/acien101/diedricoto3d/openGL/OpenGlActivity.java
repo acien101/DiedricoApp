@@ -32,12 +32,9 @@ public class OpenGlActivity extends Activity {
         setContentView(R.layout.gllayout);
         intent = getIntent();
 
-        puntos = intent.getParcelableArrayListExtra("vector");
+        puntos = intent.getParcelableArrayListExtra("points");
         lineVectors = intent.getParcelableArrayListExtra("lines");
-        planeVectors = intent.getParcelableArrayListExtra("planos");
-
-        Log.i("received", Integer.toString(puntos.size()));
-        Log.i("LINE", Integer.toString(lineVectors.size()));
+        planeVectors = intent.getParcelableArrayListExtra("planes");
 
         mGLView = new MyGLSurfaceView(this, puntos, lineVectors, planeVectors);
         LinearLayout rootLayout = (LinearLayout)findViewById(R.id.rootLayout);
@@ -45,8 +42,6 @@ public class OpenGlActivity extends Activity {
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
-
-
 
 
         SeekBar myBar = (SeekBar)findViewById(R.id.seekBar);
