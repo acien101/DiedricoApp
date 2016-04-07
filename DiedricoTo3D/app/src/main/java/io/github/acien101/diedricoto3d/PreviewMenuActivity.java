@@ -344,11 +344,24 @@ public class PreviewMenuActivity extends Activity{
                     Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
                     Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeY.get(i).getXa(), planeY.get(i).getYa()));
                     Vector AD = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeY.get(i).getXb(), planeY.get(i).getYb()));
-                    Vector AE = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeX.get(i).getXb(), planeX.get(i).getYb()));
+                    Vector AE = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeX.get(i).getXa(), planeX.get(i).getYa()));
+                    Vector AF = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeX.get(i).getXb(), planeX.get(i).getYb()));
 
-                    ScalarProduct scalarProductBeginningPlane = new ScalarProduct(AB, AC);
-                    ScalarProduct scalarProductX = new ScalarProduct(AB, AE);
-                    ScalarProduct scalarProductY = new ScalarProduct(AB, AD);
+                    ScalarProduct scalarProductBeginningPlane;
+                    ScalarProduct scalarProductX;
+                    ScalarProduct scalarProductY;
+
+                    if(planeY.get(i).getYa() > planeY.get(i).getYb()){           //Problem with planes
+                        scalarProductBeginningPlane = new ScalarProduct(AB, AD);
+                        scalarProductX = new ScalarProduct(AB, AE);
+                        scalarProductY = new ScalarProduct(AB, AC);
+                    }
+                    else{
+                        scalarProductBeginningPlane = new ScalarProduct(AB, AC);
+                        scalarProductX = new ScalarProduct(AB, AF);
+                        scalarProductY = new ScalarProduct(AB, AD);
+                    }
+
                     planeVectors.add(new PlaneVector((float)(scalarProductBeginningPlane.getLength()/AB.getModule()), (float)(scalarProductY.getHeight()/AB.getModule()), (float)(scalarProductX.getHeight()/AB.getModule()), (float)(scalarProductY.getLength()/AB.getModule())));
                 }
 
