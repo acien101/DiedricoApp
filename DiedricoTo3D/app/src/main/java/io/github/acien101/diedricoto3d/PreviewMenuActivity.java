@@ -142,7 +142,7 @@ public class PreviewMenuActivity extends Activity{
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.preview_menu_topmenu, menu);
 
-        MenuItem analizar = menu.findItem(R.id.analizar);
+        MenuItem analizar = menu.findItem(R.id.analyze);
         analizar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -304,7 +304,7 @@ public class PreviewMenuActivity extends Activity{
             }
         });
 
-        MenuItem procesar = menu.findItem(R.id.procesar);
+        MenuItem procesar = menu.findItem(R.id.process);
         procesar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

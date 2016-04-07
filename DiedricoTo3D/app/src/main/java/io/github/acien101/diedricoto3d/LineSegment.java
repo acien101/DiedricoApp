@@ -30,8 +30,6 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
     Context context;
     ImageView pic;
     Bitmap bmPic;
-    static List<Double> interestPoints = new ArrayList<Double>();
-    static List<Float> landLine = new ArrayList<Float>();
     private static Bitmap myBM;
 
     int nPoints;
@@ -98,55 +96,40 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
 
         for(int i = 0; i<found.size();i++){
-            canvas.drawLine(found.get(i).a.x,found.get(i).a.y, found.get(i).b.x,found.get(i).b.y,paintMax);
+            canvas.drawLine(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y, paintMax);
             lines.add(new Line(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
         }
-
-
-
-        landLine.add(0, found.get(0).a.x);
-        landLine.add(1, found.get(0).a.y);
-
-        landLine.add(2, found.get(0).b.x);
-        landLine.add(3, found.get(0).b.y);
-
         return image;
     }
 
     public <T extends ImageFloat32>
     Bitmap detect( Bitmap image, Class<T> imageType , int nPuntos) {
 
-        T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);
+        if(nPuntos != 0){           //There is a problem with BoofCV if we put 0 points
+            T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);
 
-        // Create a Fast Hessian detector from the SURF paper.
-        // Other detectors can be used in this example too.
+            // Create a Fast Hessian detector from the SURF paper.
+            // Other detectors can be used in this example too.
 
-        Log.i("nPoints", Integer.toString(nPuntos));
+            InterestPointDetector<T> detector = FactoryInterestPoint.fastHessian(
+                    new ConfigFastHessian(30, 2, nPuntos, 2, 9, 3, 4));
 
-        InterestPointDetector<T> detector = FactoryInterestPoint.fastHessian(
-                new ConfigFastHessian(30, 2, nPuntos, 2, 9, 3, 4));
+            // find interest points in the image
+            detector.detect(input);
 
-        // find interest points in the image
-        detector.detect(input);
+            Paint paintMax;
+            paintMax = new Paint();
+            paintMax.setColor(Color.RED);
+            paintMax.setStyle(Paint.Style.FILL);
 
-        Paint paintMax;
-        paintMax = new Paint();
-        paintMax.setColor(Color.RED);
-        paintMax.setStyle(Paint.Style.FILL);
-
-        Canvas canvas = new Canvas(image);
+            Canvas canvas = new Canvas(image);
 
 
-        for(int i = 0; i<detector.getNumberOfFeatures();i++){
-            canvas.drawCircle((float) detector.getLocation(i).getX(), (float) detector.getLocation(i).getY(), 3, paintMax);
-            points.add(new Point(detector.getLocation(i).getX(), detector.getLocation(i).getY()));
+            for(int i = 0; i<detector.getNumberOfFeatures();i++){
+                canvas.drawCircle((float) detector.getLocation(i).getX(), (float) detector.getLocation(i).getY(), 3, paintMax);
+                points.add(new Point(detector.getLocation(i).getX(), detector.getLocation(i).getY()));
+            }
         }
-
-        interestPoints.add(0, detector.getLocation(0).getX());
-        interestPoints.add(1, detector.getLocation(0).getY());
-        interestPoints.add(2, detector.getLocation(1).getX());
-        interestPoints.add(3, detector.getLocation(1).getY());
-
         return image;
 
     }
