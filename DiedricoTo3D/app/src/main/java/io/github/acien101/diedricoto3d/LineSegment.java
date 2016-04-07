@@ -97,7 +97,12 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         for(int i = 0; i<found.size();i++){
             canvas.drawLine(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y, paintMax);
-            lines.add(new Line(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
+            if(found.get(i).a.x < found.get(i).b.x){               ////problem with lines
+                lines.add(new Line(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
+            }
+            else{
+                lines.add(new Line(found.get(i).b.x, found.get(i).b.y, found.get(i).a.x, found.get(i).a.y));
+            }
         }
         return image;
     }
