@@ -4,27 +4,27 @@ package io.github.acien101.diedricoto3d;
  * Created by amil101 on 21/02/16.
  */
 public class PointDiedrico {
-    Point cota;
-    Point alejamiento;
+    Point pointY;
+    Point pointX;
 
-    public PointDiedrico(Point cota, Point alejamiento){
-        this.cota = cota;
-        this.alejamiento = alejamiento;
+    public PointDiedrico(Point pointY, Point pointX){
+        this.pointY = pointY;
+        this.pointX = pointX;
     }
 
-    public Point getAlejamiento() {
-        return alejamiento;
+    public Point getPointX() {
+        return pointX;
     }
 
-    public void setAlejamiento(Point alejamiento) {
-        this.alejamiento = alejamiento;
+    public void setPointX(Point pointX) {
+        this.pointX = pointX;
     }
 
-    public Point getCota() {
-        return cota;
+    public Point getPointY() {
+        return pointY;
     }
 
-    public void setCota(Point cota) {
-        this.cota = cota;
+    public void setPointY(Point pointY) {
+        this.pointY = pointY;
     }
 }

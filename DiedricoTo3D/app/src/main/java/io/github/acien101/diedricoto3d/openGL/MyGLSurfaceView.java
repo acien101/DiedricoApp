@@ -40,11 +40,4 @@ class MyGLSurfaceView extends GLSurfaceView {
         mRenderer.setZoom(progress);
         requestRender();
     }
-
-    public void setPointCoords(List<PointVector> coords){
-        mRenderer.setPointCoords(coords);
-
-    }
-
-
 }

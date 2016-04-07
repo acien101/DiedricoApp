@@ -130,7 +130,7 @@ public class Camera2BasicFragment extends Fragment
     private static final int MAX_PREVIEW_HEIGHT = 1080;
 
     /**
-     * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on firstPoint
+     * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
      * {@link TextureView}.
      */
     private final TextureView.SurfaceTextureListener mSurfaceTextureListener
@@ -236,7 +236,7 @@ public class Camera2BasicFragment extends Fragment
     private File mFile;
 
     /**
-     * This firstPoint callback object for the {@link ImageReader}. "onImageAvailable" will be called when firstPoint
+     * This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
      * still image is ready to be saved.
      */
     private final ImageReader.OnImageAvailableListener mOnImageAvailableListener
@@ -345,7 +345,7 @@ public class Camera2BasicFragment extends Fragment
     };
 
     /**
-     * Shows firstPoint {@link Toast} on the UI thread.
+     * Shows a {@link Toast} on the UI thread.
      *
      * @param text The message to show
      */
@@ -362,7 +362,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Given {@code choices} of {@code Size}s supported by firstPoint camera, choose the smallest one that
+     * Given {@code choices} of {@code Size}s supported by a camera, choose the smallest one that
      * is at least as large as the respective texture view size, and that is at most as large as the
      * respective max size, and whose aspect ratio matches with the specified value. If such size
      * doesn't exist, choose the largest one that is at most as large as the respective max size,
@@ -440,7 +440,7 @@ public class Camera2BasicFragment extends Fragment
 
         // When the screen is turned off and turned back on, the SurfaceTexture is already
         // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
-        // firstPoint camera and start preview from here (otherwise, we wait until the surface is ready in
+        // a camera and start preview from here (otherwise, we wait until the surface is ready in
         // the SurfaceTextureListener).
         if (mTextureView.isAvailable()) {
             openCamera(mTextureView.getWidth(), mTextureView.getHeight());
@@ -492,7 +492,7 @@ public class Camera2BasicFragment extends Fragment
                 CameraCharacteristics characteristics
                         = manager.getCameraCharacteristics(cameraId);
 
-                // We don't use firstPoint front facing camera in this sample.
+                // We don't use a front facing camera in this sample.
                 Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
                 if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
                     continue;
@@ -558,7 +558,7 @@ public class Camera2BasicFragment extends Fragment
                     maxPreviewHeight = MAX_PREVIEW_HEIGHT;
                 }
 
-                // Danger, W.R.! Attempting to use too large firstPoint preview size could  exceed the camera
+                // Danger, W.R.! Attempting to use too large a preview size could  exceed the camera
                 // bus' bandwidth limitation, resulting in gorgeous previews but the storage of
                 // garbage capture data.
                 mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
@@ -643,7 +643,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Starts firstPoint background thread and its {@link Handler}.
+     * Starts a background thread and its {@link Handler}.
      */
     private void startBackgroundThread() {
         mBackgroundThread = new HandlerThread("CameraBackground");
@@ -666,7 +666,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Creates firstPoint new {@link CameraCaptureSession} for camera preview.
+     * Creates a new {@link CameraCaptureSession} for camera preview.
      */
     private void createCameraPreviewSession() {
         try {
@@ -679,12 +679,12 @@ public class Camera2BasicFragment extends Fragment
             // This is the output Surface we need to start preview.
             Surface surface = new Surface(texture);
 
-            // We set up firstPoint CaptureRequest.Builder with the output Surface.
+            // We set up a CaptureRequest.Builder with the output Surface.
             mPreviewRequestBuilder
                     = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mPreviewRequestBuilder.addTarget(surface);
 
-            // Here, we create firstPoint CameraCaptureSession for camera preview.
+            // Here, we create a CameraCaptureSession for camera preview.
             mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),
                     new CameraCaptureSession.StateCallback() {
 
@@ -759,14 +759,14 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Initiate firstPoint still image capture.
+     * Initiate a still image capture.
      */
     private void takePicture() {
         lockFocus();
     }
 
     /**
-     * Lock the focus as the first step for firstPoint still image capture.
+     * Lock the focus as the first step for a still image capture.
      */
     private void lockFocus() {
         try {
@@ -783,8 +783,8 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Run the precapture sequence for capturing firstPoint still image. This method should be called when
-     * we get firstPoint response in {@link #mCaptureCallback} from {@link #lockFocus()}.
+     * Run the precapture sequence for capturing a still image. This method should be called when
+     * we get a response in {@link #mCaptureCallback} from {@link #lockFocus()}.
      */
     private void runPrecaptureSequence() {
         try {
@@ -801,7 +801,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Capture firstPoint still picture. This method should be called when we get firstPoint response in
+     * Capture a still picture. This method should be called when we get a response in
      * {@link #mCaptureCallback} from both {@link #lockFocus()}.
      */
     private void captureStillPicture() {
@@ -810,7 +810,7 @@ public class Camera2BasicFragment extends Fragment
             if (null == activity || null == mCameraDevice) {
                 return;
             }
-            // This is the CaptureRequest.Builder that we use to take firstPoint picture.
+            // This is the CaptureRequest.Builder that we use to take a picture.
             final CaptureRequest.Builder captureBuilder =
                     mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureBuilder.addTarget(mImageReader.getSurface());
@@ -898,7 +898,7 @@ public class Camera2BasicFragment extends Fragment
     }
 
     /**
-     * Saves firstPoint JPEG {@link Image} into the specified {@link File}.
+     * Saves a JPEG {@link Image} into the specified {@link File}.
      */
     private static class ImageSaver implements Runnable {
 

@@ -7,10 +7,10 @@ import android.os.Parcelable;
  * Created by amil101 on 27/03/16.
  */
 public class PlaneVector implements Parcelable{
-    float desplazamientoPlanoOrigen;
-    float cota;
-    float alejamiento;
-    float desplazamiento;
+    float planeOriginZ;
+    float planeY;
+    float planeX;
+    float planeZ;
 
     @Override
     public int describeContents() {
@@ -19,10 +19,10 @@ public class PlaneVector implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeFloatArray(new float[]{this.desplazamientoPlanoOrigen,
-                                        this.cota,
-                                        this.alejamiento,
-                                        this.desplazamiento});
+        out.writeFloatArray(new float[]{this.planeOriginZ,
+                                        this.planeY,
+                                        this.planeX,
+                                        this.planeZ});
     }
 
     public static final Parcelable.Creator<PlaneVector> CREATOR = new Creator<PlaneVector>() {
@@ -41,51 +41,51 @@ public class PlaneVector implements Parcelable{
         float[] data = new float[4];
 
         in.readFloatArray(data);
-        this.desplazamientoPlanoOrigen = data[0];
-        this.cota = data[1];
-        this.alejamiento = data[2];
-        this.desplazamiento = data[3];
+        this.planeOriginZ = data[0];
+        this.planeY = data[1];
+        this.planeX = data[2];
+        this.planeZ = data[3];
 
     }
 
-    public PlaneVector(float desplazamientoPlanoOrigen, float cota, float alejamiento, float desplazamiento){
+    public PlaneVector(float planeOriginZ, float planeY, float planeX, float planeZ){
 
-        this.desplazamientoPlanoOrigen = desplazamientoPlanoOrigen;
-        this.cota = cota;
-        this.alejamiento = alejamiento;
-        this.desplazamiento = desplazamiento;
+        this.planeOriginZ = planeOriginZ;
+        this.planeY = planeY;
+        this.planeX = planeX;
+        this.planeZ = planeZ;
     }
 
-    public float getAlejamiento() {
-        return alejamiento;
+    public float getPlaneX() {
+        return planeX;
     }
 
-    public void setAlejamiento(float alejamiento) {
-        this.alejamiento = alejamiento;
+    public void setPlaneX(float planeX) {
+        this.planeX = planeX;
     }
 
-    public float getCota() {
-        return cota;
+    public float getPlaneY() {
+        return planeY;
     }
 
-    public void setCota(float cota) {
-        this.cota = cota;
+    public void setPlaneY(float planeY) {
+        this.planeY = planeY;
     }
 
-    public float getDesplazamiento() {
-        return desplazamiento;
+    public float getPlaneZ() {
+        return planeZ;
     }
 
-    public void setDesplazamiento(float desplazamiento) {
-        this.desplazamiento = desplazamiento;
+    public void setPlaneZ(float planeZ) {
+        this.planeZ = planeZ;
     }
 
-    public float getDesplazamientoPlanoOrigen() {
-        return desplazamientoPlanoOrigen;
+    public float getPlaneOriginZ() {
+        return planeOriginZ;
     }
 
-    public void setDesplazamientoPlanoOrigen(float desplazamientoPlanoOrigen) {
-        this.desplazamientoPlanoOrigen = desplazamientoPlanoOrigen;
+    public void setPlaneOriginZ(float planeOriginZ) {
+        this.planeOriginZ = planeOriginZ;
     }
 }
 

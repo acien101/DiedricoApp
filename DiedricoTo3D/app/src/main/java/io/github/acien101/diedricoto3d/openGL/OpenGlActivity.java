@@ -20,7 +20,7 @@ public class OpenGlActivity extends Activity {
 
     private GLSurfaceView mGLView;
     MyGLSurfaceView obj;
-    List<PointVector> puntos;
+    List<PointVector> pointVectors;
     List<LineVector> lineVectors;
     List<PlaneVector> planeVectors;
 
@@ -32,11 +32,11 @@ public class OpenGlActivity extends Activity {
         setContentView(R.layout.gllayout);
         intent = getIntent();
 
-        puntos = intent.getParcelableArrayListExtra("points");
+        pointVectors = intent.getParcelableArrayListExtra("points");
         lineVectors = intent.getParcelableArrayListExtra("lines");
         planeVectors = intent.getParcelableArrayListExtra("planes");
 
-        mGLView = new MyGLSurfaceView(this, puntos, lineVectors, planeVectors);
+        mGLView = new MyGLSurfaceView(this, pointVectors, lineVectors, planeVectors);
         LinearLayout rootLayout = (LinearLayout)findViewById(R.id.rootLayout);
         rootLayout.addView(mGLView);
 
@@ -48,10 +48,7 @@ public class OpenGlActivity extends Activity {
         myBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                Log.i("SeekBar", Integer.toString(progress));
-
-                obj = new MyGLSurfaceView(getApplicationContext(), puntos, lineVectors, planeVectors);
+                obj = new MyGLSurfaceView(getApplicationContext(), pointVectors, lineVectors, planeVectors);
                 obj.setRenderer(progress);
             }
 

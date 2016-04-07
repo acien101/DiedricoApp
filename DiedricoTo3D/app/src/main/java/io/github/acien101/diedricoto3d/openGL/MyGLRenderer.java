@@ -24,7 +24,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
 
     private List<GLPoint> mPoints = new ArrayList<>();
     private List<Line> mLines = new ArrayList<>();
-    private List<Plano> mPlano = new ArrayList<>();
+    private List<Plane> mPlane = new ArrayList<>();
 
     private List<PointVector> pointVectors = new ArrayList<>();
     private List<LineVector> lineVectors = new ArrayList<>();
@@ -58,14 +58,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         // initialize a triangle
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
+
+        // initialize the points
         for(int i = 0; i < pointVectors.size(); i++){
             mPoints.add(new GLPoint(10,10,0.01f, 0.7f));
         }
+        // initialize the lines
         for(int i = 0; i< lineVectors.size(); i++){
-            mLines.add(new Line(lineVectors.get(i).getCotaA(), lineVectors.get(i).getAlejamientoA(), -lineVectors.get(i).getDistanciaA(), lineVectors.get(i).getCotaB(), lineVectors.get(i).getAlejamientoB(), -lineVectors.get(i).getDistanciaB()));
+            mLines.add(new Line(lineVectors.get(i).getLineYA(), lineVectors.get(i).getLineXA(), -lineVectors.get(i).getLineZA(), lineVectors.get(i).getLineYB(), lineVectors.get(i).getLineXB(), -lineVectors.get(i).getLineZB()));
         }
+        // initialize the planes
         for(int i = 0; i < planeVectors.size(); i++){
-            mPlano.add(new Plano(-planeVectors.get(i).getDesplazamientoPlanoOrigen(), planeVectors.get(i).getCota(), planeVectors.get(i).getAlejamiento(), -planeVectors.get(i).getDesplazamiento()));
+            mPlane.add(new Plane(-planeVectors.get(i).getPlaneOriginZ(), planeVectors.get(i).getPlaneY(), planeVectors.get(i).getPlaneX(), -planeVectors.get(i).getPlaneZ()));
         }
     }
 
@@ -109,20 +113,23 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         // combine the model-view with the projection matrix
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
 
+        // we draw the points and we move to the place they must be
         for(int i = 0; i < mPoints.size(); i++){
             Matrix.setIdentityM(mTranslationMatrix, 0);
-            Matrix.translateM(mTranslationMatrix, 0, ((float) pointVectors.get(i).getCota()), ((float) pointVectors.get(i).getAlejamiento()), -((float) pointVectors.get(i).getDistancia()));
+            Matrix.translateM(mTranslationMatrix, 0, ((float) pointVectors.get(i).getPointY()), ((float) pointVectors.get(i).getPointX()), -((float) pointVectors.get(i).getPointZ()));
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
 
             mPoints.get(i).draw(scratch);
         }
 
+        // we draw the lines
         for(int i = 0; i < mLines.size(); i++){
             mLines.get(i).draw(mMVPMatrix);
         }
 
-        for(int i = 0; i < mPlano.size(); i++){
-            mPlano.get(i).draw(mMVPMatrix);
+        // we draw the planes
+        for(int i = 0; i < mPlane.size(); i++){
+            mPlane.get(i).draw(mMVPMatrix);
         }
 
         // Draw shape
@@ -152,10 +159,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer{
         GLES20.glCompileShader(shader);
 
         return shader;
-    }
-
-    public int getZoom() {
-        return zoom;
     }
 
     public void setZoom(int zoom) {

@@ -7,13 +7,13 @@ import android.os.Parcelable;
  * Created by amil101 on 23/03/16.
  */
 public class LineVector implements Parcelable{
-    float cotaA;
-    float alejamientoA;
-    float distanciaA;
+    float LineYA;
+    float LineXA;
+    float LineZA;
 
-    float cotaB;
-    float alejamientoB;
-    float distanciaB;
+    float LineYB;
+    float LineXB;
+    float LineZB;
 
     @Override
     public int describeContents() {
@@ -22,12 +22,12 @@ public class LineVector implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        out.writeFloatArray(new float[]{this.cotaA,
-                this.alejamientoA,
-                this.distanciaA,
-                this.cotaB,
-                this.alejamientoB,
-                this.distanciaB});
+        out.writeFloatArray(new float[]{this.LineYA,
+                this.LineXA,
+                this.LineZA,
+                this.LineYB,
+                this.LineXB,
+                this.LineZB});
     }
 
     public static final Parcelable.Creator<LineVector> CREATOR = new Creator<LineVector>() {
@@ -46,72 +46,72 @@ public class LineVector implements Parcelable{
         float[] data = new float[6];
 
         in.readFloatArray(data);
-        this.cotaA = data[0];
-        this.alejamientoA = data[1];
-        this.distanciaA = data[2];
+        this.LineYA = data[0];
+        this.LineXA = data[1];
+        this.LineZA = data[2];
 
-        this.cotaB = data[3];
-        this.alejamientoB = data[4];
-        this.distanciaB = data[5];
+        this.LineYB = data[3];
+        this.LineXB = data[4];
+        this.LineZB = data[5];
 
     }
 
-    public LineVector(float cotaA, float alejamientoA, float distanciaA, float cotaB, float alejamientoB, float distanciaB){
+    public LineVector(float LineYA, float LineXA, float LineZA, float LineYB, float LineXB, float LineZB){
 
-        this.cotaA = cotaA;
-        this.alejamientoA = alejamientoA;
-        this.distanciaA = distanciaA;
+        this.LineYA = LineYA;
+        this.LineXA = LineXA;
+        this.LineZA = LineZA;
 
-        this.cotaB = cotaB;
-        this.alejamientoB = alejamientoB;
-        this.distanciaB = distanciaB;
+        this.LineYB = LineYB;
+        this.LineXB = LineXB;
+        this.LineZB = LineZB;
     }
 
-    public float getDistanciaB() {
-        return distanciaB;
+    public float getLineZB() {
+        return LineZB;
     }
 
-    public void setDistanciaB(float distanciaB) {
-        this.distanciaB = distanciaB;
+    public void setLineZB(float lineZB) {
+        this.LineZB = lineZB;
     }
 
-    public float getDistanciaA() {
-        return distanciaA;
+    public float getLineZA() {
+        return LineZA;
     }
 
-    public void setDistanciaA(float distanciaA) {
-        this.distanciaA = distanciaA;
+    public void setLineZA(float lineZA) {
+        this.LineZA = lineZA;
     }
 
-    public float getCotaB() {
-        return cotaB;
+    public float getLineYB() {
+        return LineYB;
     }
 
-    public void setCotaB(float cotaB) {
-        this.cotaB = cotaB;
+    public void setLineYB(float lineYB) {
+        this.LineYB = lineYB;
     }
 
-    public float getCotaA() {
-        return cotaA;
+    public float getLineYA() {
+        return LineYA;
     }
 
-    public void setCotaA(float cotaA) {
-        this.cotaA = cotaA;
+    public void setLineYA(float lineYA) {
+        this.LineYA = lineYA;
     }
 
-    public float getAlejamientoB() {
-        return alejamientoB;
+    public float getLineXB() {
+        return LineXB;
     }
 
-    public void setAlejamientoB(float alejamientoB) {
-        this.alejamientoB = alejamientoB;
+    public void setLineXB(float lineXB) {
+        this.LineXB = lineXB;
     }
 
-    public float getAlejamientoA() {
-        return alejamientoA;
+    public float getLineXA() {
+        return LineXA;
     }
 
-    public void setAlejamientoA(float alejamientoA) {
-        this.alejamientoA = alejamientoA;
+    public void setLineXA(float lineXA) {
+        this.LineXA = lineXA;
     }
 }

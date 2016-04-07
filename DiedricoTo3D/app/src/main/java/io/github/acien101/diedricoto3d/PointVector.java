@@ -8,18 +8,18 @@ import android.os.Parcelable;
  */
 public class PointVector implements Parcelable{
 
-    private double cota;
-    private double alejamiento;
-    private double distancia;
+    private double pointY;
+    private double pointX;
+    private double pointZ;
 
     public int describeContents() {
         return 0;
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeDoubleArray(new double[]{this.cota,
-                this.alejamiento,
-                this.distancia});
+        out.writeDoubleArray(new double[]{this.pointY,
+                                          this.pointX,
+                                          this.pointZ});
     }
 
     public static final Parcelable.Creator<PointVector> CREATOR
@@ -37,39 +37,39 @@ public class PointVector implements Parcelable{
         double[] data = new double[3];
 
         in.readDoubleArray(data);
-        this.cota = data[0];
-        this.alejamiento = data[1];
-        this.distancia = data[2];
+        this.pointY = data[0];
+        this.pointX = data[1];
+        this.pointZ = data[2];
     }
 
-    public PointVector(double alejamiento, double cota, double distancia) {
-        this.alejamiento = alejamiento;
-        this.cota = cota;
-        this.distancia = distancia;
+    public PointVector(double pointX, double pointY, double pointZ) {
+        this.pointX = pointX;
+        this.pointY = pointY;
+        this.pointZ = pointZ;
     }
 
-    public double getAlejamiento() {
+    public double getPointX() {
 
-        return alejamiento;
+        return pointX;
     }
 
-    public void setAlejamiento(double alejamiento) {
-        this.alejamiento = alejamiento;
+    public void setPointX(double pointX) {
+        this.pointX = pointX;
     }
 
-    public double getCota() {
-        return cota;
+    public double getPointY() {
+        return pointY;
     }
 
-    public void setCota(double cota) {
-        this.cota = cota;
+    public void setPointY(double pointY) {
+        this.pointY = pointY;
     }
 
-    public double getDistancia() {
-        return distancia;
+    public double getPointZ() {
+        return pointZ;
     }
 
-    public void setDistancia(double distancia) {
-        this.distancia = distancia;
+    public void setPointZ(double pointZ) {
+        this.pointZ = pointZ;
     }
 }

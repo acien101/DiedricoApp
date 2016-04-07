@@ -81,10 +81,10 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
                              Class<T> imageType ,
                              Class<D> derivType )
     {
-        // convert the line into firstPoint single band image
+        // convert the line into a single band image
         T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);
 
-        // Comment/uncomment to try firstPoint different type of line detector
+        // Comment/uncomment to try a different type of line detector
         DetectLineSegmentsGridRansac<T,D> detector = FactoryDetectLineAlgs.lineRansac(40, 10, 1, true, imageType, derivType);
 
         List<LineSegment2D_F32> found = detector.detect(input);
@@ -118,7 +118,7 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         T input = ConvertBitmap.bitmapToGray(image, null, imageType, null);
 
-        // Create firstPoint Fast Hessian detector from the SURF paper.
+        // Create a Fast Hessian detector from the SURF paper.
         // Other detectors can be used in this example too.
 
         Log.i("nPoints", Integer.toString(nPuntos));
