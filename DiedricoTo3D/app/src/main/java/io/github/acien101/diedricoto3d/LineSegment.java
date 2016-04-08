@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import boofcv.abst.feature.detect.interest.ConfigFastHessian;
@@ -94,14 +95,25 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
 
         Canvas canvas = new Canvas(image);
 
-
-        for(int i = 0; i<found.size();i++){
-            canvas.drawLine(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y, paintMax);
-            if(found.get(i).a.x < found.get(i).b.x){               ////problem with lines
-                lines.add(new Line(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
+        if(found.size() > 0){
+            List<Double> modules = new ArrayList<>();               //For preveting find very short lines, we get the top module and then we discard the short ones
+            for (int i = 0; i < found.size(); i++) {
+                modules.add(new Vector(new Point(found.get(i).a.x, found.get(i).a.y), new Point(found.get(i).b.x, found.get(i).b.y)).getModule());
             }
-            else{
-                lines.add(new Line(found.get(i).b.x, found.get(i).b.y, found.get(i).a.x, found.get(i).a.y));
+            Collections.sort(modules);
+            Collections.reverse(modules);
+
+            double topModule = modules.get(0);          //this is the module of the largest line
+
+            for (int i = 0; i < found.size(); i++) {
+                if (new Vector(new Point(found.get(i).a.x, found.get(i).a.y), new Point(found.get(i).b.x, found.get(i).b.y)).getModule() > (topModule / 6)) {
+                    canvas.drawLine(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y, paintMax);
+                    if (found.get(i).a.x < found.get(i).b.x) {               ////problem with lines
+                        lines.add(new Line(found.get(i).a.x, found.get(i).a.y, found.get(i).b.x, found.get(i).b.y));
+                    } else {
+                        lines.add(new Line(found.get(i).b.x, found.get(i).b.y, found.get(i).a.x, found.get(i).a.y));
+                    }
+                }
             }
         }
         return image;
