@@ -21,7 +21,6 @@ import android.widget.Spinner;
 import io.github.acien101.diedricoto3d.openGL.OpenGlActivity;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -121,14 +120,14 @@ public class PreviewMenuActivity extends Activity{
 
         //Set menuType to the view and then put an array
         menuType = (Spinner) findViewById(R.id.menu_tipo);
-        ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colors);
+        ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, colors);
         menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         menuType.setAdapter(menuTipoArrayAdapter);
 
 
         //Set menuNumber to the view and then put an array
         menuNumber = (Spinner) findViewById(R.id.menu_numero);
-        ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, colors);
+        ArrayAdapter<String> menuNumeroArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, colors);
         menuNumeroArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         menuNumber.setAdapter(menuNumeroArrayAdapter);
 
@@ -159,7 +158,7 @@ public class PreviewMenuActivity extends Activity{
                         pointObj = points;          //we receive all the points found
                         lineObj = lines;            //we receive all the lines found
 
-                        List<String> pointsForSpinner = new ArrayList<String>();            //we put all the points to the Spinner
+                        List<String> pointsForSpinner = new ArrayList<>();            //we put all the points to the Spinner
                         for(int i = 0; i< points.size(); i ++){
                             pointsForSpinner.add("Point " + Integer.toString(i) + " X:" + Float.toString((float) pointObj.get(i).getX()) + " Y:" + Float.toString((float) pointObj.get(i).getY()));
                             Log.i("points", "Point " + Integer.toString(i) + " X:" + Double.toString(pointObj.get(i).getX()) + " Y:" + Double.toString(pointObj.get(i).getY()));
@@ -167,20 +166,20 @@ public class PreviewMenuActivity extends Activity{
 
                         List<String> linesForSpinner = new ArrayList<>();               //we put all the lines to the spinner
                         for(int i = 0; i < lines.size(); i++){
-                            linesForSpinner.add("Line " + Integer.toString(i) + " Xa: " + Float.toString((float) lineObj.get(i).getXa()) + " Ya: " + Float.toString((float) lineObj.get(i).getYa()) + " Xb: "  + Float.toString((float) lineObj.get(i).getXb()) + " Yb: " + Float.toString((float) lineObj.get(i).getYb()));
+                            linesForSpinner.add("Line " + Integer.toString(i) + " Xa: " + Float.toString(lineObj.get(i).getXa()) + " Ya: " + Float.toString(lineObj.get(i).getYa()) + " Xb: "  + Float.toString(lineObj.get(i).getXb()) + " Yb: " + Float.toString(lineObj.get(i).getYb()));
                         }
 
 
                         //the Adapter with the points
-                        menuPointArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, pointsForSpinner);
+                        menuPointArrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, pointsForSpinner);
                         menuPointArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                         //the adapter with the lines
-                        menuLineArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, linesForSpinner);
+                        menuLineArrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, linesForSpinner);
                         menuLineArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                         if(pointObj.size() >= (Integer.parseInt(nPoints.getText().toString())*2)){                 //we need to have equal or more points in nPoints and pointObj
-                            typeSpinner = new ArrayList<String>();                                       //We create a Spinner with the X's and Y's of points, lines and planes that we specificated in nPoints, nLines and nPlanes
+                            typeSpinner = new ArrayList<>();                                       //We create a Spinner with the X's and Y's of points, lines and planes that we specificated in nPoints, nLines and nPlanes
 
                             typeSpinner.add("Land Line");
                             landLine = lineObj.get(0);              //we need to put at least one landLines, later the user specify what line it is
@@ -214,7 +213,7 @@ public class PreviewMenuActivity extends Activity{
                             }
 
 
-                            ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, typeSpinner);           //we create the adapter for menuType Spinner with typeSpinner
+                            ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, typeSpinner);           //we create the adapter for menuType Spinner with typeSpinner
                             menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                             menuType.setAdapter(menuTipoArrayAdapter);
                             menuType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {                           //listener of menuType
@@ -313,7 +312,7 @@ public class PreviewMenuActivity extends Activity{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                ArrayList<PointVector> pointVectors = new ArrayList<PointVector>();       //we pass the points to PointVector to know his X, his Y and his Z
+                ArrayList<PointVector> pointVectors = new ArrayList<>();       //we pass the points to PointVector to know his X, his Y and his Z
                 for(int i = 0; i < Integer.parseInt(nPoints.getText().toString()); i++){
                     Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
                     Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(pointY.get(i).getX(), pointY.get(i).getY()));
@@ -327,7 +326,7 @@ public class PreviewMenuActivity extends Activity{
 
 
 
-                ArrayList<LineVector> lineVectors = new ArrayList<LineVector>();        //we pass the lines to PointVector to know his X, his Y and his Z
+                ArrayList<LineVector> lineVectors = new ArrayList<>();        //we pass the lines to PointVector to know his X, his Y and his Z
                 for(int i = 0; i < Integer.parseInt(nLines.getText().toString()); i ++){
                     Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
                     Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(lineY.get(i).getXa(), lineY.get(i).getYa()));
@@ -343,7 +342,7 @@ public class PreviewMenuActivity extends Activity{
                     lineVectors.add(new LineVector((float)(scalarProductYA.getHeight()/AB.getModule()), (float)(scalarProductXA.getHeight()/AB.getModule()), (float)(scalarProductYA.getLength()/AB.getModule()), (float)(scalarProductYB.getHeight()/AB.getModule()), (float)(scalarProductXB.getHeight()/AB.getModule()), (float)(scalarProductYB.getLength()/AB.getModule())));
                 }
 
-                ArrayList<PlaneVector> planeVectors = new ArrayList<PlaneVector>();         //we pass the planes to PointVector to know his X, his Y and his Z
+                ArrayList<PlaneVector> planeVectors = new ArrayList<>();         //we pass the planes to PointVector to know his X, his Y and his Z
                 for(int i = 0; i < Integer.parseInt(nPlanes.getText().toString()); i++){
                     Vector AB = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(landLine.getXb(), landLine.getYb()));
                     Vector AC = new Vector(new Point(landLine.getXa(), landLine.getYa()), new Point(planeY.get(i).getXa(), planeY.get(i).getYa()));
@@ -513,8 +512,8 @@ public class PreviewMenuActivity extends Activity{
 
     private void copyFile(String inputFile, String outputPath) {
 
-        InputStream in = null;
-        OutputStream out = null;
+        InputStream in;
+        OutputStream out;
         try {
             in = new FileInputStream(inputFile);
             out = new FileOutputStream(outputPath);
@@ -530,8 +529,6 @@ public class PreviewMenuActivity extends Activity{
             out.flush();
             out.close();
 
-        }  catch (FileNotFoundException fnfe1) {
-            Log.e("tag", fnfe1.getMessage());
         }
         catch (Exception e) {
             Log.e("tag", e.getMessage());
