@@ -1,6 +1,13 @@
 # DiedricoApp
 DiedricoApp is a application for android devices (lollipop or earler). This app pass the exercises of descriptive geometry (in spanish Diedrico) to 3d. To use it, you have to take a picture of the exercise and especify what is in the picture, then you can view on 3D.
 
+## Screenshots
+
+<img src="Images/puntoPSD.png" alt="point" height="330"> <img src="Images/punto3DPSD.png" alt="point" height="330"> 
+<img src="Images/lineaPSD.png" alt="line" height="330"> <img src="Images/linea3DPSD.png" alt="line" height="330"> <br>
+<img src="Images/planoPSD.png" alt="plane" height="330"> <img src="Images/plano3DPSD.png" alt="plane" height="330">
+<img src="Images/todoPSD.png" alt="all" height="330"> <img src="Images/todo3DPSD.png" alt="all" height="330">
+
 ## Why?
 The objective of this tool is to help the students to understand more easily how descriptive geometry works and developing the 	shape recognition.
 
