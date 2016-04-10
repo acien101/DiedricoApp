@@ -64,14 +64,12 @@ public class LineSegment extends AsyncTask<Bitmap, Integer, Bitmap>{
         delegate.processFinish(points, lines, null);
     }
 
-    public LineSegment(Context context, ImageView pic, int nPoints, int nLineas, int nPlanes, Spinner numeroPuntos, AsyncResponse delegate){
+    public LineSegment(Context context, ImageView pic, int nPoints, Spinner numeroPuntos, AsyncResponse delegate){
         super();
         this.delegate = delegate;
         this.context = context;
         this.pic = pic;
         this.nPoints = nPoints;
-        this.nLines = nLineas;
-        this.nPlanes = nPlanes;
         this.numeroPuntos = numeroPuntos;
     }
 
