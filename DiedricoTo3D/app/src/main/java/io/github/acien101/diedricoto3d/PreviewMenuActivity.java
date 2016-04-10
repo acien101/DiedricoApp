@@ -1,6 +1,7 @@
 package io.github.acien101.diedricoto3d;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,8 @@ import android.widget.Toast;
  * Created by amil101 on 12/02/16.
  */
 public class PreviewMenuActivity extends Activity{
+    Context context;
+
     ImageView ImageView;                                //the imageView where  be placed the picture
     String file;                                        //picture file name
     Bitmap bmImg;                                        //Bitmap of the picture
@@ -78,6 +81,7 @@ public class PreviewMenuActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview_menu);
 
+        context = this;
         Intent intent = getIntent();
         String originalFile = intent.getStringExtra("file");                                            //we receive te file of the picture
         file = "/storage/emulated/0/Android/data/io.github.acien101.diedricoto3d/files/pic2.jpg";
@@ -168,11 +172,11 @@ public class PreviewMenuActivity extends Activity{
 
 
                         //the Adapter with the points
-                        menuPointArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, pointsForSpinner);
+                        menuPointArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, pointsForSpinner);
                         menuPointArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                         //the adapter with the lines
-                        menuLineArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, linesForSpinner);
+                        menuLineArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, linesForSpinner);
                         menuLineArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                         if(pointObj.size() >= (Integer.parseInt(nPoints.getText().toString())*2)){                 //we need to have equal or more points in nPoints and pointObj
@@ -210,7 +214,7 @@ public class PreviewMenuActivity extends Activity{
                             }
 
 
-                            ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, typeSpinner);           //we create the adapter for menuType Spinner with typeSpinner
+                            ArrayAdapter<String> menuTipoArrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, typeSpinner);           //we create the adapter for menuType Spinner with typeSpinner
                             menuTipoArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                             menuType.setAdapter(menuTipoArrayAdapter);
                             menuType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {                           //listener of menuType
