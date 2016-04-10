@@ -94,12 +94,14 @@ public class PreviewMenuActivity extends Activity{
         ImageView = (ImageView) findViewById(R.id.imagePreview);                                              //the ImageView
         bmImg = BitmapFactory.decodeFile(file);                                                         //We convert the file to Bitmap, for BoofCV
 
+        thresholding = new Thresholding(ImageView, 1);                                                   //We modify the picture first for not crashing
+        thresholding.execute(file);
 
         seekBar = (SeekBar) findViewById(R.id.seekBar);                                                 //our SeekBar
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {                      //the listener for our SeekBar
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {            //we need to know the progress and then we modify our ImageView
-                radiousSeekBar = progress;
+                radiousSeekBar = progress + 1;              //progress can't be 0
             }
 
             @Override
