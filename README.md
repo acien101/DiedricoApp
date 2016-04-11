@@ -11,9 +11,12 @@ DiedricoApp is a application for android devices (kitkat (API level 19) or earle
 ## Why?
 The objective of this tool is to help the students to understand more easily how descriptive geometry works and developing the 	shape recognition.
 
-##What can i do with it?
+## What can i do with it?
 DiedricoApp has support for points, lines and planes, in other words, in thery you can view on 3d any exercise of descriptive geometry.
 With this tool you can experiment, view and learn while you are touching and creating!
+
+## Where I have to download?
+APK here: 
 
 ##How does it work?
 The app consist of a few main classes:
