@@ -1,5 +1,5 @@
 # DiedricoApp
-DiedricoApp is a application for android devices (lollipop or earler). This app pass the exercises of descriptive geometry (in spanish Diedrico) to 3d. To use it, you have to take a picture of the exercise and especify what is in the picture, then you can view on 3D.
+DiedricoApp is a application for android devices (kitkat (API level 19) or earler). This app pass the exercises of descriptive geometry (in spanish Diedrico) to 3d. To use it, you have to take a picture of the exercise and especify what is in the picture, then you can view on 3D.
 
 ## Screenshots
 
@@ -12,7 +12,7 @@ DiedricoApp is a application for android devices (lollipop or earler). This app 
 The objective of this tool is to help the students to understand more easily how descriptive geometry works and developing the 	shape recognition.
 
 ##What can i do with it?
-DiedricoApp has support for points, lines and planes, in other words, in thery you can view en 3d any exercise of descriptive geometry.
+DiedricoApp has support for points, lines and planes, in other words, in thery you can view on 3d any exercise of descriptive geometry.
 With this tool you can experiment, view and learn while you are touching and creating!
 
 ##How does it work?
