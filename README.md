@@ -16,7 +16,7 @@ DiedricoApp has support for points, lines and planes, in other words, in thery y
 With this tool you can experiment, view and learn while you are touching and creating!
 
 ## Where I have to download?
-APK here: 
+APK [here](https://github.com/acien101/DiedricoApp/blob/master/DiedricoApp.apk?raw=true)
 
 ##How does it work?
 The app consist of a few main classes:
