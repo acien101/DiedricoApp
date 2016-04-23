@@ -94,7 +94,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
         //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 0.0f, 1.0f);
+        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 3000L) * 0.060f, 0.0f, 0.0f, 1.0f);
 
         // combine the model with the view matrix
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
