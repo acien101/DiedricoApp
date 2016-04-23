@@ -86,7 +86,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
-        //Assign mRotationMatrix a rotation with the seekbar
+        //Assign mRotationMatrix a rotation with the time
         Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 1.0f, 0.0f);
 
         // combine the model with the view matrix
