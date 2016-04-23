@@ -1,5 +1,6 @@
 package io.github.acien101.diedricoanimation;
 
+import android.graphics.Color;
 import android.opengl.GLES20;
 
 import java.nio.ByteBuffer;
@@ -48,9 +49,10 @@ public class Line {
     private final int vertexCount = 6 / COORS_PER_VERTEX;
     private final int vertexStride = COORS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    public Line(float xA, float yA, float zA, float xB, float yB, float zB){
-
+    public Line(float xA, float yA, float zA, float xB, float yB, float zB, float[] color){
         float[] lineCoords = {xA, yA, zA, xB, yB, zB};
+
+        this.color = color;
 
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 lineCoords.length * 4);

@@ -15,6 +15,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Axis mAxis;
     private Axis mAxis2;
 
+    private Line mLine;
+
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
@@ -43,6 +45,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // initialize a triangle
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
+
+        float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
+        mLine = new Line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, color);
     }
 
     @Override
@@ -101,6 +106,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Draw shape
         mAxis.draw(scratch);
         mAxis2.draw(mMVPMatrix);
+
+        mLine.draw(mMVPMatrix);
 
     }
 
