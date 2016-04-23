@@ -57,17 +57,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onDrawFrame(GL10 unused) {
+        float[] scratch = new float[16];
+
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
 
         // Position the eye behind the origin.
-        final float eyeX = 0.0f;
+        final float eyeX = 4.0f;
         final float eyeY = 1.0f;
-        final float eyeZ = 6f;
+        final float eyeZ = 3f;
 
         // We are looking toward the distance
-        final float lookX = 0.0f;
+        final float lookX = -5.0f;
         final float lookY = -1.0f;
         final float lookZ = -5.0f;
 
@@ -87,16 +89,17 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
         //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 1.0f, 0.0f);
+        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 0.0f, 1.0f);
 
         // combine the model with the view matrix
-        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mRotationMatrix, 0);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
-        // combine the model-view with the projection matrix
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
+
+        // Calculate the projection and view transformation
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         // Draw shape
-        mAxis.draw(mMVPMatrix);
+        mAxis.draw(scratch);
         mAxis2.draw(mMVPMatrix);
 
     }
