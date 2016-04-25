@@ -8,6 +8,8 @@ import android.os.SystemClock;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.vector.PointVector;
+
 /**
  * Created by amil101 on 23/04/16.
  */
@@ -16,6 +18,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Axis mAxis2;
 
     private Line mLine;
+
+    private DiscontinuousLine mDiscontinuousLine;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -48,6 +52,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
         mLine = new Line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, color);
+
+        mDiscontinuousLine = new DiscontinuousLine(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, -1.0f), color);
     }
 
     @Override
@@ -109,6 +115,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         mLine.draw(mMVPMatrix);
 
+        mDiscontinuousLine.draw(mMVPMatrix);
     }
 
     public static int loadShader(int type, String shaderCode){
