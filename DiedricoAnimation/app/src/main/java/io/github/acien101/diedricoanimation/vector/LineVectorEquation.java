@@ -23,6 +23,6 @@ public class LineVectorEquation {
     }
 
     public double getZ(double lambda) {
-        return (point.getPointZ() + (vector.getY() * lambda));
+        return (point.getPointZ() + (vector.getZ() * lambda));
     }
 }
