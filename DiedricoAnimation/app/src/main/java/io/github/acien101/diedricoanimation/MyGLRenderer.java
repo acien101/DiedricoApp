@@ -53,7 +53,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
         mLine = new Line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, color);
 
-        mDiscontinuousLine = new DiscontinuousLine(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, -1.0f), color);
+        mDiscontinuousLine = new DiscontinuousLine(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, -1.0f), color, 20);
     }
 
     @Override

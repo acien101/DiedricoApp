@@ -21,23 +21,27 @@ public class DiscontinuousLine {
 
     List<Line> lines = new ArrayList<>();
 
-    public DiscontinuousLine(PointVector pointA, PointVector pointB, float[] color){
+    int cuts;
+
+    public DiscontinuousLine(PointVector pointA, PointVector pointB, float[] color, int cuts){
+        this.cuts = cuts;
+
         double lambda;
         LineVectorEquation lineVector = new LineVectorEquation(pointA, new SpatialVector(pointA, pointB));
-        for(int i = 0; i < 10; i++){
-            lambda = i/10;
+        for(int i = 0; i < cuts; i++){
+            lambda = ((double)i/(int)cuts);
 
             points.add(new PointVector(lineVector.getX(lambda), lineVector.getY(lambda), lineVector.getZ(lambda)));
         }
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < (cuts/2); i++){
             //lines.add(new Line(points.get(i * 2), points.get((i * 2) + 1), color));
             lines.add(new Line((float) points.get(i * 2).getPointX(), (float) points.get(i * 2).getPointY(), (float) points.get(i * 2).getPointZ(), (float) points.get((i *2) +1).getPointX(), (float) points.get((i * 2) + 1).getPointY(), (float) points.get((i * 2) +1).getPointZ(), color));
         }
     }
 
     public void draw(float[] mMVPMatrix) {
-       for(int i = 0; i < 5; i++){
+       for(int i = 0; i < cuts/2; i++){
                    lines.get(i).draw(mMVPMatrix);
        }
     }
