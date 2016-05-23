@@ -98,8 +98,8 @@
     <orderEntry type="library" exported="" name="feature-0.21" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.1.1" level="project" />
-    <orderEntry type="library" exported="" name="ip-0.21" level="project" />
     <orderEntry type="library" exported="" name="geo-0.21" level="project" />
+    <orderEntry type="library" exported="" name="ip-0.21" level="project" />
     <orderEntry type="library" exported="" name="support-v13-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="core-0.29" level="project" />
     <orderEntry type="library" exported="" name="georegression-0.10" level="project" />

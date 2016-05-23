@@ -15,5 +15,7 @@ public class MainActivity extends AppCompatActivity {
         // as the ContentView for this Activity.
         mGLView = new MyGLSurfaceView(this);
         setContentView(mGLView);
+
+        mGLView.requestRender();
     }
 }
