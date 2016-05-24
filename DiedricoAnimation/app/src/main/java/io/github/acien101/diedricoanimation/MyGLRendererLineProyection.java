@@ -53,7 +53,7 @@ public class MyGLRendererLineProyection implements GLSurfaceView.Renderer{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        mLine = new Line(0.8f, 0.0f, 0.1f, 0.0f, 0.9f, -0.9f, blackColor);
+        mLine = new Line(0.8f, 0.0f, -0.1f, 0.0f, 0.9f, -0.9f, blackColor);
 
         horizontalPoint = new GLPoint(10,10,0.01f, 0.7f);
         verticalPoint = new GLPoint(10,10,0.01f, 0.7f);
@@ -71,6 +71,7 @@ public class MyGLRendererLineProyection implements GLSurfaceView.Renderer{
     }
 
     public void onDrawFrame(GL10 unused) {
+        float[] scratch = new float[16];
         float[] horizontalProyection = new float[16];
         float[] verticalProyection = new float[16];
 
@@ -97,33 +98,38 @@ public class MyGLRendererLineProyection implements GLSurfaceView.Renderer{
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
+
+        Matrix.setIdentityM(mRotationMatrix, 0);
+
+        Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
+
+        //Assign mRotationMatrix a rotation with the seekbar
+        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 0.5f, 0.0f);
+
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+
         Matrix.setIdentityM(mTranslationMatrix, 0);
 
         Matrix.translateM(mTranslationMatrix, 0, 0.8f, 0.0f, -0.1f);
 
-        Matrix.multiplyMM(horizontalProyection, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+        Matrix.multiplyMM(horizontalProyection, 0, scratch, 0, mTranslationMatrix, 0);
 
         horizontalPoint.draw(horizontalProyection);
 
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+
         Matrix.translateM(mTranslationMatrix, 0, 0.0f, 0.9f, -0.9f);
 
-        Matrix.multiplyMM(verticalProyection, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+        Matrix.multiplyMM(verticalProyection, 0, scratch, 0, mTranslationMatrix, 0);
 
         verticalPoint.draw(verticalProyection);
 
-        //Assign mRotationMatrix a rotation with the seekbar
-       // Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 3000L) * 0.060f, 1.0f, 0.0f, 1.0f);
-
-        //Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mRotationMatrix, 0);
-
-        // Calculate the projection and view transformation
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-
         // Draw shape
-        mAxis.draw(mMVPMatrix);
-        mAxis2.draw(mMVPMatrix);
+        mAxis.draw(scratch);
+        mAxis2.draw(scratch);
 
-        mLine.draw(mMVPMatrix);
+        mLine.draw(scratch);
 
     }
 
