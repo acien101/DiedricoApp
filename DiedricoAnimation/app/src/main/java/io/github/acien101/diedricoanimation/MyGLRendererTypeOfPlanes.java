@@ -7,6 +7,8 @@ import android.os.SystemClock;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.vector.PointVector;
+
 /**
  * Created by amil101 on 23/05/16.
  */
@@ -15,7 +17,7 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
     private Axis mAxis2;
 
     private Plane crosswidePlane;
-    private Plane horizontalPlane;
+    private ProyectionPlane horizontalPlane;
     private Plane frontalPlane;
     private Plane horizontalProjectionPlane;
     private Plane verticalProjectionPlane;
@@ -52,6 +54,8 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
         // initialize a triangle
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
+
+        horizontalPlane = new ProyectionPlane(new PointVector(0.0f, 0.5f, -0.1f), new PointVector(0.0f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.1f));
 
         /*
         crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.9f);
@@ -119,6 +123,7 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
         mAxis.draw(scratch);
         mAxis2.draw(scratch);
 
+        horizontalPlane.draw(scratch);
 
         /*
         crosswidePlane.draw(scratch);
