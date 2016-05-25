@@ -18,12 +18,12 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
 
     private Plane crosswidePlane;
     private ProyectionPlane horizontalPlane;
-    private Plane frontalPlane;
-    private Plane horizontalProjectionPlane;
-    private Plane verticalProjectionPlane;
-    private Plane groundLineParallelPlane;
-    private Plane groundLineCuttedPlane;
-    private Plane profilePlane;
+    private ProyectionPlane frontalPlane;
+    private ProyectionPlane horizontalProjectionPlane;
+    private ProyectionPlane verticalProjectionPlane;
+    private ProyectionPlane groundLineParallelPlane;
+    private ProyectionPlane groundLineCuttedPlane;
+    private ProyectionPlane profilePlane;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -55,20 +55,16 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        horizontalPlane = new ProyectionPlane(new PointVector(0.0f, 0.5f, -0.1f), new PointVector(0.0f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.1f));
-
-        /*
         crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.9f);
-        horizontalPlane = new Plane(-0.1f, 0.5f, 1.0f, -0.1f);
-        frontalPlane = new Plane(-0.1f, 1.0f, 0.5f, 1.0f);
+        horizontalPlane = new ProyectionPlane(new PointVector(0.0f, 0.5f, -0.1f), new PointVector(0.0f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.1f));
+        frontalPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.0f), new PointVector(0.5f, 0.0f, -1.0f), new PointVector(0.5f, 1.0f, -1.0f), new PointVector(0.5f, 1.0f, 0.0f));
+        horizontalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, -0.1f), new PointVector(0.0f, 1.0f, -0.1f), new PointVector(0.5f, 1.0f, -1.0f), new PointVector(0.5f, 0.0f, -1.0f));
+        verticalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, -0.1f), new PointVector(0.0f, 1.0f,-1.0f), new PointVector(1.0f, 1.0f , -1.0f), new PointVector(1.0f, 0.0f, -0.1f));;
+        groundLineParallelPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.0f), new PointVector(0.5f, 0.0f, -1.0f), new PointVector(0.0f, 0.7f, -1.0f), new PointVector(0.0f, 0.7f, 0.0f));;
+        groundLineCuttedPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(1.0f, 1.0f, -1.0f), new PointVector(0.0f, 0.0f, -1.0f));;
+        profilePlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, -0.5f), new PointVector(1.0f, 0.0f, -0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 1.0f, -0.5f));;
 
-        horizontalProjectionPlane;
-        verticalProjectionPlane;
-        groundLineParallelPlane;
-        groundLineCuttedPlane;
-        profilePlane;
 
-        */
     }
 
     @Override
@@ -123,14 +119,16 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
         mAxis.draw(scratch);
         mAxis2.draw(scratch);
 
-        horizontalPlane.draw(scratch);
-
-        /*
         crosswidePlane.draw(scratch);
         horizontalPlane.draw(scratch);
         frontalPlane.draw(scratch);
+        horizontalProjectionPlane.draw(scratch);
+        verticalProjectionPlane.draw(scratch);
+        groundLineParallelPlane.draw(scratch);
+        groundLineCuttedPlane.draw(scratch);
+        profilePlane.draw(scratch);
 
-        */
+
 
 
     }
