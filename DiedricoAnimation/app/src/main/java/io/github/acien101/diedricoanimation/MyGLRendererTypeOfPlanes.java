@@ -14,7 +14,14 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
     private Axis mAxis;
     private Axis mAxis2;
 
-    
+    private Plane crosswidePlane;
+    private Plane horizontalPlane;
+    private Plane frontalPlane;
+    private Plane horizontalProjectionPlane;
+    private Plane verticalProjectionPlane;
+    private Plane groundLineParallelPlane;
+    private Plane groundLineCuttedPlane;
+    private Plane profilePlane;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -46,6 +53,18 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
+        /*
+        crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.9f);
+        horizontalPlane = new Plane(-0.1f, 0.5f, 1.0f, -0.1f);
+        frontalPlane = new Plane(-0.1f, 1.0f, 0.5f, 1.0f);
+
+        horizontalProjectionPlane;
+        verticalProjectionPlane;
+        groundLineParallelPlane;
+        groundLineCuttedPlane;
+        profilePlane;
+
+        */
     }
 
     @Override
@@ -100,6 +119,13 @@ public class MyGLRendererTypeOfPlanes implements GLSurfaceView.Renderer{
         mAxis.draw(scratch);
         mAxis2.draw(scratch);
 
+
+        /*
+        crosswidePlane.draw(scratch);
+        horizontalPlane.draw(scratch);
+        frontalPlane.draw(scratch);
+
+        */
 
 
     }

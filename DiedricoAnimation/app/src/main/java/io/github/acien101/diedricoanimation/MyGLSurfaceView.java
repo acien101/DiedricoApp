@@ -8,7 +8,7 @@ import android.opengl.GLSurfaceView;
  */
 class MyGLSurfaceView extends GLSurfaceView {
 
-    private final MyGLRendererTypeOfLines mRenderer;
+    private final MyGLRendererTypeOfPlanes mRenderer;
 
     public MyGLSurfaceView(Context context){
         super(context);
@@ -16,7 +16,7 @@ class MyGLSurfaceView extends GLSurfaceView {
         // Create an OpenGL ES 2.0 context
         setEGLContextClientVersion(2);
 
-        mRenderer = new MyGLRendererTypeOfLines();
+        mRenderer = new MyGLRendererTypeOfPlanes();
 
         // Set the Renderer for drawing on the GLSurfaceView
         setRenderer(mRenderer);
