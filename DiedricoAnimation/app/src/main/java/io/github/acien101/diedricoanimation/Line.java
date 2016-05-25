@@ -153,5 +153,9 @@ public class Line {
         GLES20.glDisableVertexAttribArray(mPositionHandle);
     }
 
+    public void setVisibility(float visibility){
+        this.color[3] = visibility;
+    }
+
 
 }
