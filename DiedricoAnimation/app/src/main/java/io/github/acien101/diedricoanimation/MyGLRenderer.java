@@ -19,6 +19,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private Line mLine;
 
+    private ModelTest mModel;
+
     private DiscontinuousLine mDiscontinuousLine;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
@@ -52,6 +54,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
         mLine = new Line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, color);
+
+        mModel = new ModelTest();
 
         mDiscontinuousLine = new DiscontinuousLine(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f), color, 20);
     }
@@ -112,6 +116,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Draw shape
         mAxis.draw(scratch);
         mAxis2.draw(mMVPMatrix);
+
+        mModel.draw(mMVPMatrix);
 
         mLine.draw(mMVPMatrix);
 
