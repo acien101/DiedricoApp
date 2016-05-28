@@ -21,13 +21,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private ModelTest mModel;
 
-    private DiscontinuousLine mDiscontinuousLine;
-
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
+    private final float[] mTranslationMatrix = new float[16];
 
 
     static float squareCoords[] = {
@@ -56,8 +55,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mLine = new Line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, color);
 
         mModel = new ModelTest();
-
-        mDiscontinuousLine = new DiscontinuousLine(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f), color, 20);
     }
 
     @Override
@@ -73,6 +70,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     public void onDrawFrame(GL10 unused) {
         float[] scratch = new float[16];
+        float[] bienvenido = new float[16];
 
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
@@ -104,24 +102,34 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
         //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 3000L) * 0.060f, 0.0f, 0.0f, 1.0f);
-
-        // combine the model with the view matrix
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
-
+        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 0.5f, 0.0f);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
+        // combine the model with the view matrix
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+
+        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, -0.5f);
+
+        Matrix.multiplyMM(bienvenido, 0, scratch, 0, mTranslationMatrix, 0);
+
+        Matrix.setIdentityM(mRotationMatrix, 0);
+
+        Matrix.rotateM(mRotationMatrix, 0, 90, 0.0f, 1.0f, 0.0f);
+
+        Matrix.multiplyMM(bienvenido, 0, bienvenido, 0, mRotationMatrix, 0);
+
+
         // Draw shape
         mAxis.draw(scratch);
-        mAxis2.draw(mMVPMatrix);
+        mAxis2.draw(scratch);
 
-        mModel.draw(mMVPMatrix);
+        mModel.draw(bienvenido);
 
-        mLine.draw(mMVPMatrix);
-
-        mDiscontinuousLine.draw(mMVPMatrix);
+        mLine.draw(scratch);
     }
 
     public static int loadShader(int type, String shaderCode){
