@@ -25,4 +25,8 @@ class MyGLSurfaceView extends GLSurfaceView {
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
     }
+
+    void setCamera(float x, float y, float z){
+        mRenderer.addCameraPosition(x, y, z);
+    }
 }

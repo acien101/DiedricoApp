@@ -5,6 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
+import android.util.Log;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -28,6 +29,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mRotationMatrix = new float[16];
     private final float[] mTranslationMatrix = new float[16];
 
+    static float viewX = 0.0f;
+    private float viewY = 0.0f;
 
     static float squareCoords[] = {
             -1.0f,  0.0f, 0.0f,   // top left
@@ -75,6 +78,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
+        // Set the view matrix. This matrix can be said to represent the camera position.
+        // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
+        // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 
         // Position the eye behind the origin.
         final float eyeX = 4.0f;
@@ -91,9 +97,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         final float upY = 1.0f;
         final float upZ = 0.0f;
 
-        // Set the view matrix. This matrix can be said to represent the camera position.
-        // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
-        // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
         // Create a rotation and translation for the cube
@@ -101,8 +104,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
+
+        Log.i("aa", " X " + viewX);
         //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 0.5f, 0.0f);
+        Matrix.rotateM(mRotationMatrix, 0, viewX, 0.0f, 0.1f, 0.0f);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
@@ -143,5 +148,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glCompileShader(shader);
 
         return shader;
+    }
+
+    void addCameraPosition(float x, float y, float z){
+        Log.i("asdf", " X " + viewX + " Y " + viewY);
+        viewX = viewX + x;
+        viewY = viewY + y;
+        //eyeZ = eyeZ + z;
     }
 }
