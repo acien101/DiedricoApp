@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case MotionEvent.ACTION_MOVE:
                         moveX = (event.getX() - initX);
-                        moveY = (event.getY() - initY);
+                        moveY = -(event.getY() - initY);
 
                         myGLSurfaceView.setCamera(moveX, moveY, 0);
                         Log.i("muevo", "X " + moveX + " Y " + moveY);
