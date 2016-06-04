@@ -1,6 +1,7 @@
 package io.github.acien101.diedricoanimation;
 
 import android.opengl.GLSurfaceView;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     float moveX;    //Is the value of the X movement
     float moveY;    //Is the value of the Y movement
 
+    boolean pressed;
+    long currentTime;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,32 +29,62 @@ public class MainActivity extends AppCompatActivity {
         // as the ContentView for this Activity.
         mGLView = new MyGLSurfaceView(this);
         myGLSurfaceView = new MyGLSurfaceView(this);
+        threadTime();
+        pressed = false;
         mGLView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        myGLSurfaceView.setNotPressed(false);
+
                         initX = event.getX();
                         initY = event.getY();
 
                         Log.i("toco", "X " + event.getX() + " Y " + event.getY());
+
+                        pressed = true;
+                        return true;
+
 
                     case MotionEvent.ACTION_MOVE:
                         moveX = (event.getX() - initX);
                         moveY = -(event.getY() - initY);
 
                         myGLSurfaceView.setCamera(moveX, moveY, 0);
-                        Log.i("muevo", "X " + moveX + " Y " + moveY);
 
                         initX = event.getX();
                         initY = event.getY();
-            }
 
-            return true;
-        }
-    });
+                        return true;
+
+                    case MotionEvent.ACTION_UP:
+                        pressed = false;
+                        threadTime();
+                        return true;
+                }
+                return false;
+            }
+        });
         setContentView(mGLView);
 
         mGLView.requestRender();
+    }
+
+    public void threadTime(){
+        new Thread(new Runnable() {
+            public void run() {
+                if(pressed == false) {
+                    currentTime = SystemClock.currentThreadTimeMillis();
+                    while (pressed == false) {
+                        if((SystemClock.currentThreadTimeMillis() - currentTime) > 3000){
+                            Log.i("asdf", "aaaa");
+                            myGLSurfaceView.setNotPressed(true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 }

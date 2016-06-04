@@ -29,4 +29,8 @@ class MyGLSurfaceView extends GLSurfaceView {
     void setCamera(float x, float y, float z){
         mRenderer.addCameraPosition(x, y, z);
     }
+
+    void setNotPressed(boolean notPressed){
+        mRenderer.setNotPressed(notPressed);
+    }
 }

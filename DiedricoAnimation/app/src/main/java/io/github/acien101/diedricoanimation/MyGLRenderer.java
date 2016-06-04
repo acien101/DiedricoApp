@@ -32,6 +32,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     static float viewX = 0.0f;
     static float viewY = 0.0f;
 
+    static boolean notPressed;
+
     static float squareCoords[] = {
             -1.0f,  0.0f, 0.5f,   // top left
             1.0f, 0.0f, 0.5f,   // bottom left
@@ -104,11 +106,14 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
-
-        Log.i("aa", " X " + viewX);
-        //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, viewX, 0.0f, 0.1f, 0.0f);
-        Matrix.rotateM(mRotationMatrix, 0, viewY, 0.0f, 0.0f, 0.1f);
+        if(notPressed){
+            Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 1.0f, 0.0f);
+        }
+        else{
+            //Assign mRotationMatrix a rotation with the time
+            Matrix.rotateM(mRotationMatrix, 0, viewX, 0.0f, 0.1f, 0.0f);
+            Matrix.rotateM(mRotationMatrix, 0, viewY, 0.0f, 0.0f, 0.1f);
+        }
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
@@ -152,9 +157,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
 
     void addCameraPosition(float x, float y, float z){
-        Log.i("asdf", " X " + viewX + " Y " + viewY);
         viewX = viewX + x;
         viewY = viewY + y;
         //eyeZ = eyeZ + z;
+    }
+
+    void setNotPressed(boolean notPressed){
+        this.notPressed = notPressed;
     }
 }
