@@ -30,19 +30,19 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mTranslationMatrix = new float[16];
 
     static float viewX = 0.0f;
-    private float viewY = 0.0f;
+    static float viewY = 0.0f;
 
     static float squareCoords[] = {
-            -1.0f,  0.0f, 0.0f,   // top left
-            1.0f, 0.0f, 0.0f,   // bottom left
-            1.0f, 0.0f, -1.0f,   // bottom right
-            -1.0f,  0.0f, -1.0f }; // top right
+            -1.0f,  0.0f, 0.5f,   // top left
+            1.0f, 0.0f, 0.5f,   // bottom left
+            1.0f, 0.0f, -0.5f,   // bottom right
+            -1.0f,  0.0f, -0.5f }; // top right
 
     static float squareCoords2[] = {
-            0.0f,  1.0f, 0.0f,   // top left
-            0.0f, -1.0f, 0.0f,   // bottom left
-            0.0f, -1.0f, -1.0f,   // bottom right
-            0.0f,  1.0f, -1.0f }; // top right
+            0.0f,  1.0f, 0.5f,   // top left
+            0.0f, -1.0f, 0.5f,   // bottom left
+            0.0f, -1.0f, -0.5f,   // bottom right
+            0.0f,  1.0f, -0.5f }; // top right
 
 
     @Override
@@ -55,7 +55,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mAxis2 = new Axis(squareCoords2);
 
         float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
-        mLine = new Line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, color);
+        mLine = new Line(0.0f, 0.0f, 0.5f, 0.0f, 0.0f, -0.5f, color);
 
         mModel = new ModelTest();
     }
@@ -108,6 +108,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Log.i("aa", " X " + viewX);
         //Assign mRotationMatrix a rotation with the time
         Matrix.rotateM(mRotationMatrix, 0, viewX, 0.0f, 0.1f, 0.0f);
+        Matrix.rotateM(mRotationMatrix, 0, viewY, 0.0f, 0.0f, 0.1f);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
@@ -117,7 +118,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         Matrix.setIdentityM(mTranslationMatrix, 0);
 
-        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, -0.5f);
+        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, 0.0f);
 
         Matrix.multiplyMM(bienvenido, 0, scratch, 0, mTranslationMatrix, 0);
 
