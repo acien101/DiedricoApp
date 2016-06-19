@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/*
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
         mGLView = new MyGLSurfaceView(this);
@@ -73,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mGLView);
 
         mGLView.requestRender();
-    }
 
+        */
+    }
+/*
     public void threadTime(){
         new Thread(new Runnable() {
             public void run() {
@@ -82,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                     currentTime = SystemClock.currentThreadTimeMillis();
                     while (pressed == false) {
                         if((SystemClock.currentThreadTimeMillis() - currentTime) > 3000){
-                            Log.i("asdf", "aaaa");
                             myGLSurfaceView.setNotPressed(true);
                             break;
                         }
@@ -97,4 +98,6 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
     }
+    */
+
 }

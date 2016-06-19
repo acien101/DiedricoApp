@@ -31,7 +31,12 @@ public class MyGLRendererPointProyection implements GLSurfaceView.Renderer{
     private final float[] mViewMatrix = new float[16];
     private final float[] mTranslationMatrix = new float[16];
     float blackColor[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    private final float[] mRotationMatrix = new float[16];
 
+    static float viewX = 0.0f;
+    static float viewY = 0.0f;
+
+    static boolean notPressed;
 
     static float squareCoords[] = {
             -1.0f,  0.0f, 0.0f,   // top left
@@ -82,6 +87,7 @@ public class MyGLRendererPointProyection implements GLSurfaceView.Renderer{
 
     public void onDrawFrame(GL10 unused) {
         float[] scratch = new float[16];
+        float[] rotation = new float[16];
 
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
@@ -106,32 +112,40 @@ public class MyGLRendererPointProyection implements GLSurfaceView.Renderer{
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
-        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.setIdentityM(mRotationMatrix, 0);
 
-        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, -0.5f);
+        Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
-
-/*        //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 3000L) * 0.060f, 0.0f, 0.0f, 1.0f);
-
-        // combine the model with the view matrix
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
-*/
+        if(notPressed){
+            Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 1.0f, 0.0f);
+        }
+        else{
+            //Assign mRotationMatrix a rotation with the time
+            Matrix.rotateM(mRotationMatrix, 0, viewX, 0.0f, 0.1f, 0.0f);
+            Matrix.rotateM(mRotationMatrix, 0, viewY, 0.0f, 0.0f, 0.1f);
+        }
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
+        Matrix.multiplyMM(rotation, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+
+        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, -0.5f);
+
+        Matrix.multiplyMM(scratch, 0, rotation, 0, mTranslationMatrix, 0);
+
+        //Matrix.multiplyMM(scratch, 0, rotation, 0, scratch, 0);
+
         // Draw shape
-        mAxis.draw(mMVPMatrix);
-        mAxis2.draw(mMVPMatrix);
+        mAxis.draw(rotation);
+        mAxis2.draw(rotation);
 
-        mLine.draw(mMVPMatrix);
+        mLine.draw(rotation);
 
-        mDiscontinuousLineX.draw(mMVPMatrix);
-        mDicontinuousLineY.draw(mMVPMatrix);
-
-        //Log.i("counter", Double.toString(counter));
+        mDiscontinuousLineX.draw(rotation);
+        mDicontinuousLineY.draw(rotation);
 
         mPoint.draw(scratch);
 
@@ -148,5 +162,15 @@ public class MyGLRendererPointProyection implements GLSurfaceView.Renderer{
         GLES20.glCompileShader(shader);
 
         return shader;
+    }
+
+    void addCameraPosition(float x, float y, float z){
+        viewX = viewX + x;
+        viewY = viewY + y;
+        //eyeZ = eyeZ + z;
+    }
+
+    void setNotPressed(boolean notPressed){
+        this.notPressed = notPressed;
     }
 }
