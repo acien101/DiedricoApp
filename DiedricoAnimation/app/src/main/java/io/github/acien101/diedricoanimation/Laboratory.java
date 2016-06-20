@@ -1,16 +1,17 @@
 package io.github.acien101.diedricoanimation;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
  * Created by amil101 on 6/06/16.
@@ -21,6 +22,8 @@ public class Laboratory extends Activity{
 
     LinearLayout projection;
     LinearLayout layoutForSurfaceView;
+
+    ImageView diedrico;
 
     float initX;      //Is the value of the X coordenate when we press the screen
     float initY;      //The Y
@@ -73,6 +76,9 @@ public class Laboratory extends Activity{
 
         projection = (LinearLayout) findViewById(R.id.layoutForProjections);
         projection.setOnClickListener(projectionClick());
+
+        diedrico = (ImageView) findViewById(R.id.projection);
+        new CreateDiedrico(new PointVector(100.0f, 50.0f, 50.0f), diedrico);
     }
 
     View.OnClickListener projectionClick(){

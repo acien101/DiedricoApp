@@ -22,16 +22,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:id="@+id/layoutForProjections"
                 android:layout_weight="9"
-                android:background="#ff0000">
+                android:background="#000000">
 
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:text="texto"
-                    android:background="#ff0000"/>
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="1dp"
+                    android:id="@+id/projection"
+                    android:background="#ffffff"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"></LinearLayout>
+
             </LinearLayout>
     </LinearLayout>
 
