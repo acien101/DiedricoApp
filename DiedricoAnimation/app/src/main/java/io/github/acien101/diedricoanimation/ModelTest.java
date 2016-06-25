@@ -5,7 +5,6 @@ import android.opengl.GLES20;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import io.github.acien101.diedricoanimation.binevenidoPrueba;
 
 /**
  * Created by amil101 on 26/03/16.
@@ -38,7 +37,7 @@ public class ModelTest {
     private int mPositionHandle;
     private int mColorHandle;
 
-    private final int vertexCount = binevenidoPrueba.cubeVerts.length / COORDS_PER_VERTEX;
+    private final int vertexCount = BienvenidoPrueba.cubeVerts.length / COORDS_PER_VERTEX;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
     private FloatBuffer vertexBuffer;
@@ -53,14 +52,14 @@ public class ModelTest {
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (number of coordinate values * 4 bytes per float)
-                binevenidoPrueba.cubeVerts.length * 4);
+                BienvenidoPrueba.cubeVerts.length * 4);
         // use the device hardware's native byte order
         bb.order(ByteOrder.nativeOrder());
 
         // create a floating point buffer from the ByteBuffer
         vertexBuffer = bb.asFloatBuffer();
         // add the coordinates to the FloatBuffer
-        vertexBuffer.put(binevenidoPrueba.cubeVerts);
+        vertexBuffer.put(BienvenidoPrueba.cubeVerts);
         // set the buffer to read the first coordinate
         vertexBuffer.position(0);
 

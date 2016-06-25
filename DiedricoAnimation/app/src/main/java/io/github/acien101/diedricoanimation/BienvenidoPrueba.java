@@ -3,7 +3,7 @@ package io.github.acien101.diedricoanimation;
 /**
  * Created by amil101 on 27/05/16.
  */
-public class binevenidoPrueba {
+public class BienvenidoPrueba {
     public static final int cubeVertsCount = 8364;
     public static final float cubeVerts [] = {
             // f 11//1 1//1 12//1
