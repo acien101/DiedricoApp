@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     boolean pressed;
     long currentTime;
 
+    MyGLRendererCamera renderer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +57,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
-        mGLView = new MyGLSurfaceView(this);
-        myGLSurfaceView = new MyGLSurfaceView(this);
+
+        renderer = new MyGLRenderer();
+        mGLView = new MyGLSurfaceView(this, renderer);
+        myGLSurfaceView = new MyGLSurfaceView(this, renderer);
+
         threadTime();
         pressed = false;
+
         mGLView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        myGLSurfaceView.setNotPressed(false);
+                        renderer.setNotPressed(false);
 
                         initX = event.getX();
                         initY = event.getY();
@@ -79,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         moveX = (event.getX() - initX);
                         moveY = -(event.getY() - initY);
 
-                        myGLSurfaceView.setCamera(moveX, moveY, 0);
+                        renderer.setCamera(moveX, moveY, 0);
 
                         initX = event.getX();
                         initY = event.getY();
@@ -101,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
     public void threadTime(){
         new Thread(new Runnable() {
             public void run() {
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     currentTime = SystemClock.currentThreadTimeMillis();
                     while (pressed == false) {
                         if((SystemClock.currentThreadTimeMillis() - currentTime) > 3000){
-                            myGLSurfaceView.setNotPressed(true);
+                            renderer.setNotPressed(true);
                             break;
                         }
                     }
@@ -116,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }).start();
     }
+
+
 
     public void createDiedrico(){
         RelativeLayout relativeLayout = new RelativeLayout(getApplicationContext());
@@ -155,33 +164,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.welcome) {
-            // Handle the camera action
+            changeRenderer(new MyGLRenderer());
         } else if (id == R.id.edges) {
-
+            changeRenderer(new MyGLRendererPointProyection());
         } else if (id == R.id.pointProjection) {
-            myGLSurfaceView.pointProjection = true;
-
-            content_main.removeAllViews();
-            content_main.addView(mGLView);
-            mGLView.requestRender();
-
+            changeRenderer(new MyGLRendererPointProyection());
         } else if (id == R.id.lineProjection) {
-
+            changeRenderer(new MyGLRendererLineProyection());
         } else if (id == R.id.typeOflines) {
-
+            changeRenderer(new MyGLRendererTypeOfLines());
         } else if (id == R.id.typeOfPlanes) {
-
+            changeRenderer(new MyGLRendererTypeOfPlanes());
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void setSurfaceView(){
+    public void changeRenderer(MyGLRendererCamera renderer){
+        mGLView = new MyGLSurfaceView(this, renderer);
+        myGLSurfaceView = new MyGLSurfaceView(this, renderer);
 
         content_main.removeAllViews();
         content_main.addView(mGLView);
         mGLView.requestRender();
-
     }
 }

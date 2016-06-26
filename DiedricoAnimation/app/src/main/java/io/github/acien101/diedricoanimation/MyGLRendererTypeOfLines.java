@@ -10,7 +10,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by amil101 on 23/05/16.
  */
-public class MyGLRendererTypeOfLines implements GLSurfaceView.Renderer{
+public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
     private Axis mAxis;
     private Axis mAxis2;
 

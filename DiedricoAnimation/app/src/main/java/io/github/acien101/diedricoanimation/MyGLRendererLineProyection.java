@@ -13,7 +13,7 @@ import io.github.acien101.diedricoanimation.vector.PointVector;
 /**
  * Created by amil101 on 23/05/16.
  */
-public class MyGLRendererLineProyection implements GLSurfaceView.Renderer{
+public class MyGLRendererLineProyection extends MyGLRendererCamera{
     private Axis mAxis;
     private Axis mAxis2;
 

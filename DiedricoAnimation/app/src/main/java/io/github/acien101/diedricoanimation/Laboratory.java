@@ -17,6 +17,8 @@ import io.github.acien101.diedricoanimation.vector.PointVector;
  * Created by amil101 on 6/06/16.
  */
 public class Laboratory extends Activity{
+
+    /*
     private GLSurfaceView mGLView;
     private MyGLSurfaceView myGLSurfaceView;
 
@@ -119,5 +121,5 @@ public class Laboratory extends Activity{
             }
         }).start();
     }
-
+*/
 }

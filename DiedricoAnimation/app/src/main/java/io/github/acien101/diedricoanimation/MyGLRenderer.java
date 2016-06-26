@@ -14,7 +14,7 @@ import io.github.acien101.diedricoanimation.vector.PointVector;
 /**
  * Created by amil101 on 23/04/16.
  */
-public class MyGLRenderer implements GLSurfaceView.Renderer {
+public class MyGLRenderer extends MyGLRendererCamera {
     private Axis mAxis;
     private Axis mAxis2;
 
@@ -28,11 +28,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
     private final float[] mTranslationMatrix = new float[16];
-
-    static float viewX = 0.0f;
-    static float viewY = 0.0f;
-
-    static boolean notPressed;
 
     static float squareCoords[] = {
             -1.0f,  0.0f, 0.5f,   // top left
@@ -154,15 +149,5 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glCompileShader(shader);
 
         return shader;
-    }
-
-    void addCameraPosition(float x, float y, float z){
-        viewX = viewX + x;
-        viewY = viewY + y;
-        //eyeZ = eyeZ + z;
-    }
-
-    void setNotPressed(boolean notPressed){
-        this.notPressed = notPressed;
     }
 }
