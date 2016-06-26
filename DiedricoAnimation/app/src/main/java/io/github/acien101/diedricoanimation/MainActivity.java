@@ -167,6 +167,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.edges) {
 
         } else if (id == R.id.pointProjection) {
+            myGLSurfaceView.pointProjection = true;
+
+            content_main.removeAllViews();
+            content_main.addView(mGLView);
+            mGLView.requestRender();
 
         } else if (id == R.id.lineProjection) {
 
@@ -178,5 +183,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void setSurfaceView(){
+
+        content_main.removeAllViews();
+        content_main.addView(mGLView);
+        mGLView.requestRender();
+
     }
 }

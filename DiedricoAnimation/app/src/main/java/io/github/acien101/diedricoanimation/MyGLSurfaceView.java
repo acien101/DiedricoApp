@@ -9,17 +9,27 @@ import android.opengl.GLSurfaceView;
 class MyGLSurfaceView extends GLSurfaceView {
 
     private final MyGLRenderer mRenderer;
+    private final MyGLRendererPointProyection myGLRendererPointProyection;
+
+    public static boolean pointProjection = false;
 
     public MyGLSurfaceView(Context context){
         super(context);
 
         // Create an OpenGL ES 2.0 context
         setEGLContextClientVersion(2);
-
+        myGLRendererPointProyection = new MyGLRendererPointProyection();
         mRenderer = new MyGLRenderer();
 
-        // Set the Renderer for drawing on the GLSurfaceView
-        setRenderer(mRenderer);
+        if(pointProjection == true){
+            // Set the Renderer for drawing on the GLSurfaceView
+            setRenderer(myGLRendererPointProyection);
+        }
+        else{
+            // Set the Renderer for drawing on the GLSurfaceView
+            setRenderer(mRenderer);
+
+        }
 
         // Render the view only when there is a change in the drawing data
         setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
