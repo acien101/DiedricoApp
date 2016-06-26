@@ -84,7 +84,7 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
         // Position the eye behind the origin.
         final float eyeX = 4.0f;
         final float eyeY = 1.0f;
-        final float eyeZ = 3f;
+        final float eyeZ = 4f;
 
         // We are looking toward the distance
         final float lookX = -5.0f;
@@ -101,14 +101,21 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
         // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-
+        // Create a rotation and translation for the cube
         Matrix.setIdentityM(mRotationMatrix, 0);
 
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
-        //Assign mRotationMatrix a rotation with the seekbar
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 0.5f, 0.0f);
+        if(notPressed){
+            Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 1.0f, 0.0f);
+        }
+        else{
+            //Assign mRotationMatrix a rotation with the time
+            Matrix.rotateM(mRotationMatrix, 0, viewX, 0.0f, 0.1f, 0.0f);
+            Matrix.rotateM(mRotationMatrix, 0, viewY, 0.0f, 0.0f, 0.1f);
+        }
+
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
