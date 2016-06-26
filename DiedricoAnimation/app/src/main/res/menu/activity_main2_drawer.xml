@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_camara" android:icon="@android:drawable/ic_menu_camera"
-            android:title="Import" />
-        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
 
-    <item android:title="Communicate">
+    <item android:title="Get Started">
         <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
-                android:title="Share" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
-                android:title="Send" />
+            <item android:id="@+id/welcome" android:title="Welcome" />
+            <item android:id="@+id/edges" android:title="Edges" />
         </menu>
     </item>
 
+    <item android:title="Projections">
+        <menu>
+            <item android:id="@+id/pointProjection" android:title="Point projection" />
+            <item android:id="@+id/lineProjection" android:title="Line projection" />
+        </menu>
+    </item>
+
+    <item android:title="Type of lines">
+        <menu>
+            <item android:id="@+id/typeOflines" android:title="Type of lines" />
+            <item android:id="@+id/typeOfPlanes" android:title="Type of planes" />
+        </menu>
+    </item>
 </menu>
