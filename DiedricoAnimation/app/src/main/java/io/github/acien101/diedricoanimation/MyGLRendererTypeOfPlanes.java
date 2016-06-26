@@ -34,17 +34,16 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
 
 
     static float squareCoords[] = {
-            -1.0f,  0.0f, 0.0f,   // top left
-            1.0f, 0.0f, 0.0f,   // bottom left
-            1.0f, 0.0f, -1.0f,   // bottom right
-            -1.0f,  0.0f, -1.0f }; // top right
+            -1.0f,  0.0f, 0.5f,   // top left
+            1.0f, 0.0f, 0.5f,   // bottom left
+            1.0f, 0.0f, -0.5f,   // bottom right
+            -1.0f,  0.0f, -0.5f }; // top right
 
     static float squareCoords2[] = {
-            0.0f,  1.0f, 0.0f,   // top left
-            0.0f, -1.0f, 0.0f,   // bottom left
-            0.0f, -1.0f, -1.0f,   // bottom right
-            0.0f,  1.0f, -1.0f }; // top right
-
+            0.0f,  1.0f, 0.5f,   // top left
+            0.0f, -1.0f, 0.5f,   // bottom left
+            0.0f, -1.0f, -0.5f,   // bottom right
+            0.0f,  1.0f, -0.5f }; // top right
 
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
@@ -55,16 +54,14 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.9f);
-        horizontalPlane = new ProyectionPlane(new PointVector(0.0f, 0.5f, -0.1f), new PointVector(0.0f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.9f), new PointVector(0.9f, 0.5f, -0.1f));
-        frontalPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.0f), new PointVector(0.5f, 0.0f, -1.0f), new PointVector(0.5f, 1.0f, -1.0f), new PointVector(0.5f, 1.0f, 0.0f));
-        horizontalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, -0.1f), new PointVector(0.0f, 1.0f, -0.1f), new PointVector(0.5f, 1.0f, -1.0f), new PointVector(0.5f, 0.0f, -1.0f));
-        verticalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, -0.1f), new PointVector(0.0f, 1.0f,-1.0f), new PointVector(1.0f, 1.0f , -1.0f), new PointVector(1.0f, 0.0f, -0.1f));;
-        groundLineParallelPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.0f), new PointVector(0.5f, 0.0f, -1.0f), new PointVector(0.0f, 0.7f, -1.0f), new PointVector(0.0f, 0.7f, 0.0f));;
-        groundLineCuttedPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(1.0f, 1.0f, -1.0f), new PointVector(0.0f, 0.0f, -1.0f));;
-        profilePlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, -0.5f), new PointVector(1.0f, 0.0f, -0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 1.0f, -0.5f));;
-
-
+        crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.4f);
+        horizontalPlane = new ProyectionPlane(new PointVector(0.0f, 0.5f, 0.4f), new PointVector(0.0f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, 0.4f));
+        frontalPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 1.0f, 0.4f));
+        horizontalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f, 0.4f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 0.0f, -0.5f));
+        verticalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f,-0.5f), new PointVector(1.0f, 1.0f , -0.5f), new PointVector(1.0f, 0.0f, 0.4f));
+        groundLineParallelPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.0f, 0.7f, -0.5f), new PointVector(0.0f, 0.7f, 0.5f));
+        groundLineCuttedPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.5f), new PointVector(1.0f, 1.0f, 0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 0.0f, -0.5f));
+        profilePlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f));
     }
 
     @Override
