@@ -31,16 +31,16 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
 
 
     static float squareCoords[] = {
-            -1.0f,  0.0f, 0.0f,   // top left
-            1.0f, 0.0f, 0.0f,   // bottom left
-            1.0f, 0.0f, -1.0f,   // bottom right
-            -1.0f,  0.0f, -1.0f }; // top right
+            -1.0f,  0.0f, 0.5f,   // top left
+            1.0f, 0.0f, 0.5f,   // bottom left
+            1.0f, 0.0f, -0.5f,   // bottom right
+            -1.0f,  0.0f, -0.5f }; // top right
 
     static float squareCoords2[] = {
-            0.0f,  1.0f, 0.0f,   // top left
-            0.0f, -1.0f, 0.0f,   // bottom left
-            0.0f, -1.0f, -1.0f,   // bottom right
-            0.0f,  1.0f, -1.0f }; // top right
+            0.0f,  1.0f, 0.5f,   // top left
+            0.0f, -1.0f, 0.5f,   // bottom left
+            0.0f, -1.0f, -0.5f,   // bottom right
+            0.0f,  1.0f, -0.5f }; // top right
 
 
     @Override
@@ -52,13 +52,13 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        crosswideLine = new Line(0.8f, 0.0f, -0.1f, 0.0f, 0.9f, -0.9f, blackColor);
-        horizontalLine = new Line(0.0f, 0.9f, -0.1f, 0.9f, 0.9f, -0.9f, blackColor);
-        frontalLine = new Line(0.5f, 0.0f, -0.1f, 0.5f, 0.9f, -0.9f, blackColor);
-        rigidLine = new Line(0.0f, 0.5f, -0.5f, 0.9f, 0.5f, -0.5f, blackColor);
-        verticalLine = new Line(0.5f, 0.0f, -0.5f, 0.5f, 0.9f, -0.5f, blackColor);
-        groundLineParallelLine = new Line(0.5f, 0.5f, -0.1f, 0.5f, 0.5f, -0.9f, blackColor);
-        groundLineCuttedLine = new Line(0.0f, 0.0f, -0.5f, 0.9f, 0.9f, -0.5f, blackColor);
+        crosswideLine = new Line(0.8f, 0.0f, 0.4f, 0.0f, 0.9f, -0.4f, blackColor);
+        horizontalLine = new Line(0.0f, 0.9f, 0.4f, 0.9f, 0.9f, -0.4f, blackColor);
+        frontalLine = new Line(0.5f, 0.0f, 0.4f, 0.5f, 0.9f, -0.4f, blackColor);
+        rigidLine = new Line(0.0f, 0.5f, 0.0f, 0.9f, 0.5f, 0.0f, blackColor);
+        verticalLine = new Line(0.5f, 0.0f, 0.0f, 0.5f, 0.9f, 0.0f, blackColor);
+        groundLineParallelLine = new Line(0.5f, 0.5f, 0.4f, 0.5f, 0.5f, -0.4f, blackColor);
+        groundLineCuttedLine = new Line(0.0f, 0.0f, 0.0f, 0.9f, 0.9f, 0.0f, blackColor);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         // Position the eye behind the origin.
         final float eyeX = 4.0f;
         final float eyeY = 1.0f;
-        final float eyeZ = 3f;
+        final float eyeZ = 4f;
 
         // We are looking toward the distance
         final float lookX = -5.0f;
