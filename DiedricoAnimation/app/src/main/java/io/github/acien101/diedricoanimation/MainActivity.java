@@ -65,41 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         threadTime();
         pressed = false;
 
-        mGLView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        renderer.setNotPressed(false);
-
-                        initX = event.getX();
-                        initY = event.getY();
-
-                        Log.i("toco", "X " + event.getX() + " Y " + event.getY());
-
-                        pressed = true;
-                        return true;
-
-
-                    case MotionEvent.ACTION_MOVE:
-                        moveX = (event.getX() - initX);
-                        moveY = -(event.getY() - initY);
-
-                        renderer.setCamera(moveX, moveY, 0);
-
-                        initX = event.getX();
-                        initY = event.getY();
-
-                        return true;
-
-                    case MotionEvent.ACTION_UP:
-                        pressed = false;
-                        threadTime();
-                        return true;
-                }
-                return false;
-            }
-        });
+        mGLView.setOnTouchListener(listenerForCamera());
 
         content_main.addView(mGLView);
         mGLView.requestRender();
@@ -185,8 +151,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mGLView = new MyGLSurfaceView(this, renderer);
         myGLSurfaceView = new MyGLSurfaceView(this, renderer);
 
+        mGLView.setOnTouchListener(listenerForCamera());
+
         content_main.removeAllViews();
         content_main.addView(mGLView);
         mGLView.requestRender();
     }
+
+    public View.OnTouchListener listenerForCamera(){
+        return new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        renderer.setNotPressed(false);
+
+                        initX = event.getX();
+                        initY = event.getY();
+
+                        Log.i("toco", "X " + event.getX() + " Y " + event.getY());
+
+                        pressed = true;
+                        return true;
+
+
+                    case MotionEvent.ACTION_MOVE:
+                        moveX = (event.getX() - initX);
+                        moveY = -(event.getY() - initY);
+
+                        renderer.setCamera(moveX, moveY, 0);
+
+                        initX = event.getX();
+                        initY = event.getY();
+
+                        return true;
+
+                    case MotionEvent.ACTION_UP:
+                        pressed = false;
+                        threadTime();
+                        return true;
+                }
+                return false;
+            }
+        };
+    }
+
 }
