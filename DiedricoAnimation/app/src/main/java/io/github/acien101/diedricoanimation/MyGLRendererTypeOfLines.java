@@ -113,7 +113,7 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         }
 
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-        
+
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // Draw shape
