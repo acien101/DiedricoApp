@@ -32,16 +32,16 @@ public class MyGLRendererLineProyection extends MyGLRendererCamera{
 
 
     static float squareCoords[] = {
-            -1.0f,  0.0f, 0.0f,   // top left
-            1.0f, 0.0f, 0.0f,   // bottom left
-            1.0f, 0.0f, -1.0f,   // bottom right
-            -1.0f,  0.0f, -1.0f }; // top right
+            -1.0f,  0.0f, 0.5f,   // top left
+            1.0f, 0.0f, 0.5f,   // bottom left
+            1.0f, 0.0f, -0.5f,   // bottom right
+            -1.0f,  0.0f, -0.5f }; // top right
 
     static float squareCoords2[] = {
-            0.0f,  1.0f, 0.0f,   // top left
-            0.0f, -1.0f, 0.0f,   // bottom left
-            0.0f, -1.0f, -1.0f,   // bottom right
-            0.0f,  1.0f, -1.0f }; // top right
+            0.0f,  1.0f, 0.5f,   // top left
+            0.0f, -1.0f, 0.5f,   // bottom left
+            0.0f, -1.0f, -0.5f,   // bottom right
+            0.0f,  1.0f, -0.5f }; // top right
 
 
     @Override
@@ -53,7 +53,7 @@ public class MyGLRendererLineProyection extends MyGLRendererCamera{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        mLine = new Line(0.8f, 0.0f, -0.1f, 0.0f, 0.9f, -0.9f, blackColor);
+        mLine = new Line(0.8f, 0.0f, 0.4f, 0.0f, 0.9f, -0.4f, blackColor);
 
         horizontalPoint = new GLPoint(10,10,0.01f, 0.7f);
         verticalPoint = new GLPoint(10,10,0.01f, 0.7f);
@@ -81,7 +81,7 @@ public class MyGLRendererLineProyection extends MyGLRendererCamera{
         // Position the eye behind the origin.
         final float eyeX = 4.0f;
         final float eyeY = 1.0f;
-        final float eyeZ = 3f;
+        final float eyeZ = 4f;
 
         // We are looking toward the distance
         final float lookX = -5.0f;
@@ -111,7 +111,7 @@ public class MyGLRendererLineProyection extends MyGLRendererCamera{
 
         Matrix.setIdentityM(mTranslationMatrix, 0);
 
-        Matrix.translateM(mTranslationMatrix, 0, 0.8f, 0.0f, -0.1f);
+        Matrix.translateM(mTranslationMatrix, 0, 0.8f, 0.0f, 0.4f);
 
         Matrix.multiplyMM(horizontalProyection, 0, scratch, 0, mTranslationMatrix, 0);
 
@@ -119,7 +119,7 @@ public class MyGLRendererLineProyection extends MyGLRendererCamera{
 
         Matrix.setIdentityM(mTranslationMatrix, 0);
 
-        Matrix.translateM(mTranslationMatrix, 0, 0.0f, 0.9f, -0.9f);
+        Matrix.translateM(mTranslationMatrix, 0, 0.0f, 0.9f, -0.4f);
 
         Matrix.multiplyMM(verticalProyection, 0, scratch, 0, mTranslationMatrix, 0);
 
