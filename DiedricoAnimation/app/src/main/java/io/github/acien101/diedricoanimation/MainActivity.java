@@ -18,7 +18,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
+import android.view.animation.Animation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import io.github.acien101.diedricoanimation.vector.PointVector;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     RelativeLayout content_main;
@@ -36,6 +41,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     long currentTime;
 
     MyGLRendererCamera renderer;
+
+    boolean expanded = false;
+
+    LinearLayout projection;
+    LinearLayout layoutForSurfaceView;
+
+    ImageView diedrico;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,10 +79,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mGLView.setOnTouchListener(listenerForCamera());
 
-        content_main.addView(mGLView);
+        layoutForSurfaceView = (LinearLayout) findViewById(R.id.layoutForSurfaceView);
+        layoutForSurfaceView.addView(mGLView);
         mGLView.requestRender();
 
+        projection = (LinearLayout) findViewById(R.id.layoutForProjections);
+        projection.setOnClickListener(projectionClick());
 
+        diedrico = (ImageView) findViewById(R.id.projection);
+        new CreateDiedrico(new PointVector(100.0f, 50.0f, 50.0f), diedrico);
     }
 
 
@@ -194,6 +211,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return false;
             }
         };
+    }
+
+
+    View.OnClickListener projectionClick(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLayoutParams();
+            }
+        };
+    }
+
+    void changeLayoutParams() {
+        Animation a;
+        if(expanded == false){
+            a = new ProjectionAnimation(projection, 9.0f, 0.1f);
+            expanded = true;
+        }
+        else{
+            a = new ProjectionAnimation(projection, 0.1f, 9.0f);
+            expanded = false;
+        }
+        a.setDuration(200);
+        projection.startAnimation(a);
     }
 
 }
