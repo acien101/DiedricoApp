@@ -2,27 +2,26 @@ package io.github.acien101.diedricoanimation;
 
 import android.opengl.GLSurfaceView;
 import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.support.v7.widget.Toolbar;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.github.acien101.diedricoanimation.vector.LineVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -88,7 +87,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         projection.setOnClickListener(projectionClick());
 
         diedrico = (ImageView) findViewById(R.id.projection);
-        new CreateDiedrico(new PointVector(100.0f, 50.0f, 50.0f), diedrico);
+        CreateDiedrico createDiedrico = new CreateDiedrico(diedrico);
+
+        List<PointVector> pointVectors = new ArrayList<>();
+
+        pointVectors.add(new PointVector(100.0f, 50.0f, 50.0f));
+        pointVectors.add(new PointVector(100.0f, 100.0f, 100.0f));
+
+        createDiedrico.addDiedricoPoints(pointVectors);
+
+
+        List<LineVector> lines = new ArrayList<>();
+        lines.add(new LineVector(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f));
     }
 
 
