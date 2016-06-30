@@ -41,16 +41,25 @@ public class CreateDiedrico {
 
     public void addDiedricoPoints(List<PointVector> pointVectors){
 
+        mCanvas.drawLine(20.0f, 150.0f, 180.0f, 150.0f, paintMax);
+
         for(int i = 0; i < pointVectors.size(); i++){
             mCanvas.drawCircle(((float) pointVectors.get(i).getPointZ()), (150.0f - (float) pointVectors.get(i).getPointY()), 1.5f, paintMax);
             mCanvas.drawCircle((float) pointVectors.get(i).getPointZ(), (150.0f + (float) pointVectors.get(i).getPointX()), 1.5f, paintMax);
-            mCanvas.drawLine(20.0f, 150.0f, 180.0f, 150.0f, paintMax);
         }
 
         this.imageView.setImageBitmap(bm);
     }
 
-    public void addDiedricoLines(List<LineVector> lineVectors, ImageView imageView){
+    public void addDiedricoLines(List<LineVector> lineVectors){
 
+        mCanvas.drawLine(20.0f, 150.0f, 180.0f, 150.0f, paintMax);
+
+        for(int i = 0; i < lineVectors.size(); i++){
+            mCanvas.drawLine(lineVectors.get(i).getLineZA(), (150.0f - lineVectors.get(i).getLineYA()), lineVectors.get(i).getLineXB(), (150.0f - lineVectors.get(i).getLineYB()), paintMax);
+            mCanvas.drawLine(lineVectors.get(i).getLineZA(), (150.0f + lineVectors.get(i).getLineXA()), lineVectors.get(i).getLineXB(), (150.0f + lineVectors.get(i).getLineXB()), paintMax);
+        }
+
+        this.imageView.setImageBitmap(bm);
     }
 }

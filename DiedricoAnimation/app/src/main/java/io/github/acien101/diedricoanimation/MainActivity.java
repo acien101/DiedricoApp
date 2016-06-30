@@ -88,17 +88,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         diedrico = (ImageView) findViewById(R.id.projection);
         CreateDiedrico createDiedrico = new CreateDiedrico(diedrico);
-
-        List<PointVector> pointVectors = new ArrayList<>();
-
-        pointVectors.add(new PointVector(100.0f, 50.0f, 50.0f));
-        pointVectors.add(new PointVector(100.0f, 100.0f, 100.0f));
-
-        createDiedrico.addDiedricoPoints(pointVectors);
-
-
-        List<LineVector> lines = new ArrayList<>();
-        lines.add(new LineVector(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f));
     }
 
 
