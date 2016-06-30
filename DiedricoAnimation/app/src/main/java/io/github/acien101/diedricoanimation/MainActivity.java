@@ -26,10 +26,11 @@ import android.widget.RelativeLayout;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-    RelativeLayout content_main;
 
-    private GLSurfaceView mGLView;
-    private MyGLSurfaceView myGLSurfaceView;
+    RelativeLayout content_main;            //its the content layout, where it is the opengl renderer
+
+    private GLSurfaceView mGLView;          //SurfaceView of OpenGL
+    private MyGLSurfaceView myGLSurfaceView;            //Its the object of the openGL where we pass the coords for the camera
 
     float initX;      //Is the value of the X coordenate when we press the screen
     float initY;      //The Y
@@ -37,17 +38,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     float moveX;    //Is the value of the X movement
     float moveY;    //Is the value of the Y movement
 
-    boolean pressed;
-    long currentTime;
+    boolean pressed;            //if the OpenGL is pressed
+    long currentTime;           //The time of the thread, for rotate the camera if the user don't press the screen
 
-    MyGLRendererCamera renderer;
+    MyGLRendererCamera renderer;            //The renderer obj
 
-    boolean expanded = false;
+    boolean expanded = false;                   //if the projection is extended
 
     LinearLayout projection;
     LinearLayout layoutForSurfaceView;
 
-    ImageView diedrico;
+    ImageView diedrico;                 //The imageView of the projection
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,11 +71,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
 
-        renderer = new MyGLRenderer();
+        renderer = new MyGLRenderer();              //The main screen is the MyGLRenderer() obj, where is a home renderer
         mGLView = new MyGLSurfaceView(this, renderer);
         myGLSurfaceView = new MyGLSurfaceView(this, renderer);
 
-        threadTime();
+        threadTime();               //start the thread, for rotate the camera if the user don't press the screen
         pressed = false;
 
         mGLView.setOnTouchListener(listenerForCamera());
@@ -105,14 +106,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         }).start();
-    }
-
-
-
-    public void createDiedrico(){
-        RelativeLayout relativeLayout = new RelativeLayout(getApplicationContext());
-        relativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
     }
 
     @Override
