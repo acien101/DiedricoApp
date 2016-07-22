@@ -1,15 +1,20 @@
-package io.github.acien101.diedricoanimation;
+package io.github.acien101.diedricoanimation.openGL;
 
 import android.opengl.GLES20;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+
+import io.github.acien101.diedricoanimation.MyGLRenderer;
+import io.github.acien101.diedricoanimation.vector.PlaneVector;
+import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
- * Created by amil101 on 26/03/16.
+ * Created by amil101 on 25/05/16.
  */
-public class Plane {
+public class ProyectionPlane {
     private final String vertexShaderCode =
             // This matrix member variable provides a hook to manipulate
             // the coordinates of the objects that use this vertex shader
@@ -37,10 +42,13 @@ public class Plane {
     private int mPositionHandle;
     private int mColorHandle;
 
-    private final int vertexCount = 9 / COORDS_PER_VERTEX;
+    private final int vertexCount = 12 / COORDS_PER_VERTEX;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
+    private short drawOrder[] = { 0, 1, 2, 0, 2, 3 }; // order to draw vertices
+
     private FloatBuffer vertexBuffer;
+    private final ShortBuffer drawListBuffer;
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
@@ -48,14 +56,15 @@ public class Plane {
     // Set color with red, green, blue and alpha (opacity) values
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.5f };
 
-    public Plane(float planeOriginZ, float planeY, float planeX, float planeZ) {
-        float[] plano = {0.0f,0.0f, planeOriginZ,
-                0.0f, planeY, planeZ,
-                planeX, 0.0f, planeZ};
+    public ProyectionPlane(PointVector a, PointVector b, PointVector c, PointVector d) {
+        float[] plano = {((float) a.getPointX()), ((float) a.getPointY()), ((float) a.getPointZ()),
+                ((float) b.getPointX()), ((float) b.getPointY()), ((float) b.getPointZ()),
+                ((float) c.getPointX()), ((float) c.getPointY()), ((float) c.getPointZ()),
+                ((float) d.getPointX()), ((float) d.getPointY()), ((float) d.getPointZ())};
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (number of coordinate values * 4 bytes per float)
-                9 * 4);
+                plano.length * 4);
         // use the device hardware's native byte order
         bb.order(ByteOrder.nativeOrder());
 
@@ -65,6 +74,61 @@ public class Plane {
         vertexBuffer.put(plano);
         // set the buffer to read the first coordinate
         vertexBuffer.position(0);
+
+        // initialize byte buffer for the draw list
+        ByteBuffer dlb = ByteBuffer.allocateDirect(
+                // (# of coordinate values * 2 bytes per short)
+                drawOrder.length * 2);
+        dlb.order(ByteOrder.nativeOrder());
+        drawListBuffer = dlb.asShortBuffer();
+        drawListBuffer.put(drawOrder);
+        drawListBuffer.position(0);
+
+        int vertexShader = MyGLRenderer.loadShader(GLES20.GL_VERTEX_SHADER,
+                vertexShaderCode);
+        int fragmentShader = MyGLRenderer.loadShader(GLES20.GL_FRAGMENT_SHADER,
+                fragmentShaderCode);
+
+        // create empty OpenGL ES Program
+        mProgram = GLES20.glCreateProgram();
+
+        // add the vertex shader to program
+        GLES20.glAttachShader(mProgram, vertexShader);
+
+        // add the fragment shader to program
+        GLES20.glAttachShader(mProgram, fragmentShader);
+
+        // creates OpenGL ES program executables
+        GLES20.glLinkProgram(mProgram);
+    }
+
+    public ProyectionPlane(PlaneVector planeVector){
+        float[] plano = {((float) planeVector.getP1().getPointX()), ((float) planeVector.getP1().getPointY()), ((float) planeVector.getP1().getPointZ()),
+                ((float) planeVector.getP2().getPointX()), ((float) planeVector.getP2().getPointY()), ((float) planeVector.getP2().getPointZ()),
+                ((float) planeVector.getP3().getPointX()), ((float) planeVector.getP3().getPointY()), ((float) planeVector.getP3().getPointZ()),
+                ((float) planeVector.getP4().getPointX()), ((float) planeVector.getP4().getPointY()), ((float) planeVector.getP4().getPointZ())};
+        // initialize vertex byte buffer for shape coordinates
+        ByteBuffer bb = ByteBuffer.allocateDirect(
+                // (number of coordinate values * 4 bytes per float)
+                plano.length * 4);
+        // use the device hardware's native byte order
+        bb.order(ByteOrder.nativeOrder());
+
+        // create a floating point buffer from the ByteBuffer
+        vertexBuffer = bb.asFloatBuffer();
+        // add the coordinates to the FloatBuffer
+        vertexBuffer.put(plano);
+        // set the buffer to read the first coordinate
+        vertexBuffer.position(0);
+
+        // initialize byte buffer for the draw list
+        ByteBuffer dlb = ByteBuffer.allocateDirect(
+                // (# of coordinate values * 2 bytes per short)
+                drawOrder.length * 2);
+        dlb.order(ByteOrder.nativeOrder());
+        drawListBuffer = dlb.asShortBuffer();
+        drawListBuffer.put(drawOrder);
+        drawListBuffer.position(0);
 
         int vertexShader = MyGLRenderer.loadShader(GLES20.GL_VERTEX_SHADER,
                 vertexShaderCode);
@@ -111,10 +175,13 @@ public class Plane {
         // Pass the projection and view transformation to the shader
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
 
-        // Draw the triangle
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+        // Draw the sqare
+        GLES20.glDrawElements(
+                GLES20.GL_TRIANGLES, drawOrder.length,
+                GLES20.GL_UNSIGNED_SHORT, drawListBuffer);
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
     }
+
 }

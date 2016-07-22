@@ -1,4 +1,4 @@
-package io.github.acien101.diedricoanimation;
+package io.github.acien101.diedricoanimation.openGL;
 
 import android.opengl.GLES20;
 
@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+
+import io.github.acien101.diedricoanimation.MyGLRenderer;
 
 /**
  * Created by amil101 on 19/01/16.

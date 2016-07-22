@@ -1,7 +1,6 @@
 package io.github.acien101.diedricoanimation;
 
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
@@ -9,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.openGL.Axis;
+import io.github.acien101.diedricoanimation.openGL.Line;
 import io.github.acien101.diedricoanimation.vector.LineVector;
 
 /**

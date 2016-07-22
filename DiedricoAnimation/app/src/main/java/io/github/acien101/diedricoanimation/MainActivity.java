@@ -18,12 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import io.github.acien101.diedricoanimation.vector.LineVector;
-import io.github.acien101.diedricoanimation.vector.PointVector;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     RelativeLayout content_main;            //its the content layout, where it is the opengl renderer
@@ -155,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico));
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
+        } else if (id == R.id.camara){
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -235,6 +231,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         a.setDuration(200);
         projection.startAnimation(a);
+    }
+
+    public void openCamera(){
+
     }
 
 }

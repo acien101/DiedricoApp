@@ -22,4 +22,10 @@
             <item android:id="@+id/typeOfPlanes" android:title="Type of planes" />
         </menu>
     </item>
+
+    <item android:title="Camara a 3D">
+        <menu>
+            <item android:id="@+id/camara" android:title="camara" />
+        </menu>
+    </item>
 </menu>

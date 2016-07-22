@@ -1,15 +1,15 @@
 package io.github.acien101.diedricoanimation;
 
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
-import android.util.Log;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.openGL.Axis;
+import io.github.acien101.diedricoanimation.openGL.GLPoint;
+import io.github.acien101.diedricoanimation.openGL.Line;
 import io.github.acien101.diedricoanimation.vector.LineVector;
-import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
  * Created by amil101 on 23/05/16.

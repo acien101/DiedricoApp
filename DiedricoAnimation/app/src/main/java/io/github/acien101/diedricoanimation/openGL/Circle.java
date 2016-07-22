@@ -1,4 +1,4 @@
-package io.github.acien101.diedricoanimation;
+package io.github.acien101.diedricoanimation.openGL;
 
 /**
  * Created by amil101 on 5/02/16.

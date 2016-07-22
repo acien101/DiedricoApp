@@ -1,4 +1,4 @@
-package io.github.acien101.diedricoanimation;
+package io.github.acien101.diedricoanimation.openGL;
 
 import android.graphics.Color;
 import android.opengl.GLES20;
@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import io.github.acien101.diedricoanimation.MyGLRenderer;
 import io.github.acien101.diedricoanimation.vector.LineVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 

@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.openGL.Axis;
+import io.github.acien101.diedricoanimation.openGL.Plane;
+import io.github.acien101.diedricoanimation.openGL.ProyectionPlane;
 import io.github.acien101.diedricoanimation.vector.PlaneVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 

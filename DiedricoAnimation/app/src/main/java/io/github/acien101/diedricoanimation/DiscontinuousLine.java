@@ -1,14 +1,9 @@
 package io.github.acien101.diedricoanimation;
 
-import android.opengl.GLES20;
-import android.util.Log;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.acien101.diedricoanimation.openGL.Line;
 import io.github.acien101.diedricoanimation.vector.LineVectorEquation;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 import io.github.acien101.diedricoanimation.vector.SpatialVector;
