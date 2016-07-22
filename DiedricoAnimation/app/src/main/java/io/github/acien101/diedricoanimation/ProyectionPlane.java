@@ -7,6 +7,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
+import io.github.acien101.diedricoanimation.vector.PlaneVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -59,6 +60,52 @@ public class ProyectionPlane {
                 ((float) b.getPointX()), ((float) b.getPointY()), ((float) b.getPointZ()),
                 ((float) c.getPointX()), ((float) c.getPointY()), ((float) c.getPointZ()),
                 ((float) d.getPointX()), ((float) d.getPointY()), ((float) d.getPointZ())};
+        // initialize vertex byte buffer for shape coordinates
+        ByteBuffer bb = ByteBuffer.allocateDirect(
+                // (number of coordinate values * 4 bytes per float)
+                plano.length * 4);
+        // use the device hardware's native byte order
+        bb.order(ByteOrder.nativeOrder());
+
+        // create a floating point buffer from the ByteBuffer
+        vertexBuffer = bb.asFloatBuffer();
+        // add the coordinates to the FloatBuffer
+        vertexBuffer.put(plano);
+        // set the buffer to read the first coordinate
+        vertexBuffer.position(0);
+
+        // initialize byte buffer for the draw list
+        ByteBuffer dlb = ByteBuffer.allocateDirect(
+                // (# of coordinate values * 2 bytes per short)
+                drawOrder.length * 2);
+        dlb.order(ByteOrder.nativeOrder());
+        drawListBuffer = dlb.asShortBuffer();
+        drawListBuffer.put(drawOrder);
+        drawListBuffer.position(0);
+
+        int vertexShader = MyGLRenderer.loadShader(GLES20.GL_VERTEX_SHADER,
+                vertexShaderCode);
+        int fragmentShader = MyGLRenderer.loadShader(GLES20.GL_FRAGMENT_SHADER,
+                fragmentShaderCode);
+
+        // create empty OpenGL ES Program
+        mProgram = GLES20.glCreateProgram();
+
+        // add the vertex shader to program
+        GLES20.glAttachShader(mProgram, vertexShader);
+
+        // add the fragment shader to program
+        GLES20.glAttachShader(mProgram, fragmentShader);
+
+        // creates OpenGL ES program executables
+        GLES20.glLinkProgram(mProgram);
+    }
+
+    public ProyectionPlane(PlaneVector planeVector){
+        float[] plano = {((float) planeVector.getP1().getPointX()), ((float) planeVector.getP1().getPointY()), ((float) planeVector.getP1().getPointZ()),
+                ((float) planeVector.getP2().getPointX()), ((float) planeVector.getP2().getPointY()), ((float) planeVector.getP2().getPointZ()),
+                ((float) planeVector.getP3().getPointX()), ((float) planeVector.getP3().getPointY()), ((float) planeVector.getP3().getPointZ()),
+                ((float) planeVector.getP4().getPointX()), ((float) planeVector.getP4().getPointY()), ((float) planeVector.getP4().getPointZ())};
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (number of coordinate values * 4 bytes per float)

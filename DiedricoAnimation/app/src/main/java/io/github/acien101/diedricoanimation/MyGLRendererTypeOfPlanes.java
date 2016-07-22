@@ -1,12 +1,12 @@
 package io.github.acien101.diedricoanimation;
 
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.vector.PlaneVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -45,7 +45,13 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
             0.0f, -1.0f, -0.5f,   // bottom right
             0.0f,  1.0f, -0.5f }; // top right
 
-    
+    PlaneVector horizontalPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.5f, 0.4f), new PointVector(0.0f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, 0.4f));
+    PlaneVector frontalPlaneCoords = new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 1.0f, 0.4f));
+    PlaneVector horizontalProjectionPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f, 0.4f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 0.0f, -0.5f));
+    PlaneVector verticalProjectionPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f,-0.5f), new PointVector(1.0f, 1.0f , -0.5f), new PointVector(1.0f, 0.0f, 0.4f));
+    PlaneVector groundLineParallelPlaneCoords = new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.0f, 0.7f, -0.5f), new PointVector(0.0f, 0.7f, 0.5f));
+    PlaneVector groundLineCuttedPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.5f), new PointVector(1.0f, 1.0f, 0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 0.0f, -0.5f));
+    PlaneVector profilePlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f));
 
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
@@ -57,13 +63,13 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
         mAxis2 = new Axis(squareCoords2);
 
         crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.4f);
-        horizontalPlane = new ProyectionPlane(new PointVector(0.0f, 0.5f, 0.4f), new PointVector(0.0f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, 0.4f));
-        frontalPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 1.0f, 0.4f));
-        horizontalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f, 0.4f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 0.0f, -0.5f));
-        verticalProjectionPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f,-0.5f), new PointVector(1.0f, 1.0f , -0.5f), new PointVector(1.0f, 0.0f, 0.4f));
-        groundLineParallelPlane = new ProyectionPlane(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.0f, 0.7f, -0.5f), new PointVector(0.0f, 0.7f, 0.5f));
-        groundLineCuttedPlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.5f), new PointVector(1.0f, 1.0f, 0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 0.0f, -0.5f));
-        profilePlane = new ProyectionPlane(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f));
+        horizontalPlane = new ProyectionPlane(horizontalPlaneCoords);
+        frontalPlane = new ProyectionPlane(frontalPlaneCoords);
+        horizontalProjectionPlane = new ProyectionPlane(horizontalProjectionPlaneCoords);
+        verticalProjectionPlane = new ProyectionPlane(verticalProjectionPlaneCoords);
+        groundLineParallelPlane = new ProyectionPlane(groundLineParallelPlaneCoords);
+        groundLineCuttedPlane = new ProyectionPlane(groundLineCuttedPlaneCoords);
+        profilePlane = new ProyectionPlane(profilePlaneCoords);
     }
 
     @Override
