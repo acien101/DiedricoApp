@@ -4,6 +4,9 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import io.github.acien101.diedricoanimation.vector.PlaneVector;
@@ -52,6 +55,19 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
     PlaneVector groundLineParallelPlaneCoords = new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.0f, 0.7f, -0.5f), new PointVector(0.0f, 0.7f, 0.5f));
     PlaneVector groundLineCuttedPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.5f), new PointVector(1.0f, 1.0f, 0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 0.0f, -0.5f));
     PlaneVector profilePlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f));
+
+    public MyGLRendererTypeOfPlanes(CreateDiedrico createDiedrico){
+        List<PlaneVector> planeVectors = new ArrayList<>();
+        planeVectors.add(horizontalPlaneCoords);
+        planeVectors.add(frontalPlaneCoords);
+        planeVectors.add(horizontalProjectionPlaneCoords);
+        planeVectors.add(verticalProjectionPlaneCoords);
+        planeVectors.add(groundLineParallelPlaneCoords);
+        planeVectors.add(groundLineCuttedPlaneCoords);
+        planeVectors.add(profilePlaneCoords);
+
+        createDiedrico.addPlanes(planeVectors);
+    }
 
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {

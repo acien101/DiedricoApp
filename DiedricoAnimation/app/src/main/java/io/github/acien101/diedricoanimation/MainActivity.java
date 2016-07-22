@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.typeOflines) {
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico));
         } else if (id == R.id.typeOfPlanes) {
-            changeRenderer(new MyGLRendererTypeOfPlanes());
+            changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

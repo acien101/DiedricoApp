@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import io.github.acien101.diedricoanimation.vector.LineVector;
+import io.github.acien101.diedricoanimation.vector.PlaneVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -83,6 +84,22 @@ public class CreateDiedrico {
 
         mCanvas.drawLine((100.0f + lineVector.getLineZB() * 180.0f), (150.0f - (lineVector.getLineYA()) * 150.0f), (100.0f + lineVector.getLineZA() * 180.0f), (150.0f - lineVector.getLineYB() * 150.f), paintMax);
         mCanvas.drawLine((100.0f + lineVector.getLineZB() * 180.0f), (150.0f + (lineVector.getLineXA()) * 150.0f), (100.0f + lineVector.getLineZA() * 180.0f), (150.0f + lineVector.getLineXB() * 150.0f), paintMax);
+
+        this.imageView.setImageBitmap(bm);
+    }
+
+    public void addPlanes(List<PlaneVector> planeVectors){
+        Bitmap bm = Bitmap.createBitmap(200, 300, Bitmap.Config.RGB_565);
+
+        Canvas mCanvas = new Canvas(bm);
+        mCanvas.drawColor(Color.WHITE);
+
+        mCanvas.drawLine(20.0f, 150.0f, 180.0f, 150.0f, paintMax);
+
+        for(int i = 0; i < planeVectors.size(); i++){
+            mCanvas.drawLine((100.0f + (float)planeVectors.get(i).getP1().getPointZ() * 180.0f), (150.0f - ((float)planeVectors.get(i).getP1().getPointY()) * 150.0f), (100.0f + (float)planeVectors.get(i).getP2().getPointZ() * 180.0f), (150.0f - (float)planeVectors.get(i).getP2().getPointY() * 150.f), paintMax);
+            mCanvas.drawLine((100.0f + (float)planeVectors.get(i).getP1().getPointZ() * 180.0f), (150.0f + ((float)planeVectors.get(i).getP1().getPointX()) * 150.0f), (100.0f + (float)planeVectors.get(i).getP3().getPointZ() * 180.0f), (150.0f + (float)planeVectors.get(i).getP3().getPointX() * 150.0f), paintMax);
+        }
 
         this.imageView.setImageBitmap(bm);
     }
