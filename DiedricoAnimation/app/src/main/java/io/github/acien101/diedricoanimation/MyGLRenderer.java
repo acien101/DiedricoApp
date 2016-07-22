@@ -42,6 +42,10 @@ public class MyGLRenderer extends MyGLRendererCamera {
             0.0f,  1.0f, -0.5f }; // top right
 
 
+    public MyGLRenderer(CreateDiedrico createDiedrico){
+        createDiedrico.addDiedricoPoint(new PointVector(100.0f, 1.0f, 1.0f));
+    }
+
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
         // Set the background frame color

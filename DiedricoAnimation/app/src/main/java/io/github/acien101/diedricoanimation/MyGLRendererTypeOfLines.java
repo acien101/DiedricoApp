@@ -5,7 +5,11 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
+import java.util.ArrayList;
+
 import javax.microedition.khronos.opengles.GL10;
+
+import io.github.acien101.diedricoanimation.vector.LineVector;
 
 /**
  * Created by amil101 on 23/05/16.
@@ -42,6 +46,28 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
             0.0f, -1.0f, -0.5f,   // bottom right
             0.0f,  1.0f, -0.5f }; // top right
 
+    LineVector crosswideLineCoords = new LineVector(0.0f, 0.8f, 0.4f, 0.9f, 0.0f, -0.4f);
+    LineVector horiontalLineCoords = new LineVector(0.9f, 0.0f, 0.4f, 0.9f, 0.9f, -0.4f);
+    LineVector frontalLineCoords = new LineVector(0.0f, 0.5f, 0.4f, 0.9f, 0.5f, -0.4f);
+    LineVector rigidLineCoords = new LineVector(0.5f, 0.0f, 0.0f, 0.5f, 0.9f, 0.0f);
+    LineVector verticalLineCoords = new LineVector(0.0f, 0.5f, 0.0f, 0.9f, 0.5f, 0.0f);
+    LineVector groundLineParallelLineCoords = new LineVector(0.5f, 0.5f, 0.4f, 0.5f, 0.5f, -0.4f);
+    LineVector groundLineCuttedLineCoords = new LineVector(0.0f, 0.0f, 0.0f, 0.9f, 0.9f, 0.0f);
+
+    public MyGLRendererTypeOfLines(CreateDiedrico createDiedrico){
+
+        //creating a list for entering the lines to create the diedrico
+        ArrayList<LineVector> lineVectors = new ArrayList<>();
+        lineVectors.add(crosswideLineCoords);
+        lineVectors.add(horiontalLineCoords);
+        lineVectors.add(frontalLineCoords);
+        lineVectors.add(rigidLineCoords);
+        lineVectors.add(verticalLineCoords);
+        lineVectors.add(groundLineParallelLineCoords);
+        lineVectors.add(groundLineCuttedLineCoords);
+
+        createDiedrico.addDiedricoLines(lineVectors);
+    }
 
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
@@ -52,13 +78,13 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        crosswideLine = new Line(0.8f, 0.0f, 0.4f, 0.0f, 0.9f, -0.4f, blackColor);
-        horizontalLine = new Line(0.0f, 0.9f, 0.4f, 0.9f, 0.9f, -0.4f, blackColor);
-        frontalLine = new Line(0.5f, 0.0f, 0.4f, 0.5f, 0.9f, -0.4f, blackColor);
-        rigidLine = new Line(0.0f, 0.5f, 0.0f, 0.9f, 0.5f, 0.0f, blackColor);
-        verticalLine = new Line(0.5f, 0.0f, 0.0f, 0.5f, 0.9f, 0.0f, blackColor);
-        groundLineParallelLine = new Line(0.5f, 0.5f, 0.4f, 0.5f, 0.5f, -0.4f, blackColor);
-        groundLineCuttedLine = new Line(0.0f, 0.0f, 0.0f, 0.9f, 0.9f, 0.0f, blackColor);
+        crosswideLine = new Line(crosswideLineCoords, blackColor);
+        horizontalLine = new Line(horiontalLineCoords, blackColor);
+        frontalLine = new Line(frontalLineCoords, blackColor);
+        rigidLine = new Line(rigidLineCoords, blackColor);
+        verticalLine = new Line(verticalLineCoords, blackColor);
+        groundLineParallelLine = new Line(groundLineParallelLineCoords, blackColor);
+        groundLineCuttedLine = new Line(groundLineCuttedLineCoords, blackColor);
     }
 
     @Override

@@ -49,12 +49,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ImageView diedrico;                 //The imageView of the projection
 
+    CreateDiedrico createDiedrico;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
         content_main = (RelativeLayout) findViewById(R.id.content_main);
+
+        diedrico = (ImageView) findViewById(R.id.projection);
+
+        createDiedrico = new CreateDiedrico(diedrico);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
 
-        renderer = new MyGLRenderer();              //The main screen is the MyGLRenderer() obj, where is a home renderer
+        renderer = new MyGLRenderer(createDiedrico);              //The main screen is the MyGLRenderer() obj, where is a home renderer
         mGLView = new MyGLSurfaceView(this, renderer);
         myGLSurfaceView = new MyGLSurfaceView(this, renderer);
 
@@ -86,8 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         projection = (LinearLayout) findViewById(R.id.layoutForProjections);
         projection.setOnClickListener(projectionClick());
 
-        diedrico = (ImageView) findViewById(R.id.projection);
-        CreateDiedrico createDiedrico = new CreateDiedrico(diedrico);
+
     }
 
 
@@ -139,15 +144,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.welcome) {
-            changeRenderer(new MyGLRenderer());
+            changeRenderer(new MyGLRenderer(createDiedrico));
         } else if (id == R.id.edges) {
-            changeRenderer(new MyGLRendererPointProyection());
+            changeRenderer(new MyGLRendererPointProyection(createDiedrico));
         } else if (id == R.id.pointProjection) {
-            changeRenderer(new MyGLRendererPointProyection());
+            changeRenderer(new MyGLRendererPointProyection(createDiedrico));
         } else if (id == R.id.lineProjection) {
-            changeRenderer(new MyGLRendererLineProyection());
+            changeRenderer(new MyGLRendererLineProyection(createDiedrico));
         } else if (id == R.id.typeOflines) {
-            changeRenderer(new MyGLRendererTypeOfLines());
+            changeRenderer(new MyGLRendererTypeOfLines(createDiedrico));
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes());
         }
@@ -162,8 +167,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mGLView.setOnTouchListener(listenerForCamera());
 
-        content_main.removeAllViews();
-        content_main.addView(mGLView);
+        //Put the diedrico projection to the layout and the renderer
+        layoutForSurfaceView = (LinearLayout) findViewById(R.id.layoutForSurfaceView);
+        layoutForSurfaceView.removeAllViews();
+        layoutForSurfaceView.addView(mGLView);
+
         mGLView.requestRender();
     }
 

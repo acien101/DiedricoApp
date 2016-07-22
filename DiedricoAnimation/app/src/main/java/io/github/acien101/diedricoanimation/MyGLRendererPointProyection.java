@@ -45,6 +45,13 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
             0.0f, -1.0f, -0.5f,   // bottom right
             0.0f,  1.0f, -0.5f }; // top right
 
+    PointVector pointVectorCoords = new PointVector(0.5f, 0.5f, 0.0f);
+
+    public MyGLRendererPointProyection(CreateDiedrico createDiedrico){
+        Log.i("asdf", "asdfasdf");
+        createDiedrico.addDiedricoPoint(pointVectorCoords);
+    }
+
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
         // Set the background frame color
@@ -60,6 +67,8 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
 
         mDiscontinuousLineX = new DiscontinuousLine(new PointVector(0.5f, 0.5f, 0.0f), new PointVector(0.5f, 0.0f, 0.0f), blackColor, 10);
         mDicontinuousLineY = new DiscontinuousLine(new PointVector(0.5f, 0.5f, 0.0f), new PointVector(0.0f, 0.5f, 0.0f), blackColor, 10);
+
+
 
 
     }
@@ -122,7 +131,7 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
 
         Matrix.setIdentityM(mTranslationMatrix, 0);
 
-        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, 0.0f);
+        Matrix.translateM(mTranslationMatrix, 0, (float)pointVectorCoords.getPointX(), (float)pointVectorCoords.getPointY(), (float)pointVectorCoords.getPointZ());
 
         Matrix.multiplyMM(scratch, 0, rotation, 0, mTranslationMatrix, 0);
 

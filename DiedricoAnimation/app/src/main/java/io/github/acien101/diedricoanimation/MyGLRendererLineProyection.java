@@ -8,6 +8,7 @@ import android.util.Log;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.vector.LineVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -43,17 +44,23 @@ public class MyGLRendererLineProyection extends MyGLRendererCamera{
             0.0f, -1.0f, -0.5f,   // bottom right
             0.0f,  1.0f, -0.5f }; // top right
 
+    LineVector lineVector = new LineVector(0.0f, 0.8f, 0.4f, 0.9f, 0.0f, -0.4f);
+
+    public MyGLRendererLineProyection(CreateDiedrico createDiedrico){
+        createDiedrico.addLine(lineVector);
+    }
 
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
         // Set the background frame color
         GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
+        //Initialize the line
+        mLine = new Line(lineVector ,blackColor);
+
         // initialize a triangle
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
-
-        mLine = new Line(0.8f, 0.0f, 0.4f, 0.0f, 0.9f, -0.4f, blackColor);
 
         horizontalPoint = new GLPoint(10,10,0.01f, 0.7f);
         verticalPoint = new GLPoint(10,10,0.01f, 0.7f);

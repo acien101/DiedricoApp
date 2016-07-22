@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import io.github.acien101.diedricoanimation.vector.LineVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -53,6 +54,37 @@ public class Line {
 
     public Line(float xA, float yA, float zA, float xB, float yB, float zB, float[] color){
         float[] lineCoords = {xA, yA, zA, xB, yB, zB};
+
+        this.color = color;
+
+        ByteBuffer bb = ByteBuffer.allocateDirect(
+                lineCoords.length * 4);
+        bb.order(ByteOrder.nativeOrder());
+
+        vertexBuffer = bb.asFloatBuffer();
+        vertexBuffer.put(lineCoords);
+        vertexBuffer.position(0);
+
+        int vertexShader = MyGLRenderer.loadShader(GLES20.GL_VERTEX_SHADER,
+                vertexShaderCode);
+        int fragmentShader = MyGLRenderer.loadShader(GLES20.GL_FRAGMENT_SHADER,
+                fragmentShaderCode);
+
+        // create empty OpenGL ES Program
+        mProgram = GLES20.glCreateProgram();
+
+        // add the vertex shader to program
+        GLES20.glAttachShader(mProgram, vertexShader);
+
+        // add the fragment shader to program
+        GLES20.glAttachShader(mProgram, fragmentShader);
+
+        // creates OpenGL ES program executables
+        GLES20.glLinkProgram(mProgram);
+    }
+
+    public Line(LineVector lineVector, float[] color){
+        float[] lineCoords = {lineVector.getLineXA(), lineVector.getLineYA(), lineVector.getLineZA(), lineVector.getLineXB(), lineVector.getLineYB(), lineVector.getLineZB()};
 
         this.color = color;
 
