@@ -40,11 +40,6 @@
             android:name=".DiedricoTo3D.PreviewMenuActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity
-            android:name=".DiedricoTo3D.MenuPrueba"
-            android:label="@string/title_activity_menu_prueba"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
     </application>
 
 </manifest>
