@@ -53,20 +53,32 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
     int currentType;
 
     public MyGLRendererTypeOfLines(CreateDiedrico createDiedrico, int currentType){
-
-        //creating a list for entering the lines to create the diedrico
-        ArrayList<LineVector> lineVectors = new ArrayList<>();
-        lineVectors.add(crosswideLineCoords);
-        lineVectors.add(horiontalLineCoords);
-        lineVectors.add(frontalLineCoords);
-        lineVectors.add(rigidLineCoords);
-        lineVectors.add(verticalLineCoords);
-        lineVectors.add(groundLineParallelLineCoords);
-        lineVectors.add(groundLineCuttedLineCoords);
-
-        createDiedrico.addDiedricoLines(lineVectors);
-
         this.currentType = currentType;
+        switch (currentType){
+            case 0:
+                createDiedrico.addLine(crosswideLineCoords);
+                return;
+            case 1:
+                createDiedrico.addLine(horiontalLineCoords);
+                return;
+            case 2:
+                createDiedrico.addLine(frontalLineCoords);
+                return;
+            case 3:
+                createDiedrico.addLine(rigidLineCoords);
+                return;
+            case 4:
+                createDiedrico.addLine(verticalLineCoords);
+                return;
+            case 5:
+                createDiedrico.addLine(groundLineParallelLineCoords);
+                return;
+            case 6:
+                createDiedrico.addLine(groundLineCuttedLineCoords);
+                return;
+
+        }
+
     }
 
     @Override
