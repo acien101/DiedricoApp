@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageButton leftButton;
     ImageButton rightButton;
 
+    Boolean isTypeOfLines;      //To determinate if the current renderer is the MyGLRendererTypeOfLines
+    int currentType = 0;           //To determinate the number of the current type of line or plane
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
         leftButton = (ImageButton) findViewById(R.id.leftButton);
+        leftButton.setOnClickListener(leftButtonClick());
         rightButton = (ImageButton) findViewById(R.id.rightButton);
+        rightButton.setOnClickListener(rightButtonClick());
         buttonsLayout.setVisibility(View.INVISIBLE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,15 +169,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             changeRenderer(new MyGLRendererLineProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
         } else if (id == R.id.typeOflines) {
-            changeRenderer(new MyGLRendererTypeOfLines(createDiedrico));
+            changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0));
             buttonsLayout.setVisibility(View.VISIBLE);
+
+            isTypeOfLines = true;
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
             buttonsLayout.setVisibility(View.VISIBLE);
+
+            isTypeOfLines = false;
         } else if (id == R.id.camara){
             Intent intent = new Intent(this, CameraActivity.class);
             this.startActivity(intent);
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -182,7 +190,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void changeRenderer(MyGLRendererCamera renderer){
         mGLView = new MyGLSurfaceView(this, renderer);
         myGLSurfaceView = new MyGLSurfaceView(this, renderer);
-
         mGLView.setOnTouchListener(listenerForCamera());
 
         //Put the diedrico projection to the layout and the renderer
@@ -255,8 +262,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         projection.startAnimation(a);
     }
 
-    public void openCamera(){
-
+    public View.OnClickListener leftButtonClick(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentType == 0){
+                    return;
+                }
+                currentType--;
+                Log.i("sadf", Integer.toString(currentType));
+                if (isTypeOfLines){
+                    changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
+                }
+                else{
+                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
+                }
+            }
+        };
     }
 
+    public View.OnClickListener rightButtonClick(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentType == 6){
+                    return;
+                }
+                currentType++;
+                Log.i("sadf", Integer.toString(currentType));
+                if (isTypeOfLines){
+                    changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
+                }
+                else{
+                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
+                }
+
+            }
+        };
+    }
 }

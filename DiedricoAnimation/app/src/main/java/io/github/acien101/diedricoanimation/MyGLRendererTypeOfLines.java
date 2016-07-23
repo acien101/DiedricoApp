@@ -19,13 +19,8 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
     private Axis mAxis;
     private Axis mAxis2;
 
-    private Line crosswideLine;
-    private Line horizontalLine;
-    private Line frontalLine;
-    private Line rigidLine;
-    private Line verticalLine;
-    private Line groundLineParallelLine;
-    private Line groundLineCuttedLine;
+
+    private Line currentLine;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -55,7 +50,9 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
     LineVector groundLineParallelLineCoords = new LineVector(0.5f, 0.5f, 0.4f, 0.5f, 0.5f, -0.4f);
     LineVector groundLineCuttedLineCoords = new LineVector(0.0f, 0.0f, 0.0f, 0.9f, 0.9f, 0.0f);
 
-    public MyGLRendererTypeOfLines(CreateDiedrico createDiedrico){
+    int currentType;
+
+    public MyGLRendererTypeOfLines(CreateDiedrico createDiedrico, int currentType){
 
         //creating a list for entering the lines to create the diedrico
         ArrayList<LineVector> lineVectors = new ArrayList<>();
@@ -68,6 +65,8 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         lineVectors.add(groundLineCuttedLineCoords);
 
         createDiedrico.addDiedricoLines(lineVectors);
+
+        this.currentType = currentType;
     }
 
     @Override
@@ -79,13 +78,30 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        crosswideLine = new Line(crosswideLineCoords, blackColor);
-        horizontalLine = new Line(horiontalLineCoords, blackColor);
-        frontalLine = new Line(frontalLineCoords, blackColor);
-        rigidLine = new Line(rigidLineCoords, blackColor);
-        verticalLine = new Line(verticalLineCoords, blackColor);
-        groundLineParallelLine = new Line(groundLineParallelLineCoords, blackColor);
-        groundLineCuttedLine = new Line(groundLineCuttedLineCoords, blackColor);
+        switch (currentType){
+            case 0:
+                currentLine = new Line(crosswideLineCoords, blackColor);
+                return;
+            case 1:
+                currentLine = new Line(horiontalLineCoords, blackColor);
+                return;
+            case 2:
+                currentLine = new Line(frontalLineCoords, blackColor);
+                return;
+            case 3:
+                currentLine = new Line(rigidLineCoords, blackColor);
+                return;
+            case 4:
+                currentLine = new Line(verticalLineCoords, blackColor);
+                return;
+            case 5:
+                currentLine = new Line(groundLineParallelLineCoords, blackColor);
+                return;
+            case 6:
+                currentLine = new Line(groundLineCuttedLineCoords, blackColor);
+                return;
+
+        }
     }
 
     @Override
@@ -147,14 +163,7 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         mAxis.draw(scratch);
         mAxis2.draw(scratch);
 
-        horizontalLine.draw(scratch);
-        crosswideLine.draw(scratch);
-        frontalLine.draw(scratch);
-        rigidLine.draw(scratch);
-        verticalLine.draw(scratch);
-        groundLineParallelLine.draw(scratch);
-        groundLineCuttedLine.draw(scratch);
-
+        currentLine.draw(scratch);
     }
 
     public static int loadShader(int type, String shaderCode){
