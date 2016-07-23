@@ -18,7 +18,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:id="@+id/buttonsLayout"
+        android:visibility="invisible">
 
         <ImageButton
             android:layout_width="match_parent"
@@ -26,6 +28,7 @@
             style="@android:style/Widget.Material.Button.Borderless"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:id="@+id/leftButton"
             android:src="@drawable/ic_action_arrow_left"/>
 
         <TextView
@@ -33,6 +36,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical|center"
             android:layout_weight="1"
+            android:id="@+id/infoText"
             android:text="Hooolaaa"/>
 
         <ImageButton
@@ -41,6 +45,7 @@
             style="@android:style/Widget.Material.Button.Borderless"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:id="@+id/rightButton"
             android:src="@drawable/ic_action_arrow_right"/>
         <Button
             android:layout_width="match_parent"

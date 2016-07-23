@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -49,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     CreateDiedrico createDiedrico;
 
+    LinearLayout buttonsLayout;
+    ImageButton leftButton;
+    ImageButton rightButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +67,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
+        leftButton = (ImageButton) findViewById(R.id.leftButton);
+        rightButton = (ImageButton) findViewById(R.id.rightButton);
+        buttonsLayout.setVisibility(View.INVISIBLE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -143,18 +153,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.welcome) {
             changeRenderer(new MyGLRenderer(createDiedrico));
+            buttonsLayout.setVisibility(View.INVISIBLE);
         } else if (id == R.id.edges) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
+            buttonsLayout.setVisibility(View.INVISIBLE);
         } else if (id == R.id.pointProjection) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
+            buttonsLayout.setVisibility(View.INVISIBLE);
         } else if (id == R.id.lineProjection) {
             changeRenderer(new MyGLRendererLineProyection(createDiedrico));
+            buttonsLayout.setVisibility(View.INVISIBLE);
         } else if (id == R.id.typeOflines) {
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico));
+            buttonsLayout.setVisibility(View.VISIBLE);
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
+            buttonsLayout.setVisibility(View.VISIBLE);
         } else if (id == R.id.camara){
-
             Intent intent = new Intent(this, CameraActivity.class);
             this.startActivity(intent);
 
