@@ -1,5 +1,6 @@
 package io.github.acien101.diedricoanimation;
 
+import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.SystemClock;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,9 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import io.github.acien101.diedricoanimation.DiedricoTo3D.Camera2BasicFragment;
+import io.github.acien101.diedricoanimation.DiedricoTo3D.CameraActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -150,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
         } else if (id == R.id.camara){
+
+            Intent intent = new Intent(this, CameraActivity.class);
+            this.startActivity(intent);
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

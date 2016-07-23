@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,7 +35,7 @@ import io.github.acien101.diedricoanimation.DiedricoTo3D.OpenGlActivity;
 /**
  * Created by amil101 on 12/02/16.
  */
-public class PreviewMenuActivity extends Activity{
+public class PreviewMenuActivity extends AppCompatActivity {
     Context context;
 
     ImageView ImageView;                                //the imageView where  be placed the picture
@@ -84,6 +86,9 @@ public class PreviewMenuActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview_menu);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         context = this;
         Intent intent = getIntent();
