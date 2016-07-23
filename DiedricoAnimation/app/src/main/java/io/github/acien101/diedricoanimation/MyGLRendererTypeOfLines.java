@@ -57,25 +57,25 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         switch (currentType){
             case 0:
                 createDiedrico.addLine(crosswideLineCoords);
-                return;
+                break;
             case 1:
                 createDiedrico.addLine(horiontalLineCoords);
-                return;
+                break;
             case 2:
                 createDiedrico.addLine(frontalLineCoords);
-                return;
+                break;
             case 3:
                 createDiedrico.addLine(rigidLineCoords);
-                return;
+                break;
             case 4:
                 createDiedrico.addLine(verticalLineCoords);
-                return;
+                break;
             case 5:
                 createDiedrico.addLine(groundLineParallelLineCoords);
-                return;
+                break;
             case 6:
                 createDiedrico.addLine(groundLineCuttedLineCoords);
-                return;
+                break;
 
         }
 
@@ -93,25 +93,25 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         switch (currentType){
             case 0:
                 currentLine = new Line(crosswideLineCoords, blackColor);
-                return;
+                break;
             case 1:
                 currentLine = new Line(horiontalLineCoords, blackColor);
-                return;
+                break;
             case 2:
                 currentLine = new Line(frontalLineCoords, blackColor);
-                return;
+                break;
             case 3:
                 currentLine = new Line(rigidLineCoords, blackColor);
-                return;
+                break;
             case 4:
                 currentLine = new Line(verticalLineCoords, blackColor);
-                return;
+                break;
             case 5:
                 currentLine = new Line(groundLineParallelLineCoords, blackColor);
-                return;
+                break;
             case 6:
                 currentLine = new Line(groundLineCuttedLineCoords, blackColor);
-                return;
+                break;
 
         }
     }
