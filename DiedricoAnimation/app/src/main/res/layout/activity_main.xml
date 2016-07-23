@@ -6,8 +6,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:id="@+id/layoutForSurfaceView"></LinearLayout>
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:text="Hooola"
+            android:layout_weight="5"></TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layoutForSurfaceView"
+            android:orientation="horizontal"
+            android:layout_weight="1"></LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
