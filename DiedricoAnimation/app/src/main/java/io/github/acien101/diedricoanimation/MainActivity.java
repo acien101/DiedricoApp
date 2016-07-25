@@ -287,7 +287,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentType == 6){
+                if(isTypeOfLines == true && currentType == 6){
+                    return;
+                }
+                if(isTypeOfLines == false && currentType == 7){
                     return;
                 }
                 currentType++;
