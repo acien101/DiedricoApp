@@ -125,6 +125,7 @@ public class CreateDiedrico {
         List<PointVector> pointsYEdge = new ArrayList<>();
 
 
+        //whith this method we know the points that are in the edges
         for(int i = 0; i < pointVectors.size(); i++){
             if(pointVectors.get(i).getPointX() == 0.0f){
                 pointsYEdge.add(pointVectors.get(i));
@@ -156,11 +157,6 @@ public class CreateDiedrico {
             Log.i("StartX 2 X", Float.toString((100.0f + (float) pointsXEdge.get(i + 1).getPointZ() * 180.0f)));
             Log.i("StartY 2 X", Float.toString((150.0f - (float) pointsXEdge.get(i + 1).getPointY() * 150.0f)));
         }
-
-
-        //mCanvas.drawLine((100.0f + (float)planeVector.getP1().getPointZ() * 180.0f), (150.0f - ((float)planeVector.getP1().getPointY()) * 150.0f), (100.0f + (float)planeVector.getP2().getPointZ() * 180.0f), (150.0f - (float)planeVector.getP2().getPointY() * 150.0f), paintMax);
-        //mCanvas.drawLine((100.0f + (float)planeVector.getP1().getPointZ() * 180.0f), (150.0f + ((float)planeVector.getP1().getPointX()) * 150.0f), (100.0f + (float)planeVector.getP3().getPointZ() * 180.0f), (150.0f + (float)planeVector.getP3().getPointX() * 150.0f), paintMax);
-
 
         this.imageView.setImageBitmap(bm);
     }

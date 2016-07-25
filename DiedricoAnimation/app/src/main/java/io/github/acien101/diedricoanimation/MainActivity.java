@@ -270,7 +270,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return;
                 }
                 currentType--;
-                Log.i("sadf", Integer.toString(currentType));
                 if (isTypeOfLines){
                     changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
                 }
@@ -289,7 +288,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return;
                 }
                 currentType++;
-                Log.i("sadf", Integer.toString(currentType));
                 if (isTypeOfLines){
                     changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
                 }
