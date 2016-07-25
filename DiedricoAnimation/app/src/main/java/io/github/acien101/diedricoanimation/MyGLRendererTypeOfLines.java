@@ -3,6 +3,7 @@ package io.github.acien101.diedricoanimation;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -52,28 +53,35 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
 
     int currentType;
 
-    public MyGLRendererTypeOfLines(CreateDiedrico createDiedrico, int currentType){
+    public MyGLRendererTypeOfLines(CreateDiedrico createDiedrico, int currentType, TextView infoText){
         this.currentType = currentType;
         switch (currentType){
             case 0:
+                infoText.setText("Crosswide Line");
                 createDiedrico.addLine(crosswideLineCoords);
                 break;
             case 1:
+                infoText.setText("Horizontal Line");
                 createDiedrico.addLine(horiontalLineCoords);
                 break;
             case 2:
+                infoText.setText("Frontal Line");
                 createDiedrico.addLine(frontalLineCoords);
                 break;
             case 3:
+                infoText.setText("Rigid Line");
                 createDiedrico.addLine(rigidLineCoords);
                 break;
             case 4:
+                infoText.setText("Vertical Line");
                 createDiedrico.addLine(verticalLineCoords);
                 break;
             case 5:
+                infoText.setText("Ground Line Parallel Line");
                 createDiedrico.addLine(groundLineParallelLineCoords);
                 break;
             case 6:
+                infoText.setText("Ground Line Cutted Line");
                 createDiedrico.addLine(groundLineCuttedLineCoords);
                 break;
 

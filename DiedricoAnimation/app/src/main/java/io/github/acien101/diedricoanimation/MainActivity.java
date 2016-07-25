@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import io.github.acien101.diedricoanimation.DiedricoTo3D.Camera2BasicFragment;
 import io.github.acien101.diedricoanimation.DiedricoTo3D.CameraActivity;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     Boolean isTypeOfLines;      //To determinate if the current renderer is the MyGLRendererTypeOfLines
     int currentType = 0;           //To determinate the number of the current type of line or plane
+    TextView infoText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         diedrico = (ImageView) findViewById(R.id.projection);
 
         createDiedrico = new CreateDiedrico(diedrico);
+        infoText = (TextView) findViewById(R.id.infoText);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -169,12 +172,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             changeRenderer(new MyGLRendererLineProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
         } else if (id == R.id.typeOflines) {
-            changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0));
+            changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
 
             isTypeOfLines = true;
         } else if (id == R.id.typeOfPlanes) {
-            changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0));
+            changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
 
             isTypeOfLines = false;
@@ -271,10 +274,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 currentType--;
                 if (isTypeOfLines){
-                    changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
+                    changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType, infoText));
                 }
                 else{
-                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, currentType));
+                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, currentType, infoText));
                 }
             }
         };
@@ -289,12 +292,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 currentType++;
                 if (isTypeOfLines){
-                    changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
+                    changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType, infoText));
                 }
                 else{
-                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, currentType));
+                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, currentType, infoText));
                 }
-
             }
         };
     }

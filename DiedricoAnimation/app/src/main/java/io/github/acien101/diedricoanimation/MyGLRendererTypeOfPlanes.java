@@ -3,6 +3,7 @@ package io.github.acien101.diedricoanimation;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,28 +57,35 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
 
     int currentType;
 
-    public MyGLRendererTypeOfPlanes(CreateDiedrico createDiedrico, int currentType){
+    public MyGLRendererTypeOfPlanes(CreateDiedrico createDiedrico, int currentType, TextView infoText){
 
         switch (currentType){
             case 0:
+                infoText.setText("Horizontal Plane");
                 createDiedrico.addPlane(horizontalPlaneCoords);
                 break;
             case 1:
+                infoText.setText("Frontal Plane");
                 createDiedrico.addPlane(frontalPlaneCoords);
                 break;
             case 2:
+                infoText.setText("Horizontal Projection Plane");
                 createDiedrico.addPlane(horizontalProjectionPlaneCoords);
                 break;
             case 3:
+                infoText.setText("Vertical Projection Plane");
                 createDiedrico.addPlane(verticalProjectionPlaneCoords);
                 break;
             case 4:
+                infoText.setText("Ground Line Parallel Plane");
                 createDiedrico.addPlane(groundLineParallelPlaneCoords);
                 break;
             case 5:
+                infoText.setText("Ground Line Cutted Plane");
                 createDiedrico.addPlane(groundLineCuttedPlaneCoords);
                 break;
             case 6:
+                infoText.setText("Profile Plane");
                 createDiedrico.addPlane(profilePlaneCoords);
                 break;
         }
