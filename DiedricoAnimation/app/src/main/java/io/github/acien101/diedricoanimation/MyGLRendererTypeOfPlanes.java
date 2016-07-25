@@ -23,13 +23,7 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
     private Axis mAxis2;
 
     private Plane crosswidePlane;
-    private ProyectionPlane horizontalPlane;
-    private ProyectionPlane frontalPlane;
-    private ProyectionPlane horizontalProjectionPlane;
-    private ProyectionPlane verticalProjectionPlane;
-    private ProyectionPlane groundLineParallelPlane;
-    private ProyectionPlane groundLineCuttedPlane;
-    private ProyectionPlane profilePlane;
+    private ProyectionPlane currentPlane;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -51,25 +45,44 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
             0.0f, -1.0f, -0.5f,   // bottom right
             0.0f,  1.0f, -0.5f }; // top right
 
-    PlaneVector horizontalPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.5f, 0.4f), new PointVector(0.0f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, -0.4f), new PointVector(0.9f, 0.5f, 0.4f));
-    PlaneVector frontalPlaneCoords = new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 1.0f, 0.4f));
-    PlaneVector horizontalProjectionPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f, 0.4f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 0.0f, -0.5f));
+
+    PlaneVector horizontalPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.5f, -0.5f),  new PointVector(0.0f, 0.5f, 0.5f), new PointVector(0.9f, 0.5f, 0.5f),new PointVector(0.9f, 0.5f, -0.5f));
+    PlaneVector frontalPlaneCoords = new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 1.0f, 0.5f));
+    PlaneVector horizontalProjectionPlaneCoords = new PlaneVector(new PointVector(0.0f, 1.0f, 0.4f) ,new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f));
     PlaneVector verticalProjectionPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f,-0.5f), new PointVector(1.0f, 1.0f , -0.5f), new PointVector(1.0f, 0.0f, 0.4f));
     PlaneVector groundLineParallelPlaneCoords = new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.0f, 0.7f, -0.5f), new PointVector(0.0f, 0.7f, 0.5f));
     PlaneVector groundLineCuttedPlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.5f), new PointVector(1.0f, 1.0f, 0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 0.0f, -0.5f));
     PlaneVector profilePlaneCoords = new PlaneVector(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f));
 
-    public MyGLRendererTypeOfPlanes(CreateDiedrico createDiedrico){
-        List<PlaneVector> planeVectors = new ArrayList<>();
-        planeVectors.add(horizontalPlaneCoords);
-        planeVectors.add(frontalPlaneCoords);
-        planeVectors.add(horizontalProjectionPlaneCoords);
-        planeVectors.add(verticalProjectionPlaneCoords);
-        planeVectors.add(groundLineParallelPlaneCoords);
-        planeVectors.add(groundLineCuttedPlaneCoords);
-        planeVectors.add(profilePlaneCoords);
+    int currentType;
 
-        createDiedrico.addPlanes(planeVectors);
+    public MyGLRendererTypeOfPlanes(CreateDiedrico createDiedrico, int currentType){
+
+        switch (currentType){
+            case 0:
+                createDiedrico.addPlane(horizontalPlaneCoords);
+                break;
+            case 1:
+                createDiedrico.addPlane(frontalPlaneCoords);
+                break;
+            case 2:
+                createDiedrico.addPlane(horizontalProjectionPlaneCoords);
+                break;
+            case 3:
+                createDiedrico.addPlane(verticalProjectionPlaneCoords);
+                break;
+            case 4:
+                createDiedrico.addPlane(groundLineParallelPlaneCoords);
+                break;
+            case 5:
+                createDiedrico.addPlane(groundLineCuttedPlaneCoords);
+                break;
+            case 6:
+                createDiedrico.addPlane(profilePlaneCoords);
+                break;
+        }
+
+        this.currentType = currentType;
     }
 
     @Override
@@ -81,14 +94,30 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.4f);
-        horizontalPlane = new ProyectionPlane(horizontalPlaneCoords);
-        frontalPlane = new ProyectionPlane(frontalPlaneCoords);
-        horizontalProjectionPlane = new ProyectionPlane(horizontalProjectionPlaneCoords);
-        verticalProjectionPlane = new ProyectionPlane(verticalProjectionPlaneCoords);
-        groundLineParallelPlane = new ProyectionPlane(groundLineParallelPlaneCoords);
-        groundLineCuttedPlane = new ProyectionPlane(groundLineCuttedPlaneCoords);
-        profilePlane = new ProyectionPlane(profilePlaneCoords);
+        switch (currentType){
+            case 0:
+                currentPlane = new ProyectionPlane(horizontalPlaneCoords);
+                break;
+            case 1:
+                currentPlane = new ProyectionPlane(frontalPlaneCoords);
+                break;
+            case 2:
+                currentPlane = new ProyectionPlane(horizontalProjectionPlaneCoords);
+                break;
+            case 3:
+                currentPlane = new ProyectionPlane(verticalProjectionPlaneCoords);
+                break;
+            case 4:
+                currentPlane = new ProyectionPlane(groundLineParallelPlaneCoords);
+                break;
+            case 5:
+                currentPlane = new ProyectionPlane(groundLineCuttedPlaneCoords);
+                break;
+            case 6:
+                currentPlane = new ProyectionPlane(profilePlaneCoords);
+                break;
+        }
+        //crosswidePlane = new Plane(-0.1f, 0.9f, 0.9f, -0.4f);
     }
 
     @Override
@@ -150,18 +179,8 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
         mAxis.draw(scratch);
         mAxis2.draw(scratch);
 
-        crosswidePlane.draw(scratch);
-        horizontalPlane.draw(scratch);
-        frontalPlane.draw(scratch);
-        horizontalProjectionPlane.draw(scratch);
-        verticalProjectionPlane.draw(scratch);
-        groundLineParallelPlane.draw(scratch);
-        groundLineCuttedPlane.draw(scratch);
-        profilePlane.draw(scratch);
-
-
-
-
+        //crosswidePlane.draw(scratch);
+        currentPlane.draw(scratch);
     }
 
     public static int loadShader(int type, String shaderCode){

@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             isTypeOfLines = true;
         } else if (id == R.id.typeOfPlanes) {
-            changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
+            changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0));
             buttonsLayout.setVisibility(View.VISIBLE);
 
             isTypeOfLines = false;
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
                 }
                 else{
-                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
+                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, currentType));
                 }
             }
         };
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, currentType));
                 }
                 else{
-                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico));
+                    changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, currentType));
                 }
 
             }
