@@ -21,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import io.github.acien101.diedricoanimation.DiedricoTo3D.Camera2BasicFragment;
 import io.github.acien101.diedricoanimation.DiedricoTo3D.CameraActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -59,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     int currentType = 0;           //To determinate the number of the current type of line or plane
     TextView infoText;
 
+    TextView textInfoProjection;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         createDiedrico = new CreateDiedrico(diedrico);
         infoText = (TextView) findViewById(R.id.infoText);
+
+        textInfoProjection = (TextView) findViewById(R.id.textInfoProjection);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,7 +111,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         projection = (LinearLayout) findViewById(R.id.layoutForProjections);
         projection.setOnClickListener(projectionClick());
 
-
+        diedrico.setVisibility(View.GONE);          //When the application start, there is a text of informatios, but the diedrico must be GONE
+        textInfoProjection.setVisibility(View.VISIBLE);
     }
 
 
@@ -162,24 +166,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.welcome) {
             changeRenderer(new MyGLRenderer(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
+            diedrico.setVisibility(View.GONE);
+            textInfoProjection.setVisibility(View.VISIBLE);
         } else if (id == R.id.edges) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
+            diedrico.setVisibility(View.VISIBLE);
+            textInfoProjection.setVisibility(View.GONE);
         } else if (id == R.id.pointProjection) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
+            diedrico.setVisibility(View.VISIBLE);
+            textInfoProjection.setVisibility(View.GONE);
         } else if (id == R.id.lineProjection) {
             changeRenderer(new MyGLRendererLineProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
+            diedrico.setVisibility(View.VISIBLE);
+            textInfoProjection.setVisibility(View.GONE);
         } else if (id == R.id.typeOflines) {
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
-
+            diedrico.setVisibility(View.INVISIBLE);
+            textInfoProjection.setVisibility(View.GONE);
             isTypeOfLines = true;
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
-
+            diedrico.setVisibility(View.INVISIBLE);
+            textInfoProjection.setVisibility(View.GONE);
             isTypeOfLines = false;
         } else if (id == R.id.camara){
             Intent intent = new Intent(this, CameraActivity.class);

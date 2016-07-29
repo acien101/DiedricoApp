@@ -78,7 +78,17 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:id="@+id/projection"
-                android:background="#ffffff"/>
+                android:background="#ffffff"
+                android:visibility="visible" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="1dp"
+                android:id="@+id/textInfoProjection"
+                android:visibility="gone"
+                android:background="#ffffff"
+                android:text="adfsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
