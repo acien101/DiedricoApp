@@ -1,24 +1,49 @@
 <resources>
     <string name="app_name">DiedricoAnimation</string>
-    <string name="title_activity_main2">DiedricoAnimation</string>
+    <string name="title_activity_main2" translatable="false">DiedricoAnimation</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
 
     <string name="picture">Picture</string>
-    <string name="description_info">Info</string>
-    <string name="request_permission">This sample needs camera permission.</string>
-    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
-    <string name="title_activity_preview_menu_main">PreviewMenuMainActivity</string>
+    <string name="description_info" translatable="false">Info</string>
+    <string name="request_permission" translatable="false">This sample needs camera permission.</string>
+    <string name="camera_error" translatable="false">This device doesn\'t support Camera2 API.</string>
+    <string name="title_activity_preview_menu_main" translatable="false">PreviewMenuMainActivity</string>
 
     <string name="nPoint">Nº Point</string>
     <string name="nLine">Nº Line</string>
     <string name="nPlane">Nº Plane</string>
 
     <string name="analyze">Analyze</string>
-    <string name="info">Info</string>
+    <string name="info" translatable="false">Info</string>
     <string name="process">Process</string>
-    <string name="title_activity_menu_prueba">MenuPrueba</string>
+    <string name="title_activity_menu_prueba" translatable="false">MenuPrueba</string>
+    <string name="getStarted">Get Started</string>
+    <string name="welcome">Welcome</string>
+    <string name="edges">Edges</string>
+    <string name="projections">Projections</string>
+    <string name="pointProjection">Point projection</string>
+    <string name="lineProjection">Line projection</string>
+    <string name="typeOfLines">Type of lines</string>
+    <string name="typeOfPlanes">Type of planes</string>
+    <string name="camera_to_3D">Camera to 3D</string>
+    <string name="camera">Camera</string>
+    <string name="crosswideLine">Crosswide Line</string>
+    <string name="horizontalLine">Horizontal Line</string>
+    <string name="frontalLine">Frontal Line</string>
+    <string name="rigidLine">Rigid Line</string>
+    <string name="verticalLine">Vertical Line</string>
+    <string name="groundLineParallelLine">Ground Line Parallel Line</string>
+    <string name="groundLineCuttedLine">Ground Line Cutted Line</string>
+    <string name="crosswidePlane">Crosswide Plane</string>
+    <string name="horizontalPlane">Horizontal Plane</string>
+    <string name="frontalPlane">Frontal Plane</string>
+    <string name="horizontalProjectionPlane">Horizontal Projection Plane</string>
+    <string name="verticalProjectionPlane">Vertical Projection Plane</string>
+    <string name="groundLineParallelPlane">Ground Line Parallel Plane</string>
+    <string name="groundLineCuttedPlane">Ground Line Cutted Plane</string>
+    <string name="profilePlane">Profile Plane</string>
 </resources>

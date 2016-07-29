@@ -61,35 +61,35 @@ public class MyGLRendererTypeOfPlanes extends MyGLRendererCamera{
 
         switch (currentType){
             case 0:
-                infoText.setText("Crosswide Plane");
+                infoText.setText(R.string.crosswidePlane);
                 createDiedrico.addPlane(crosswidePlane);
                 break;
             case 1:
-                infoText.setText("Horizontal Plane");
+                infoText.setText(R.string.horizontalPlane);
                 createDiedrico.addPlane(horizontalPlaneCoords);
                 break;
             case 2:
-                infoText.setText("Frontal Plane");
+                infoText.setText(R.string.frontalPlane);
                 createDiedrico.addPlane(frontalPlaneCoords);
                 break;
             case 3:
-                infoText.setText("Horizontal Projection Plane");
+                infoText.setText(R.string.horizontalProjectionPlane);
                 createDiedrico.addPlane(horizontalProjectionPlaneCoords);
                 break;
             case 4:
-                infoText.setText("Vertical Projection Plane");
+                infoText.setText(R.string.verticalProjectionPlane);
                 createDiedrico.addPlane(verticalProjectionPlaneCoords);
                 break;
             case 5:
-                infoText.setText("Ground Line Parallel Plane");
+                infoText.setText(R.string.groundLineParallelPlane);
                 createDiedrico.addPlane(groundLineParallelPlaneCoords);
                 break;
             case 6:
-                infoText.setText("Ground Line Cutted Plane");
+                infoText.setText(R.string.groundLineCuttedPlane);
                 createDiedrico.addPlane(groundLineCuttedPlaneCoords);
                 break;
             case 7:
-                infoText.setText("Profile Plane");
+                infoText.setText(R.string.profilePlane);
                 createDiedrico.addPlane(profilePlaneCoords);
                 break;
         }

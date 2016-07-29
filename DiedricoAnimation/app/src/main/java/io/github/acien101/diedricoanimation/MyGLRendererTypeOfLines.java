@@ -57,31 +57,31 @@ public class MyGLRendererTypeOfLines extends MyGLRendererCamera{
         this.currentType = currentType;
         switch (currentType){
             case 0:
-                infoText.setText("Crosswide Line");
+                infoText.setText(R.string.crosswideLine);
                 createDiedrico.addLine(crosswideLineCoords);
                 break;
             case 1:
-                infoText.setText("Horizontal Line");
+                infoText.setText(R.string.horizontalLine);
                 createDiedrico.addLine(horiontalLineCoords);
                 break;
             case 2:
-                infoText.setText("Frontal Line");
+                infoText.setText(R.string.frontalLine);
                 createDiedrico.addLine(frontalLineCoords);
                 break;
             case 3:
-                infoText.setText("Rigid Line");
+                infoText.setText(R.string.rigidLine);
                 createDiedrico.addLine(rigidLineCoords);
                 break;
             case 4:
-                infoText.setText("Vertical Line");
+                infoText.setText(R.string.verticalLine);
                 createDiedrico.addLine(verticalLineCoords);
                 break;
             case 5:
-                infoText.setText("Ground Line Parallel Line");
+                infoText.setText(R.string.groundLineParallelLine);
                 createDiedrico.addLine(groundLineParallelLineCoords);
                 break;
             case 6:
-                infoText.setText("Ground Line Cutted Line");
+                infoText.setText(R.string.groundLineCuttedLine);
                 createDiedrico.addLine(groundLineCuttedLineCoords);
                 break;
 

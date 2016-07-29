@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         projection = (LinearLayout) findViewById(R.id.layoutForProjections);
         projection.setOnClickListener(projectionClick());
 
-        diedrico.setVisibility(View.GONE);          //When the application start, there is a text of informatios, but the diedrico must be GONE
+        diedrico.setVisibility(View.GONE);          //When the application start, there is a text of information, but the diedrico must be GONE
         textInfoProjection.setVisibility(View.VISIBLE);
     }
 
@@ -186,13 +186,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.typeOflines) {
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
-            diedrico.setVisibility(View.INVISIBLE);
+            diedrico.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
             isTypeOfLines = true;
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
-            diedrico.setVisibility(View.INVISIBLE);
+            diedrico.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
             isTypeOfLines = false;
         } else if (id == R.id.camara){

@@ -16,7 +16,7 @@
 -->
 
 <resources>
-    <string name="intro_message">
+    <string name="intro_message" translatable="false">
         <![CDATA[
         
             

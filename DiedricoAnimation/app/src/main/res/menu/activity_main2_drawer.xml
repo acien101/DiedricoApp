@@ -2,30 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Get Started">
+    <item android:title="@string/getStarted">
         <menu>
-            <item android:id="@+id/welcome" android:title="Welcome" />
-            <item android:id="@+id/edges" android:title="Edges" />
+            <item android:id="@+id/welcome" android:title="@string/welcome" />
+            <item android:id="@+id/edges" android:title="@string/edges" />
         </menu>
     </item>
 
-    <item android:title="Projections">
+    <item android:title="@string/projections">
         <menu>
-            <item android:id="@+id/pointProjection" android:title="Point projection" />
-            <item android:id="@+id/lineProjection" android:title="Line projection" />
+            <item android:id="@+id/pointProjection" android:title="@string/pointProjection" />
+            <item android:id="@+id/lineProjection" android:title="@string/lineProjection" />
         </menu>
     </item>
 
-    <item android:title="Type of lines">
+    <item android:title="@string/typeOfLines">
         <menu>
-            <item android:id="@+id/typeOflines" android:title="Type of lines" />
-            <item android:id="@+id/typeOfPlanes" android:title="Type of planes" />
+            <item android:id="@+id/typeOflines" android:title="@string/typeOfLines" />
+            <item android:id="@+id/typeOfPlanes" android:title="@string/typeOfPlanes" />
         </menu>
     </item>
 
-    <item android:title="Camara a 3D">
+    <item android:title="@string/camera_to_3D">
         <menu>
-            <item android:id="@+id/camara" android:title="camara" />
+            <item android:id="@+id/camara" android:title="@string/camera" />
         </menu>
     </item>
 </menu>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DiedricoAnimation</string>
+    <string name="action_settings">Configuración</string>
+    <string name="analyze">Analizar</string>
+    <string name="nLine">Nº Linea</string>
+    <string name="nPlane">Nº Plano</string>
+    <string name="nPoint">Nº Punto</string>
+    <string name="picture">Foto</string>
+    <string name="process">Procesar</string>
+    <string name="camera_to_3D">Camara a 3D</string>
+    <string name="edges">Ejes</string>
+    <string name="getStarted">Empezar</string>
+    <string name="lineProjection">Proyección de lineas</string>
+    <string name="pointProjection">Proyección de puntos</string>
+    <string name="projections">Proyecciones</string>
+    <string name="typeOfLines">Tipos de lineas</string>
+    <string name="typeOfPlanes">Tipos de planos</string>
+    <string name="welcome">Bienvenido</string>
+    <string name="camera">Camara</string>
+    <string name="crosswideLine">Linea oblicua</string>
+    <string name="crosswidePlane">Plano oblicuo</string>
+    <string name="frontalLine">Linea frontal</string>
+    <string name="frontalPlane">Plano frontal</string>
+    <string name="groundLineCuttedLine">Linea que pasa por la linea de tierra</string>
+    <string name="groundLineCuttedPlane">Plano que pasa por la linea de tierra</string>
+    <string name="groundLineParallelLine">Linea paralela a la linea de tierra</string>
+    <string name="groundLineParallelPlane">Plano paralelo a la linea de tierra</string>
+    <string name="horizontalLine">Line horizontal</string>
+    <string name="horizontalPlane">Plano horizontal</string>
+    <string name="horizontalProjectionPlane">Plano proyectante horizontal</string>
+    <string name="profilePlane">Plano de perfil</string>
+    <string name="rigidLine">Linea de punta</string>
+    <string name="verticalLine">Linea vertical</string>
+    <string name="verticalProjectionPlane">Plano proyectante vertical</string>
+</resources>
