@@ -163,14 +163,4 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
 
         return shader;
     }
-
-    void addCameraPosition(float x, float y, float z){
-        viewX = viewX + x;
-        viewY = viewY + y;
-        //eyeZ = eyeZ + z;
-    }
-
-    void setNotPressed(boolean notPressed){
-        this.notPressed = notPressed;
-    }
 }

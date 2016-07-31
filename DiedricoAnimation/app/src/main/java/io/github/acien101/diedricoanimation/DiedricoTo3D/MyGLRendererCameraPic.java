@@ -1,8 +1,9 @@
 package io.github.acien101.diedricoanimation.DiedricoTo3D;
 
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.os.SystemClock;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,12 @@ import io.github.acien101.diedricoanimation.openGL.Axis;
 import io.github.acien101.diedricoanimation.openGL.GLPoint;
 import io.github.acien101.diedricoanimation.openGL.Plane;
 import io.github.acien101.diedricoanimation.openGL.Line;
+import io.github.acien101.diedricoanimation.MyGLRendererCamera;
 
 /**
  * Created by amil101 on 10/01/16.
  */
-public class MyGLRendererCamera implements GLSurfaceView.Renderer{
+public class MyGLRendererCameraPic extends MyGLRendererCamera{
 
     private Axis mAxis;
     private Axis mAxis2;
@@ -26,12 +28,6 @@ public class MyGLRendererCamera implements GLSurfaceView.Renderer{
     private List<GLPoint> mPoints = new ArrayList<>();
     private List<Line> mLines = new ArrayList<>();
     private List<Plane> mPlane = new ArrayList<>();
-
-    private List<PointVector> pointVectors = new ArrayList<>();
-    private List<LineVector> lineVectors = new ArrayList<>();
-    private List<PlaneVector> planeVectors = new ArrayList<>();
-
-    static int zoom = 130;
 
     static float squareCoords[] = {
             -1.0f,  0.0f, 0.0f,   // top left
@@ -54,6 +50,7 @@ public class MyGLRendererCamera implements GLSurfaceView.Renderer{
     float blackColor[] = {0.0f, 0.0f, 0.0f, 1.0f};
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
+        Log.i("created", "created");
         // Set the background frame color
         GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -82,12 +79,12 @@ public class MyGLRendererCamera implements GLSurfaceView.Renderer{
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         // Position the eye behind the origin.
-        final float eyeX = 0.0f;
+        final float eyeX = 4.0f;
         final float eyeY = 1.0f;
-        final float eyeZ = 6f;
+        final float eyeZ = 4f;
 
         // We are looking toward the distance
-        final float lookX = 0.0f;
+        final float lookX = -5.0f;
         final float lookY = -1.0f;
         final float lookZ = -5.0f;
 
@@ -106,14 +103,20 @@ public class MyGLRendererCamera implements GLSurfaceView.Renderer{
 
         Matrix.translateM(mRotationMatrix, 0, 0, 0, 0);
 
-        //Assign mRotationMatrix a rotation with the seekbar
-        Matrix.rotateM(mRotationMatrix, 0, zoom * 3.6f, 0.0f, 1.0f, 0.0f);
+        if(notPressed){
+            Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 6000L) * 0.060f, 0.0f, 1.0f, 0.0f);
+        }
+        else{
+            //Assign mRotationMatrix a rotation with the time
+            Matrix.rotateM(mRotationMatrix, 0, viewX, 0.0f, 0.1f, 0.0f);
+            Matrix.rotateM(mRotationMatrix, 0, viewY, 0.0f, 0.0f, 0.1f);
+        }
 
         // combine the model with the view matrix
-        Matrix.multiplyMM(mMVPMatrix, 0, mViewMatrix, 0, mRotationMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         // combine the model-view with the projection matrix
-        Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mMVPMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // we draw the points and we move to the place they must be
         for(int i = 0; i < mPoints.size(); i++){
@@ -150,7 +153,7 @@ public class MyGLRendererCamera implements GLSurfaceView.Renderer{
         Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
     }
 
-    public static int loadShader(int type, String shaderCode){
+    public static int loadShader(int type, String shaderCode) {
 
         // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
         // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
@@ -161,24 +164,6 @@ public class MyGLRendererCamera implements GLSurfaceView.Renderer{
         GLES20.glCompileShader(shader);
 
         return shader;
-    }
-
-    public void setZoom(int zoom) {
-
-        this.zoom = zoom;
-    }
-
-    public void setPointCoords(List<PointVector> pointCoords) {
-        this.pointVectors = pointCoords;
-
-    }
-
-    public void setLineVectors(List<LineVector> lineVectors) {
-        this.lineVectors = lineVectors;
-    }
-
-    public void setPlaneVectors(List<PlaneVector> planeVectors) {
-        this.planeVectors = planeVectors;
     }
 
 }
