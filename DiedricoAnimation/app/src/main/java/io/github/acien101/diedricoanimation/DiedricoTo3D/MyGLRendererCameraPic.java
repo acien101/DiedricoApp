@@ -30,16 +30,16 @@ public class MyGLRendererCameraPic extends MyGLRendererCamera{
     private List<Plane> mPlane = new ArrayList<>();
 
     static float squareCoords[] = {
-            -1.0f,  0.0f, 0.0f,   // top left
-            1.0f, 0.0f, 0.0f,   // bottom left
-            1.0f, 0.0f, -1.0f,   // bottom right
-            -1.0f,  0.0f, -1.0f }; // top right
+            -1.0f,  0.0f, 0.5f,   // top left
+            1.0f, 0.0f, 0.5f,   // bottom left
+            1.0f, 0.0f, -0.5f,   // bottom right
+            -1.0f,  0.0f, -0.5f }; // top right
 
     static float squareCoords2[] = {
-            0.0f,  1.0f, 0.0f,   // top left
-            0.0f, -1.0f, 0.0f,   // bottom left
-            0.0f, -1.0f, -1.0f,   // bottom right
-            0.0f,  1.0f, -1.0f }; // top right
+            0.0f,  1.0f, 0.5f,   // top left
+            0.0f, -1.0f, 0.5f,   // bottom left
+            0.0f, -1.0f, -0.5f,   // bottom right
+            0.0f,  1.0f, -0.5f }; // top right
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -64,11 +64,11 @@ public class MyGLRendererCameraPic extends MyGLRendererCamera{
         }
         // initialize the lines
         for(int i = 0; i< lineVectors.size(); i++){
-            mLines.add(new Line(lineVectors.get(i).getLineYA(), lineVectors.get(i).getLineXA(), -lineVectors.get(i).getLineZA(), lineVectors.get(i).getLineYB(), lineVectors.get(i).getLineXB(), -lineVectors.get(i).getLineZB(), blackColor));
+            mLines.add(new Line(lineVectors.get(i).getLineYA(), lineVectors.get(i).getLineXA(), 0.5f - lineVectors.get(i).getLineZA(), lineVectors.get(i).getLineYB(), lineVectors.get(i).getLineXB(), 0.5f - lineVectors.get(i).getLineZB(), blackColor));
         }
         // initialize the planes
         for(int i = 0; i < planeVectors.size(); i++){
-            mPlane.add(new Plane(-planeVectors.get(i).getPlaneOriginZ(), planeVectors.get(i).getPlaneY(), planeVectors.get(i).getPlaneX(), -planeVectors.get(i).getPlaneZ()));
+            mPlane.add(new Plane(0.5f - planeVectors.get(i).getPlaneOriginZ(), planeVectors.get(i).getPlaneY(), planeVectors.get(i).getPlaneX(), 0.5f - planeVectors.get(i).getPlaneZ()));
         }
     }
 
@@ -121,7 +121,7 @@ public class MyGLRendererCameraPic extends MyGLRendererCamera{
         // we draw the points and we move to the place they must be
         for(int i = 0; i < mPoints.size(); i++){
             Matrix.setIdentityM(mTranslationMatrix, 0);
-            Matrix.translateM(mTranslationMatrix, 0, ((float) pointVectors.get(i).getPointY()), ((float) pointVectors.get(i).getPointX()), -((float) pointVectors.get(i).getPointZ()));
+            Matrix.translateM(mTranslationMatrix, 0, ((float) pointVectors.get(i).getPointY()), ((float) pointVectors.get(i).getPointX()), (0.5f - (float) pointVectors.get(i).getPointZ()));
             Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
 
             mPoints.get(i).draw(scratch);
