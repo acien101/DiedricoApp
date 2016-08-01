@@ -1,10 +1,8 @@
 package io.github.acien101.diedricoanimation.DiedricoTo3D;
 
 import io.github.acien101.diedricoanimation.R;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,7 +28,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.acien101.diedricoanimation.DiedricoTo3D.OpenGlActivity;
+import io.github.acien101.diedricoanimation.vector.LineVector;
+
 
 /**
  * Created by amil101 on 12/02/16.

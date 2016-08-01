@@ -3,6 +3,7 @@ package io.github.acien101.diedricoanimation.DiedricoTo3D;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import io.github.acien101.diedricoanimation.MyGLRendererCamera;
+import io.github.acien101.diedricoanimation.vector.LineVector;
 
 import java.util.List;
 

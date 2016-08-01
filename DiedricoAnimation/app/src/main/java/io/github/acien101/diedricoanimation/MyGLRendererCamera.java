@@ -7,7 +7,7 @@ import java.util.List;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import io.github.acien101.diedricoanimation.DiedricoTo3D.LineVector;
+import io.github.acien101.diedricoanimation.vector.LineVector;
 import io.github.acien101.diedricoanimation.DiedricoTo3D.PlaneVector;
 import io.github.acien101.diedricoanimation.DiedricoTo3D.PointVector;
 

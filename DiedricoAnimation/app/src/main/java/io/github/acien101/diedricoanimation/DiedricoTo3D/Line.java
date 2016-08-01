@@ -3,6 +3,7 @@ package io.github.acien101.diedricoanimation.DiedricoTo3D;
 /**
  * Created by amil101 on 16/02/16.
  */
+
 public class Line {
 
     float xa;
