@@ -587,4 +587,3 @@ public class PreviewMenuActivity extends AppCompatActivity {
     }
 }
 
-
