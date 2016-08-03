@@ -73,13 +73,43 @@
             android:layout_weight="9"
             android:background="#000000">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="300dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="1dp"
-                android:id="@+id/projection"
-                android:background="#ffffff"
-                android:visibility="visible" />
+                android:id="@+id/projectionLayout">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/projection"
+                    android:background="#ffffff"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Cota"
+                    android:layout_marginLeft="160dp"
+                    android:layout_marginTop="200dp"
+                    android:id="@+id/cotaText"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Alejamiento"
+                    android:layout_marginLeft="160dp"
+                    android:layout_marginTop="300dp"
+                    android:id="@+id/alejamientoText"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_info"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/infoButton"/>
+
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_width="300dp"

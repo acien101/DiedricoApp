@@ -1,5 +1,6 @@
 package io.github.acien101.diedricoanimation;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.SystemClock;
@@ -10,10 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -60,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     TextView textInfoProjection;
 
+    RelativeLayout projectionLayout;
+
+    TextView cotaText;
+    TextView alejamientoText;
+
+    ImageButton inforButton;
+    Dialog dialogButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +79,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         content_main = (RelativeLayout) findViewById(R.id.content_main);
 
         diedrico = (ImageView) findViewById(R.id.projection);
+        projectionLayout = (RelativeLayout) findViewById(R.id.projectionLayout);
 
         createDiedrico = new CreateDiedrico(diedrico);
         infoText = (TextView) findViewById(R.id.infoText);
 
         textInfoProjection = (TextView) findViewById(R.id.textInfoProjection);
+
+        cotaText = (TextView) findViewById(R.id.cotaText);
+        alejamientoText = (TextView) findViewById(R.id.alejamientoText);
+
+        inforButton = (ImageButton) findViewById(R.id.infoButton);
+        inforButton.setOnClickListener(infoButton());
+        dialogButton = new Dialog(this);
+        LayoutInflater inflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.info_dialog, (ViewGroup)findViewById(R.id.dialog));
+        dialogButton.setContentView(layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         projection = (LinearLayout) findViewById(R.id.layoutForProjections);
         projection.setOnClickListener(projectionClick());
 
-        diedrico.setVisibility(View.GONE);          //When the application start, there is a text of information, but the diedrico must be GONE
+        projectionLayout.setVisibility(View.GONE);          //When the application start, there is a text of information, but the diedrico must be GONE
         textInfoProjection.setVisibility(View.VISIBLE);
         textInfoProjection.setText(R.string.firtstext);
     }
@@ -166,35 +188,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.welcome) {
             changeRenderer(new MyGLRenderer(createDiedrico));
-            buttonsLayout.setVisibility(View.INVISIBLE);
-            diedrico.setVisibility(View.GONE);
+            buttonsLayout.setVisibility(View.GONE);
+            projectionLayout.setVisibility(View.GONE);
             textInfoProjection.setVisibility(View.VISIBLE);
         } else if (id == R.id.edges) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
-            diedrico.setVisibility(View.VISIBLE);
+            projectionLayout.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
+
+            cotaText.setVisibility(View.VISIBLE);
+            alejamientoText.setVisibility(View.VISIBLE);
         } else if (id == R.id.pointProjection) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
-            diedrico.setVisibility(View.VISIBLE);
+            projectionLayout.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
+
+            cotaText.setVisibility(View.VISIBLE);
+            alejamientoText.setVisibility(View.VISIBLE);
         } else if (id == R.id.lineProjection) {
             changeRenderer(new MyGLRendererLineProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
-            diedrico.setVisibility(View.VISIBLE);
+            projectionLayout.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
+
+            cotaText.setVisibility(View.INVISIBLE);
+            alejamientoText.setVisibility(View.INVISIBLE);
         } else if (id == R.id.typeOflines) {
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
-            diedrico.setVisibility(View.VISIBLE);
+            projectionLayout.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
+
+            cotaText.setVisibility(View.INVISIBLE);
+            alejamientoText.setVisibility(View.INVISIBLE);
             isTypeOfLines = true;
         } else if (id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
-            diedrico.setVisibility(View.VISIBLE);
+            projectionLayout.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
+
+            cotaText.setVisibility(View.INVISIBLE);
+            alejamientoText.setVisibility(View.INVISIBLE);
             isTypeOfLines = false;
         } else if (id == R.id.camara){
             Intent intent = new Intent(this, CameraActivity.class);
@@ -315,6 +352,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 else{
                     changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, currentType, infoText));
                 }
+            }
+        };
+    }
+
+    public View.OnClickListener infoButton(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogButton.show();
             }
         };
     }
