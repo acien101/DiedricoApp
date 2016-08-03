@@ -33,4 +33,9 @@
     <string name="rigidLine">Linea de punta</string>
     <string name="verticalLine">Linea vertical</string>
     <string name="verticalProjectionPlane">Plano proyectante vertical</string>
+    <string name="firtstext">HOLA\r\n\r\n
+        Bienvenido a la aplicación de diédrico3D, con esta aplicación podrás ver como funciona el sistema diédrico en tres dimensiones. La aplicación contiene las explicaciones básicas para que tú y tu clase saqueis un 10 en selectividad. 	\r\n\r\n
+        Aplicación creada por Fran Acién (alumno de dibujo enfirecido) \r\n\r\n
+        FOSS-Código fuente en http://github.com/acien101/DiedricoApp \r\n\r\n
+        Animo!</string>
 </resources>

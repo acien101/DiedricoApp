@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         diedrico.setVisibility(View.GONE);          //When the application start, there is a text of information, but the diedrico must be GONE
         textInfoProjection.setVisibility(View.VISIBLE);
+        textInfoProjection.setText(R.string.firtstext);
     }
 
 

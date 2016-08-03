@@ -46,4 +46,9 @@
     <string name="groundLineParallelPlane">Ground Line Parallel Plane</string>
     <string name="groundLineCuttedPlane">Ground Line Cutted Plane</string>
     <string name="profilePlane">Profile Plane</string>
+    <string name="firtstext">Hi!\r\n\r\n
+        Welcome to Diedrico3D, with this app you can leanr how the descriptive geometry works in three dimensions. This app have the basics skill in aim to pass the selectividad exam with a 10 ;) \r\n\r\n
+        App created by Fran Acién \r\n\r\n
+        FOSS-Code in http://github.com/acien101/DiedricoApp \r\n\r\n
+        Good luck!</string>
 </resources>
