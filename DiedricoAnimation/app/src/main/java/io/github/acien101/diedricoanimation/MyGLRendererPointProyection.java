@@ -7,10 +7,12 @@ import android.util.Log;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import io.github.acien101.diedricoanimation.openGL.AlejamientoModel;
 import io.github.acien101.diedricoanimation.openGL.Axis;
+import io.github.acien101.diedricoanimation.openGL.CotaModel;
 import io.github.acien101.diedricoanimation.openGL.GLPoint;
+import io.github.acien101.diedricoanimation.openGL.ImportModel;
 import io.github.acien101.diedricoanimation.openGL.Line;
-import io.github.acien101.diedricoanimation.openGL.ModelTest;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -23,6 +25,9 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
     private Line mLine;
 
     private GLPoint mPoint;
+
+    private ImportModel cota;     //We import the model cota and the model alejamiento
+    private ImportModel alejamiento;
 
     private DiscontinuousLine mDiscontinuousLineX;
     private DiscontinuousLine mDicontinuousLineY;
@@ -69,6 +74,9 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
 
         mDiscontinuousLineX = new DiscontinuousLine(new PointVector(0.5f, 0.5f, 0.0f), new PointVector(0.5f, 0.0f, 0.0f), blackColor, 10);
         mDicontinuousLineY = new DiscontinuousLine(new PointVector(0.5f, 0.5f, 0.0f), new PointVector(0.0f, 0.5f, 0.0f), blackColor, 10);
+
+        cota = new ImportModel(new CotaModel());
+        alejamiento = new ImportModel(new AlejamientoModel());
     }
 
     @Override
@@ -129,11 +137,9 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
 
         Matrix.setIdentityM(mTranslationMatrix, 0);
 
-        Matrix.translateM(mTranslationMatrix, 0, (float)pointVectorCoords.getPointX(), (float)pointVectorCoords.getPointY(), (float)pointVectorCoords.getPointZ());
+        Matrix.translateM(mTranslationMatrix, 0, (float) pointVectorCoords.getPointX(), (float) pointVectorCoords.getPointY(), (float) pointVectorCoords.getPointZ());
 
         Matrix.multiplyMM(scratch, 0, rotation, 0, mTranslationMatrix, 0);
-
-        //Matrix.multiplyMM(scratch, 0, rotation, 0, scratch, 0);
 
         // Draw shape
         mAxis.draw(rotation);
@@ -145,6 +151,21 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
         mDicontinuousLineY.draw(rotation);
 
         mPoint.draw(scratch);
+
+
+        //Moving the cotaModel
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.translateM(mTranslationMatrix, 0, 0.75f, 0.25f, 0.0f);
+        Matrix.multiplyMM(scratch, 0, rotation, 0, mTranslationMatrix, 0);
+
+        cota.draw(scratch);
+
+        //Moving the alejamientoModel
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.translateM(mTranslationMatrix, 0, 0.4f, 0.6f, 0.0f);
+        Matrix.multiplyMM(scratch, 0, rotation, 0, mTranslationMatrix, 0);
+
+        alejamiento.draw(scratch);
 
     }
 
