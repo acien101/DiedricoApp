@@ -38,4 +38,5 @@
         Aplicación creada por Fran Acién (alumno de dibujo enfirecido) \r\n\r\n
         FOSS-Código fuente en http://github.com/acien101/DiedricoApp \r\n\r\n
         Animo!</string>
+    <string name="pointProjectionInfo">Se llama cota o altura de un punto a la distancia qeu hay desde el punto al PH de proyección y slejamienot a su distancia al PV. \n En proyección, la cota viene determinada por la distancia que hay desde la proyección vertical del pinto a la LT, y el alejamiento por la idstancia qeu jay desde la protecciń jprozntal a la LT.</string>
 </resources>

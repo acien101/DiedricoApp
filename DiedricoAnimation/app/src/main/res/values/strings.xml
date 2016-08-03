@@ -51,4 +51,5 @@
         App created by Fran Acién \r\n\r\n
         FOSS-Code in http://github.com/acien101/DiedricoApp \r\n\r\n
         Good luck!</string>
+    <string name="pointProjectionInfo">OnlyInSpanish</string>
 </resources>

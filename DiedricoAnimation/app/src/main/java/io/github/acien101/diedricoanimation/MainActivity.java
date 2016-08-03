@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ImageButton inforButton;
     Dialog dialogButton;
+    TextView infoDialogText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.info_dialog, (ViewGroup)findViewById(R.id.dialog));
         dialogButton.setContentView(layout);
+        infoDialogText = (TextView) layout.findViewById(R.id.infoDialogText);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -361,6 +363,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 dialogButton.show();
+                infoDialogText.setText(R.string.pointProjectionInfo);
             }
         };
     }
