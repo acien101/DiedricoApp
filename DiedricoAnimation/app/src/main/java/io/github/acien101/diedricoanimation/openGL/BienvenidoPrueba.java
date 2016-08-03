@@ -3,7 +3,7 @@ package io.github.acien101.diedricoanimation.openGL;
 /**
  * Created by amil101 on 27/05/16.
  */
-public class BienvenidoPrueba {
+public class BienvenidoPrueba extends Model{
     public static final int cubeVertsCount = 8364;
     public static final float cubeVerts [] = {
             // f 11//1 1//1 12//1
@@ -2071,4 +2071,9 @@ public class BienvenidoPrueba {
             0.502731729173146f, -0.0427485428457038f, 0.010428433636895f,
             0.477448963962613f, -0.0490794858288616f, -0.010428433636895f,
     };
+
+        public BienvenidoPrueba(){
+                super(cubeVertsCount, cubeVerts);
+        }
+
 }

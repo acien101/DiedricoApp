@@ -10,6 +10,7 @@ import javax.microedition.khronos.opengles.GL10;
 import io.github.acien101.diedricoanimation.openGL.Axis;
 import io.github.acien101.diedricoanimation.openGL.GLPoint;
 import io.github.acien101.diedricoanimation.openGL.Line;
+import io.github.acien101.diedricoanimation.openGL.ModelTest;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -68,10 +69,6 @@ public class MyGLRendererPointProyection extends MyGLRendererCamera{
 
         mDiscontinuousLineX = new DiscontinuousLine(new PointVector(0.5f, 0.5f, 0.0f), new PointVector(0.5f, 0.0f, 0.0f), blackColor, 10);
         mDicontinuousLineY = new DiscontinuousLine(new PointVector(0.5f, 0.5f, 0.0f), new PointVector(0.0f, 0.5f, 0.0f), blackColor, 10);
-
-
-
-
     }
 
     @Override

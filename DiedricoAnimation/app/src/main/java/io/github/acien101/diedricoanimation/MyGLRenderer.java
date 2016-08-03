@@ -7,6 +7,8 @@ import android.os.SystemClock;
 import javax.microedition.khronos.opengles.GL10;
 
 import io.github.acien101.diedricoanimation.openGL.Axis;
+import io.github.acien101.diedricoanimation.openGL.BienvenidoPrueba;
+import io.github.acien101.diedricoanimation.openGL.ImportModel;
 import io.github.acien101.diedricoanimation.openGL.Line;
 import io.github.acien101.diedricoanimation.openGL.ModelTest;
 import io.github.acien101.diedricoanimation.vector.PointVector;
@@ -20,7 +22,7 @@ public class MyGLRenderer extends MyGLRendererCamera {
 
     private Line mLine;
 
-    private ModelTest mModel;
+    private ImportModel mModel;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -58,7 +60,7 @@ public class MyGLRenderer extends MyGLRendererCamera {
         float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
         mLine = new Line(0.0f, 0.0f, 0.5f, 0.0f, 0.0f, -0.5f, color);
 
-        mModel = new ModelTest();
+        mModel = new ImportModel(new BienvenidoPrueba());
     }
 
     @Override
