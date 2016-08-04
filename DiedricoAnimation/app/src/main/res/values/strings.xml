@@ -52,4 +52,20 @@
         FOSS-Code in http://github.com/acien101/DiedricoApp \r\n\r\n
         Good luck!</string>
     <string name="pointProjectionInfo">OnlyInSpanish</string>
+    <string name="lineProjectionInfo">Only In Spanish</string>
+    <string name="horizontalLineInfo">OnlyInSpanish</string>
+    <string name="frontalLineInfo">Only in spanish</string>
+    <string name="verticalLineInfo">Only in Spanish</string>
+    <string name="rigidLineInfo">Only in spanish</string>
+    <string name="groundLineParallelLineInfo">Only in spanish</string>
+    <string name="groundLineCuttedLineInfo">Only in spanish</string>
+    <string name="crosswideLineInfo">Only in spanish</string>
+    <string name="crosswidePlanoInfo">Only in spanish</string>
+    <string name="horizontalPlaneInfo">Only in spanish</string>
+    <string name="frontalPlaneInfo">Only in spanish</string>
+    <string name="horizontalProjectionPlaneInfo">Only in spanish</string>
+    <string name="verticalProjectionPlaneInfo">Only in spanish</string>
+    <string name="groundLineParallelPlaneInfo">Only in spanish</string>
+    <string name="profilePlaneInfo">Only in spanish</string>
+    <string name="groundLineCuttedPlaneInfo">Only in spanish</string>
 </resources>

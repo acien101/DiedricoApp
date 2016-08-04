@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import io.github.acien101.diedricoanimation.DiedricoTo3D.CameraActivity;
+import io.github.acien101.diedricoanimation.openGL.Line;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageButton inforButton;
     Dialog dialogButton;
     TextView infoDialogText;
+
+    private int id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -186,14 +189,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        this.id = item.getItemId();
 
-        if (id == R.id.welcome) {
+        if (this.id == R.id.welcome) {
             changeRenderer(new MyGLRenderer(createDiedrico));
             buttonsLayout.setVisibility(View.GONE);
             projectionLayout.setVisibility(View.GONE);
             textInfoProjection.setVisibility(View.VISIBLE);
-        } else if (id == R.id.edges) {
+        } else if (this.id == R.id.edges) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
@@ -201,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             cotaText.setVisibility(View.VISIBLE);
             alejamientoText.setVisibility(View.VISIBLE);
-        } else if (id == R.id.pointProjection) {
+        } else if (this.id == R.id.pointProjection) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
@@ -209,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             cotaText.setVisibility(View.VISIBLE);
             alejamientoText.setVisibility(View.VISIBLE);
-        } else if (id == R.id.lineProjection) {
+        } else if (this.id == R.id.lineProjection) {
             changeRenderer(new MyGLRendererLineProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
@@ -217,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             cotaText.setVisibility(View.INVISIBLE);
             alejamientoText.setVisibility(View.INVISIBLE);
-        } else if (id == R.id.typeOflines) {
+        } else if (this.id == R.id.typeOflines) {
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
@@ -226,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             cotaText.setVisibility(View.INVISIBLE);
             alejamientoText.setVisibility(View.INVISIBLE);
             isTypeOfLines = true;
-        } else if (id == R.id.typeOfPlanes) {
+        } else if (this.id == R.id.typeOfPlanes) {
             changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
@@ -235,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             cotaText.setVisibility(View.INVISIBLE);
             alejamientoText.setVisibility(View.INVISIBLE);
             isTypeOfLines = false;
-        } else if (id == R.id.camara){
+        } else if (this.id == R.id.camara){
             Intent intent = new Intent(this, CameraActivity.class);
             this.startActivity(intent);
         }
@@ -362,8 +365,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (id == R.id.edges) {
+                    infoDialogText.setText(R.string.pointProjectionInfo);
+                } else if (id == R.id.pointProjection) {
+                    infoDialogText.setText(R.string.pointProjectionInfo);
+                } else if (id == R.id.lineProjection) {
+                    infoDialogText.setText(R.string.lineProjectionInfo);
+                } else if (id == R.id.typeOflines) {
+                    switch (currentType){
+                        case 0:
+                            infoDialogText.setText(R.string.crosswideLineInfo);
+                            break;
+                        case 1:
+                            infoDialogText.setText(R.string.horizontalLineInfo);
+                            break;
+                        case 2:
+                            infoDialogText.setText(R.string.frontalLineInfo);
+                            break;
+                        case 3:
+                            infoDialogText.setText(R.string.rigidLineInfo);
+                            break;
+                        case 4:
+                            infoDialogText.setText(R.string.verticalLineInfo);
+                            break;
+                        case 5:
+                            infoDialogText.setText(R.string.groundLineParallelLineInfo);
+                            break;
+                        case 6:
+                            infoDialogText.setText(R.string.groundLineCuttedLineInfo);
+                            break;
+
+                    }
+
+                } else if (id == R.id.typeOfPlanes) {
+                    switch (currentType){
+                        case 0:
+                            infoDialogText.setText(R.string.crosswidePlanoInfo);
+                            break;
+                        case 1:
+                            infoDialogText.setText(R.string.horizontalPlaneInfo);
+                            break;
+                        case 2:
+                            infoDialogText.setText(R.string.frontalPlaneInfo);
+                            break;
+                        case 3:
+                            infoDialogText.setText(R.string.horizontalProjectionPlaneInfo);
+                            break;
+                        case 4:
+                            infoDialogText.setText(R.string.verticalProjectionPlaneInfo);
+                            break;
+                        case 5:
+                            infoDialogText.setText(R.string.groundLineCuttedPlaneInfo);
+                            break;
+                        case 6:
+                            infoDialogText.setText(R.string.groundLineCuttedPlaneInfo);
+                            break;
+                        case 7:
+                            infoDialogText.setText(R.string.profilePlaneInfo);
+                            break;
+
+                    }
+                }
                 dialogButton.show();
-                infoDialogText.setText(R.string.pointProjectionInfo);
+
             }
         };
     }
