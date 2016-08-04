@@ -9,7 +9,12 @@ import android.os.SystemClock;
 import javax.microedition.khronos.opengles.GL10;
 
 import io.github.acien101.diedricoanimation.openGL.Axis;
+import io.github.acien101.diedricoanimation.openGL.FirstQuadrantModel;
+import io.github.acien101.diedricoanimation.openGL.FourthQuadrantModel;
+import io.github.acien101.diedricoanimation.openGL.ImportModel;
 import io.github.acien101.diedricoanimation.openGL.Line;
+import io.github.acien101.diedricoanimation.openGL.SecondQuadrantModel;
+import io.github.acien101.diedricoanimation.openGL.ThirdQuadrantModel;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -21,10 +26,16 @@ public class MyGLRendererEdges extends MyGLRendererCamera {
 
     private Line mLine;
 
+    private ImportModel firstQuadrant;
+    private ImportModel secondQuadrant;
+    private ImportModel thirdQuadrant;
+    private ImportModel fourthQuadrant;
+
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
+    private final float[] mTranslationMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
 
 
@@ -53,6 +64,11 @@ public class MyGLRendererEdges extends MyGLRendererCamera {
         mAxis2 = new Axis(squareCoords2);
 
         mLine = new Line(new PointVector(0.0f, 0.0f, -0.5f), new PointVector(0.0f, 0.0f, 0.5f), color);
+
+        firstQuadrant = new ImportModel(new FirstQuadrantModel());
+        secondQuadrant = new ImportModel(new SecondQuadrantModel());
+        thirdQuadrant = new ImportModel(new ThirdQuadrantModel());
+        fourthQuadrant = new ImportModel(new FourthQuadrantModel());
     }
 
     @Override
@@ -117,16 +133,44 @@ public class MyGLRendererEdges extends MyGLRendererCamera {
         Matrix.setIdentityM(mRotationMatrix, 0);
 
         //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 0.0f, 1.0f);
+        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 0.0f, -1.0f);
 
         // combine the model with the view matrix
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // Draw shape
-        mAxis.draw(mMVPMatrix);
-        mAxis2.draw(scratch);
+        mAxis.draw(scratch);
+        mAxis2.draw(mMVPMatrix);
 
         mLine.draw(mMVPMatrix);
+
+        //Moving the firstQuadrant model
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.translateM(mTranslationMatrix, 0, 1.0f, 1.0f, -0.5f);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+
+        firstQuadrant.draw(scratch);
+
+        //Moving the secondQuadrant model
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.translateM(mTranslationMatrix, 0, -1.0f, 1.0f, -0.5f);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+
+        secondQuadrant.draw(scratch);
+
+        //Moving the thirdQuadrant model
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.translateM(mTranslationMatrix, 0, -1.0f, -1.0f, -0.5f);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+
+        thirdQuadrant.draw(scratch);
+
+        //Moving the fouthQuadrant model
+        Matrix.setIdentityM(mTranslationMatrix, 0);
+        Matrix.translateM(mTranslationMatrix, 0, 1.0f, -1.0f, -0.5f);
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mTranslationMatrix, 0);
+
+        fourthQuadrant.draw(scratch);
 
     }
 
