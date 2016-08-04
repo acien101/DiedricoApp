@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
 
-        renderer = new MyGLRenderer(createDiedrico);              //The main screen is the MyGLRenderer() obj, where is a home renderer
+        renderer = new MyGLRenderer();              //The main screen is the MyGLRenderer() obj, where is a home renderer
         mGLView = new MyGLSurfaceView(this, renderer);
         myGLSurfaceView = new MyGLSurfaceView(this, renderer);
 
@@ -192,18 +192,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.id = item.getItemId();
 
         if (this.id == R.id.welcome) {
-            changeRenderer(new MyGLRenderer(createDiedrico));
+            changeRenderer(new MyGLRenderer());
             buttonsLayout.setVisibility(View.GONE);
             projectionLayout.setVisibility(View.GONE);
             textInfoProjection.setVisibility(View.VISIBLE);
         } else if (this.id == R.id.edges) {
-            changeRenderer(new MyGLRendererPointProyection(createDiedrico));
+            changeRenderer(new MyGLRendererEdges());
             buttonsLayout.setVisibility(View.INVISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
 
-            cotaText.setVisibility(View.VISIBLE);
-            alejamientoText.setVisibility(View.VISIBLE);
+            cotaText.setVisibility(View.INVISIBLE);
+            alejamientoText.setVisibility(View.INVISIBLE);
         } else if (this.id == R.id.pointProjection) {
             changeRenderer(new MyGLRendererPointProyection(createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);

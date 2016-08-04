@@ -1,35 +1,32 @@
 package io.github.acien101.diedricoanimation;
 
+import android.opengl.EGLConfig;
 import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import io.github.acien101.diedricoanimation.openGL.Axis;
-import io.github.acien101.diedricoanimation.openGL.BienvenidoPrueba;
-import io.github.acien101.diedricoanimation.openGL.ImportModel;
 import io.github.acien101.diedricoanimation.openGL.Line;
-import io.github.acien101.diedricoanimation.openGL.ModelTest;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
  * Created by amil101 on 23/04/16.
  */
-public class MyGLRenderer extends MyGLRendererCamera {
+public class MyGLRendererEdges extends MyGLRendererCamera {
     private Axis mAxis;
     private Axis mAxis2;
 
     private Line mLine;
-
-    private ImportModel mModel;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
-    private final float[] mTranslationMatrix = new float[16];
+
 
     static float squareCoords[] = {
             -1.0f,  0.0f, 0.5f,   // top left
@@ -43,6 +40,9 @@ public class MyGLRenderer extends MyGLRendererCamera {
             0.0f, -1.0f, -0.5f,   // bottom right
             0.0f,  1.0f, -0.5f }; // top right
 
+
+    float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
+
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
         // Set the background frame color
@@ -52,10 +52,7 @@ public class MyGLRenderer extends MyGLRendererCamera {
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
-        mLine = new Line(0.0f, 0.0f, 0.5f, 0.0f, 0.0f, -0.5f, color);
-
-        mModel = new ImportModel(new BienvenidoPrueba());
+        mLine = new Line(new PointVector(0.0f, 0.0f, -0.5f), new PointVector(0.0f, 0.0f, 0.5f), color);
     }
 
     @Override
@@ -71,14 +68,10 @@ public class MyGLRenderer extends MyGLRendererCamera {
 
     public void onDrawFrame(GL10 unused) {
         float[] scratch = new float[16];
-        float[] bienvenido = new float[16];
 
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
-        // Set the view matrix. This matrix can be said to represent the camera position.
-        // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
-        // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
 
         // Position the eye behind the origin.
         final float eyeX = 4.0f;
@@ -95,6 +88,9 @@ public class MyGLRenderer extends MyGLRendererCamera {
         final float upY = 1.0f;
         final float upZ = 0.0f;
 
+        // Set the view matrix. This matrix can be said to represent the camera position.
+        // NOTE: In OpenGL 1, a ModelView matrix is used, which is a combination of a model and
+        // view matrix. In OpenGL 2, we can keep track of these matrices separately if we choose.
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
         // Create a rotation and translation for the cube
@@ -115,28 +111,23 @@ public class MyGLRenderer extends MyGLRendererCamera {
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         // combine the model with the view matrix
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+        Matrix.multiplyMM(mMVPMatrix, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
-        Matrix.setIdentityM(mTranslationMatrix, 0);
-
-        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, 0.0f);
-
-        Matrix.multiplyMM(bienvenido, 0, scratch, 0, mTranslationMatrix, 0);
-
+        // Create a rotation and translation for the cube
         Matrix.setIdentityM(mRotationMatrix, 0);
 
-        Matrix.rotateM(mRotationMatrix, 0, 90, 0.0f, 1.0f, 0.0f);
+        //Assign mRotationMatrix a rotation with the time
+        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 0.0f, 1.0f);
 
-        Matrix.multiplyMM(bienvenido, 0, bienvenido, 0, mRotationMatrix, 0);
-
+        // combine the model with the view matrix
+        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // Draw shape
-        mAxis.draw(scratch);
+        mAxis.draw(mMVPMatrix);
         mAxis2.draw(scratch);
 
-        mModel.draw(bienvenido);
+        mLine.draw(mMVPMatrix);
 
-        mLine.draw(scratch);
     }
 
     public static int loadShader(int type, String shaderCode){
