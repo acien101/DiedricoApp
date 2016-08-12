@@ -5,6 +5,7 @@
     <item android:title="@string/getStarted">
         <menu>
             <item android:id="@+id/welcome" android:title="@string/welcome" />
+            <item android:id="@+id/components" android:title="@string/components"/>
             <item android:id="@+id/edges" android:title="@string/edges" />
         </menu>
     </item>

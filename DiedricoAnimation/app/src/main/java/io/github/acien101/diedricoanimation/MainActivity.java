@@ -196,8 +196,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             buttonsLayout.setVisibility(View.GONE);
             projectionLayout.setVisibility(View.GONE);
             textInfoProjection.setVisibility(View.VISIBLE);
+        } else if (this.id == R.id.components) {
+            changeRenderer(new MyGLRendererEdges(false, createDiedrico));
+            buttonsLayout.setVisibility(View.INVISIBLE);
+            projectionLayout.setVisibility(View.VISIBLE);
+            textInfoProjection.setVisibility(View.GONE);
+
+            cotaText.setVisibility(View.INVISIBLE);
+            alejamientoText.setVisibility(View.INVISIBLE);
         } else if (this.id == R.id.edges) {
-            changeRenderer(new MyGLRendererEdges());
+            changeRenderer(new MyGLRendererEdges(true, createDiedrico));
             buttonsLayout.setVisibility(View.INVISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
             textInfoProjection.setVisibility(View.GONE);
@@ -365,7 +373,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (id == R.id.edges) {
+                if (id == R.id.components) {
+                    infoDialogText.setText(R.string.componentsInfo);
+                } if (id == R.id.edges) {
                     infoDialogText.setText(R.string.pointProjectionInfo);
                 } else if (id == R.id.pointProjection) {
                     infoDialogText.setText(R.string.pointProjectionInfo);

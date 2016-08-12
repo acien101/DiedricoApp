@@ -15,6 +15,7 @@ import io.github.acien101.diedricoanimation.openGL.ImportModel;
 import io.github.acien101.diedricoanimation.openGL.Line;
 import io.github.acien101.diedricoanimation.openGL.SecondQuadrantModel;
 import io.github.acien101.diedricoanimation.openGL.ThirdQuadrantModel;
+import io.github.acien101.diedricoanimation.vector.LineVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -53,6 +54,13 @@ public class MyGLRendererEdges extends MyGLRendererCamera {
 
 
     float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
+
+    boolean motion;
+
+    public MyGLRendererEdges(boolean motion, CreateDiedrico createDiedrico){
+        this.motion = motion;
+        createDiedrico.addLine(new LineVector(0.0f, 0.0f, -0.5f, 0.0f, 0.0f, 0.5f));
+    }
 
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
@@ -132,8 +140,12 @@ public class MyGLRendererEdges extends MyGLRendererCamera {
         // Create a rotation and translation for the cube
         Matrix.setIdentityM(mRotationMatrix, 0);
 
-        //Assign mRotationMatrix a rotation with the time
-        Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 0.0f, -1.0f);
+        if(motion){
+            //Assign mRotationMatrix a rotation with the time
+            Matrix.rotateM(mRotationMatrix, 0, (SystemClock.uptimeMillis() % 4000L) * 0.090f, 0.0f, 0.0f, -1.0f);
+        }
+
+
 
         // combine the model with the view matrix
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);

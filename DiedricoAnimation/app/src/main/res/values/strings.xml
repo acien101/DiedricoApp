@@ -68,4 +68,14 @@
     <string name="groundLineParallelPlaneInfo">Only in spanish</string>
     <string name="profilePlaneInfo">Only in spanish</string>
     <string name="groundLineCuttedPlaneInfo">Only in spanish</string>
+    <string name="components">Descriptive geometry components</string>
+    <string name="componentsInfo">Only in spanish</string>
+    <string name="infoCamara">With a photo you can pass it to 3D! \r\n  You only have to take a pic and set de values of the lines</string>
+    <string name="landLine">Land Line</string>
+    <string name="XLine">X line</string>
+    <string name="yLine">Y line</string>
+    <string name="xPoint">X point</string>
+    <string name="yPoint">Y point</string>
+    <string name="line">Line</string>
+    <string name="point">Point</string>
 </resources>

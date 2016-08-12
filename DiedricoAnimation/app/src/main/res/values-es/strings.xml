@@ -55,4 +55,15 @@
     <string name="groundLineParallelPlaneInfo">Como su nombre indica este tipo de plano es paralelo a la LT, siendo por tanto sus trazas paralelas a la LT. Los tipos de rectas que puede contener son: oblicua, paralela a la LT y de perfil.</string>
     <string name="profilePlaneInfo">Es perpendicular a los dos planos de proyección, o lo que es lo mismo, perpendicular a la LT, por tanto también será perpendicular a los planos bisectores y a cualquier otro plano que pase por la LT. Sus trazas se proyectan perpendiculares a la LT confundidas en una linea. Los tipos de rectas que puede contener son: vertical, de punta y de perfil.</string>
     <string name="groundLineCuttedPlaneInfo">Tiene sus trazas confundidas con la LT. para su definición es necesario conocer las proyecciones de un punto contenido en dicho plano. Los tipos de rectas que puede contener son: paralela a la LT, corta a la LT y de perfil.</string>
+    <string name="components">Componentes del sistema diédrico</string>
+    <string name="componentsInfo">Los elementos fundamentales de este sistema son los plano de proyecció qie se sitúan perpendiculares entre sí. Éstos reciben el nombre de Plano Horizontal (PH) el situado en posición horizontal, y Plano Vertical (PV) en situado en posición verticacl. La intersección de estos planos es una recta que recibe el nombre de Línea de Tierra (LT).</string>
+    <string name="intro_message" translatable="false"></string>
+    <string name="landLine">Linea de tierra</string>
+    <string name="line">Linea</string>
+    <string name="point">Punto</string>
+    <string name="xPoint">Alejamiento punto</string>
+    <string name="yLine">Cota linea</string>
+    <string name="yPoint">Cota punto</string>
+    <string name="infoCamara">Con una foto puedes pasar tus láminas de diédrico a 3D! \r\n Lo único que tienes que hacer es hacer una foto y poner los elementos presentes en la imagen.</string>
+    <string name="XLine">Alejamiento linea</string>
 </resources>
