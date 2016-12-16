@@ -26,7 +26,6 @@ public class ProjectionFragment extends BaseFragment{
     private static final String FRICTION_PATTERN = "Current: %sF";
 
     private GLSurfaceView mGLView;          //SurfaceView of OpenGL
-    private MyGLSurfaceView myGLSurfaceView;            //Its the object of the openGL where we pass the coords for the camera
     MyGLRendererCamera renderer;            //The renderer obj
 
     float initX;      //Is the value of the X coordenate when we press the screen
@@ -72,7 +71,6 @@ public class ProjectionFragment extends BaseFragment{
         //myGLSurfaceView = new MyGLSurfaceView(getActivity());
         renderer = new MyGLRenderer();
         mGLView = new MyGLSurfaceView(getContext(), renderer);
-        //myGLSurfaceView = new MyGLSurfaceView(getContext(), renderer);
 
         threadTime();               //start the thread, for rotate the camera if the user don't press the screen
         pressed = false;

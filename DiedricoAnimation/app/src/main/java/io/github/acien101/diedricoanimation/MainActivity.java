@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RelativeLayout content_main;            //its the content layout, where it is the opengl renderer
 
     private GLSurfaceView mGLView;          //SurfaceView of OpenGL
-    private MyGLSurfaceView myGLSurfaceView;            //Its the object of the openGL where we pass the coords for the camera
 
     float initX;      //Is the value of the X coordenate when we press the screen
     float initY;      //The Y
@@ -124,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         renderer = new MyGLRenderer();              //The main screen is the MyGLRenderer() obj, where is a home renderer
         mGLView = new MyGLSurfaceView(this, renderer);
-        myGLSurfaceView = new MyGLSurfaceView(this, renderer);
 
         threadTime();               //start the thread, for rotate the camera if the user don't press the screen
         pressed = false;
@@ -257,7 +255,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void changeRenderer(MyGLRendererCamera renderer){
         mGLView = new MyGLSurfaceView(this, renderer);
-        myGLSurfaceView = new MyGLSurfaceView(this, renderer);
         mGLView.setOnTouchListener(listenerForCamera());
 
         //Put the diedrico projection to the layout and the renderer
