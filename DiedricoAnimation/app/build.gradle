@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'org.boofcv:android:0.21'
     compile 'com.android.support:support-v13:23.4.0'
+    compile 'ru.noties:scrollable:1.2.0'
 }

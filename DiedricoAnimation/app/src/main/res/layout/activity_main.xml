@@ -1,64 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
-    android:layout_height="match_parent" tools:context=".MainActivity">
+<ru.noties.scrollable.ScrollableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollable_layout"
+    app:scrollable_autoMaxScroll="true"
+    app:scrollable_autoMaxScrollViewId="@+id/header"
+    app:scrollable_considerIdleMillis="125"
+    app:scrollable_friction="0.075"
+    app:scrollable_closeUpAnimationMillis="250"
+    app:scrollable_defaultCloseUp="true"
+    app:scrollable_scrollerFlywheel="false"
+    app:scrollable_closeUpAnimatorInterpolator="@android:anim/accelerate_decelerate_interpolator">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <io.github.acien101.diedricoanimation.TabsLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:text="Hooola"
-            android:layout_weight="5"></TextView>
+            android:layout_height="@dimen/tabs_height"
+            android:background="#000000"
+            android:id="@+id/tabs" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/layoutForSurfaceView"
-            android:orientation="horizontal"
-            android:layout_weight="1"></LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1"></LinearLayout>
+        android:layout_marginTop="@dimen/tabs_height"
+        android:id="@+id/view_pager"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/layoutForProjections"
-                android:layout_weight="9"
-                android:background="#000000">
-
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="1dp"
-                    android:id="@+id/projection"
-                    android:background="#ffffff"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="sdf"
-                    android:id="@+id/cotaWord"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"></LinearLayout>
-
-            </RelativeLayout>
-    </LinearLayout>
-
-</RelativeLayout>
+</ru.noties.scrollable.ScrollableLayout>
