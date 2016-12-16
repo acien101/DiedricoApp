@@ -72,8 +72,7 @@ public class ProjectionFragment extends BaseFragment{
         //myGLSurfaceView = new MyGLSurfaceView(getActivity());
         renderer = new MyGLRenderer();
         mGLView = new MyGLSurfaceView(getContext(), renderer);
-        myGLSurfaceView = new MyGLSurfaceView(getContext(), renderer);
-
+        //myGLSurfaceView = new MyGLSurfaceView(getContext(), renderer);
 
         threadTime();               //start the thread, for rotate the camera if the user don't press the screen
         pressed = false;
@@ -81,7 +80,7 @@ public class ProjectionFragment extends BaseFragment{
         mGLView.setOnTouchListener(listenerForCamera());
 
 
-        return  myGLSurfaceView;
+        return  mGLView;
 
 
     }
