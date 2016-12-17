@@ -59,7 +59,7 @@ public class MyGLRendererEdges extends MyGLRendererCamera {
 
     public MyGLRendererEdges(boolean motion, CreateDiedrico createDiedrico){
         this.motion = motion;
-        createDiedrico.addLine(new LineVector(0.0f, 0.0f, -0.5f, 0.0f, 0.0f, 0.5f));
+        //createDiedrico.addLine(new LineVector(0.0f, 0.0f, -0.5f, 0.0f, 0.0f, 0.5f));
     }
 
     @Override

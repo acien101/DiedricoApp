@@ -28,6 +28,8 @@ public class ProjectionFragment extends BaseFragment{
     private GLSurfaceView mGLView;          //SurfaceView of OpenGL
     MyGLRendererCamera renderer;            //The renderer obj
 
+    LinearLayout layoutForGL;
+
     float initX;      //Is the value of the X coordenate when we press the screen
     float initY;      //The Y
 
@@ -68,6 +70,23 @@ public class ProjectionFragment extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle sis) {
         super.onCreate(sis);
 
+        final View view = inflater.inflate(R.layout.fragment_projection, parent, false);
+
+        layoutForGL = (LinearLayout) view.findViewById(R.id.layoutForSurfaceViewtabs);
+
+        renderer = new MyGLRenderer();
+        mGLView = new MyGLSurfaceView(getContext(), renderer);
+
+        threadTime();               //start the thread, for rotate the camera if the user don't press the screen
+        pressed = false;
+
+        mGLView.setOnTouchListener(listenerForCamera());
+
+        layoutForGL.addView(mGLView);
+        mGLView.requestRender();
+
+        return view;
+        /*
         //myGLSurfaceView = new MyGLSurfaceView(getActivity());
         renderer = new MyGLRenderer();
         mGLView = new MyGLSurfaceView(getContext(), renderer);
@@ -78,6 +97,8 @@ public class ProjectionFragment extends BaseFragment{
         mGLView.setOnTouchListener(listenerForCamera());
 
         return  mGLView;
+
+        */
     }
 
     @Override
@@ -161,5 +182,18 @@ public class ProjectionFragment extends BaseFragment{
             }
         };
     }
+
+
+    public void changeRenderer(MyGLRendererCamera renderer){
+        mGLView = new MyGLSurfaceView(getContext(), renderer);
+        mGLView.setOnTouchListener(listenerForCamera());
+
+        //Put the diedrico projection to the layout and the renderer
+        layoutForGL.removeAllViews();
+        layoutForGL.addView(mGLView);
+
+        mGLView.requestRender();
+    }
+
 
 }

@@ -14,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +31,11 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
     private static final String ARG_LAST_SCROLL_Y = "arg.LastScrollY";
 
     private ScrollableLayout mScrollableLayout;
+    ProjectionFragment projectionFragment;
+    ExplanationFragment explanationFragment;
+
+    CreateDiedrico createDiedrico;
+    TextView infoText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +101,7 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
         final FragmentManager manager = getSupportFragmentManager();
         final List<BaseFragment> list = new ArrayList<>();
 
-        ProjectionFragment projectionFragment
-                = (ProjectionFragment) manager.findFragmentByTag(ProjectionFragment.TAG);
+        projectionFragment = (ProjectionFragment) manager.findFragmentByTag(ProjectionFragment.TAG);
         if (projectionFragment == null) {
             projectionFragment = ProjectionFragment.newInstance();
         }
@@ -106,14 +112,20 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
             diedricoFragment = DiedricoFragment.newInstance(Color.rgb(245, 245, 245));
         }
 
-        Collections.addAll(list, projectionFragment, diedricoFragment);
+
+        explanationFragment= (ExplanationFragment) manager.findFragmentByTag(ExplanationFragment.TAG);
+        if(explanationFragment == null){
+            explanationFragment = explanationFragment.newInstance();
+        }
+
+        Collections.addAll(list, projectionFragment, diedricoFragment, explanationFragment);
         return list;
     }
 
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_tabs_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -140,72 +152,34 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-/*
-        if (this.id == R.id.welcome) {
-            changeRenderer(new MyGLRenderer());
-            buttonsLayout.setVisibility(View.GONE);
-            projectionLayout.setVisibility(View.GONE);
-            textInfoProjection.setVisibility(View.VISIBLE);
-        } else if (this.id == R.id.components) {
-            changeRenderer(new MyGLRendererEdges(false, createDiedrico));
-            buttonsLayout.setVisibility(View.INVISIBLE);
-            projectionLayout.setVisibility(View.VISIBLE);
-            textInfoProjection.setVisibility(View.GONE);
 
-            cotaText.setVisibility(View.INVISIBLE);
-            alejamientoText.setVisibility(View.INVISIBLE);
-        } else if (this.id == R.id.edges) {
-            changeRenderer(new MyGLRendererEdges(true, createDiedrico));
-            buttonsLayout.setVisibility(View.INVISIBLE);
-            projectionLayout.setVisibility(View.VISIBLE);
-            textInfoProjection.setVisibility(View.GONE);
+        if (id == R.id.welcome) {
+            projectionFragment.changeRenderer(new MyGLRenderer());
+            projectionFragment.newInstance();
 
-            cotaText.setVisibility(View.INVISIBLE);
-            alejamientoText.setVisibility(View.INVISIBLE);
-        } else if (this.id == R.id.pointProjection) {
-            changeRenderer(new MyGLRendererPointProyection(createDiedrico));
-            buttonsLayout.setVisibility(View.INVISIBLE);
-            projectionLayout.setVisibility(View.VISIBLE);
-            textInfoProjection.setVisibility(View.GONE);
+            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.newInstance();
+        } else if (id == R.id.components) {
+            projectionFragment.changeRenderer(new MyGLRendererEdges(false, null));
+            projectionFragment.newInstance();
 
-            cotaText.setVisibility(View.VISIBLE);
-            alejamientoText.setVisibility(View.VISIBLE);
-        } else if (this.id == R.id.lineProjection) {
-            changeRenderer(new MyGLRendererLineProyection(createDiedrico));
-            buttonsLayout.setVisibility(View.INVISIBLE);
-            projectionLayout.setVisibility(View.VISIBLE);
-            textInfoProjection.setVisibility(View.GONE);
-
-            cotaText.setVisibility(View.INVISIBLE);
-            alejamientoText.setVisibility(View.INVISIBLE);
-        } else if (this.id == R.id.typeOflines) {
-            changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
-            buttonsLayout.setVisibility(View.VISIBLE);
-            projectionLayout.setVisibility(View.VISIBLE);
-            textInfoProjection.setVisibility(View.GONE);
-
-            cotaText.setVisibility(View.INVISIBLE);
-            alejamientoText.setVisibility(View.INVISIBLE);
-            isTypeOfLines = true;
-        } else if (this.id == R.id.typeOfPlanes) {
-            changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
-            buttonsLayout.setVisibility(View.VISIBLE);
-            projectionLayout.setVisibility(View.VISIBLE);
-            textInfoProjection.setVisibility(View.GONE);
-
-            cotaText.setVisibility(View.INVISIBLE);
-            alejamientoText.setVisibility(View.INVISIBLE);
-            isTypeOfLines = false;
-        } else if (this.id == R.id.camara){
-            Intent intent = new Intent(this, CameraActivity.class);
-            this.startActivity(intent);
+            explanationFragment.setExplanation(R.string.edges);
+            explanationFragment.newInstance();
+        } else if (id == R.id.edges) {
+            //projectionFragment.changeRenderer(new MyGLRendererEdges(true, createDiedrico));
+        } else if (id == R.id.pointProjection) {
+            //projectionFragment.changeRenderer(new MyGLRendererPointProyection(createDiedrico));
+        } else if (id == R.id.lineProjection) {
+            //projectionFragment.changeRenderer(new MyGLRendererLineProyection(createDiedrico));
+        } else if (id == R.id.typeOflines) {
+            //projectionFragment.changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
+        } else if (id == R.id.typeOfPlanes) {
+            //projectionFragment.changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_tabs_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-        */
         return true;
 
     }
-
 }
