@@ -77,10 +77,7 @@ public class ProjectionFragment extends BaseFragment{
 
         mGLView.setOnTouchListener(listenerForCamera());
 
-
         return  mGLView;
-
-
     }
 
     @Override

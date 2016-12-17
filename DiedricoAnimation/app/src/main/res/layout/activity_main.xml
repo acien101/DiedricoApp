@@ -1,35 +1,16 @@
-<ru.noties.scrollable.ScrollableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/scrollable_layout"
-    app:scrollable_autoMaxScroll="true"
-    app:scrollable_autoMaxScrollViewId="@+id/header"
-    app:scrollable_considerIdleMillis="125"
-    app:scrollable_friction="0.075"
-    app:scrollable_closeUpAnimationMillis="250"
-    app:scrollable_defaultCloseUp="true"
-    app:scrollable_scrollerFlywheel="false"
-    app:scrollable_closeUpAnimatorInterpolator="@android:anim/accelerate_decelerate_interpolator">
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/drawer_tabs_layout"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fitsSystemWindows="true" tools:openDrawer="start">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <include layout="@layout/app_bar_main" android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <io.github.acien101.diedricoanimation.TabsLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tabs_height"
-            android:background="#000000"
-            android:id="@+id/tabs" />
+    <android.support.design.widget.NavigationView android:id="@+id/nav_tabs_view"
+        android:layout_width="wrap_content" android:layout_height="match_parent"
+        android:layout_gravity="start" android:fitsSystemWindows="true"
+        app:menu="@menu/activity_main2_drawer" />
 
-    </LinearLayout>
-
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/tabs_height"
-        android:id="@+id/view_pager"/>
-
-</ru.noties.scrollable.ScrollableLayout>
+</android.support.v4.widget.DrawerLayout>

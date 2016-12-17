@@ -1,0 +1,44 @@
+<ru.noties.scrollable.ScrollableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollable_layout"
+    app:scrollable_autoMaxScroll="true"
+    app:scrollable_autoMaxScrollViewId="@+id/header"
+    app:scrollable_considerIdleMillis="125"
+    app:scrollable_friction="0.075"
+    app:scrollable_closeUpAnimationMillis="250"
+    app:scrollable_defaultCloseUp="true"
+    app:scrollable_scrollerFlywheel="false"
+    app:scrollable_closeUpAnimatorInterpolator="@android:anim/accelerate_decelerate_interpolator">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <io.github.acien101.diedricoanimation.TabsLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tabs_height"
+            android:background="#000000"
+            android:id="@+id/tabs" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/tabs_height"
+        android:id="@+id/view_pager"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+</ru.noties.scrollable.ScrollableLayout>
