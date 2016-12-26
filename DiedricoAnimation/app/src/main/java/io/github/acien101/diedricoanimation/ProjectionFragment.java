@@ -26,7 +26,7 @@ public class ProjectionFragment extends BaseFragment{
     private static final String FRICTION_PATTERN = "Current: %sF";
 
     private GLSurfaceView mGLView;          //SurfaceView of OpenGL
-    MyGLRendererCamera renderer;            //The renderer obj
+    MyGLRendererCamera renderer = new MyGLRenderer();            //The main renderer, it has to be initialized because the fragment can die. With changeRenderer we will change the renderer
 
     LinearLayout layoutForGL;
 
@@ -74,7 +74,6 @@ public class ProjectionFragment extends BaseFragment{
 
         layoutForGL = (LinearLayout) view.findViewById(R.id.layoutForSurfaceViewtabs);
 
-        renderer = new MyGLRenderer();
         mGLView = new MyGLSurfaceView(getContext(), renderer);
 
         threadTime();               //start the thread, for rotate the camera if the user don't press the screen
@@ -86,19 +85,6 @@ public class ProjectionFragment extends BaseFragment{
         mGLView.requestRender();
 
         return view;
-        /*
-        //myGLSurfaceView = new MyGLSurfaceView(getActivity());
-        renderer = new MyGLRenderer();
-        mGLView = new MyGLSurfaceView(getContext(), renderer);
-
-        threadTime();               //start the thread, for rotate the camera if the user don't press the screen
-        pressed = false;
-
-        mGLView.setOnTouchListener(listenerForCamera());
-
-        return  mGLView;
-
-        */
     }
 
     @Override
@@ -185,6 +171,9 @@ public class ProjectionFragment extends BaseFragment{
 
 
     public void changeRenderer(MyGLRendererCamera renderer){
+
+        this.renderer = renderer;           // To change the renderer if it dies.
+
         mGLView = new MyGLSurfaceView(getContext(), renderer);
         mGLView.setOnTouchListener(listenerForCamera());
 
