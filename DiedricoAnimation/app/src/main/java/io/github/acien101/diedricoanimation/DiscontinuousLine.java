@@ -21,10 +21,10 @@ public class DiscontinuousLine {
     public DiscontinuousLine(PointVector pointA, PointVector pointB, float[] color, int cuts){
         this.cuts = cuts;
 
-        double lambda;
+        float lambda;
         LineVectorEquation lineVector = new LineVectorEquation(pointA, new SpatialVector(pointA, pointB));
         for(int i = 0; i < cuts; i++){
-            lambda = ((double)i/(int)cuts);
+            lambda = ((float)i/(int)cuts);
 
             points.add(new PointVector(lineVector.getX(lambda), lineVector.getY(lambda), lineVector.getZ(lambda)));
         }

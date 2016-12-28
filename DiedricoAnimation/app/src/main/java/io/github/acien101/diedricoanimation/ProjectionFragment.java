@@ -26,7 +26,7 @@ public class ProjectionFragment extends BaseFragment{
     private static final String FRICTION_PATTERN = "Current: %sF";
 
     private GLSurfaceView mGLView;          //SurfaceView of OpenGL
-    MyGLRendererCamera renderer = new MyGLRenderer();            //The main renderer, it has to be initialized because the fragment can die. With changeRenderer we will change the renderer
+    MyGLRendererCamera renderer = new MyGLRenderer(new Diedrico(null, null, null));            //The main renderer, it has to be initialized because the fragment can die. With changeRenderer we will change the renderer
 
     LinearLayout layoutForGL;
 

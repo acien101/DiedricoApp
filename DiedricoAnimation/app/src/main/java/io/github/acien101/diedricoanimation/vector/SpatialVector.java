@@ -4,9 +4,9 @@ package io.github.acien101.diedricoanimation.vector;
  * Created by amil101 on 25/04/16.
  */
 public class SpatialVector {
-    private double x;
-    private double y;
-    private double z;
+    private float x;
+    private float y;
+    private float z;
 
     PointVector firstPoint;
     PointVector secondPoint;
@@ -21,15 +21,15 @@ public class SpatialVector {
         this.z = secondPoint.getPointZ() - firstPoint.getPointZ();
     }
 
-    public double getX() {
+    public float getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public double getZ() {
+    public float getZ() {
         return z;
     }
 }

@@ -4,13 +4,18 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import io.github.acien101.diedricoanimation.openGL.Axis;
 import io.github.acien101.diedricoanimation.openGL.BienvenidoPrueba;
+import io.github.acien101.diedricoanimation.openGL.GLPoint;
 import io.github.acien101.diedricoanimation.openGL.ImportModel;
 import io.github.acien101.diedricoanimation.openGL.Line;
 import io.github.acien101.diedricoanimation.openGL.ModelTest;
+import io.github.acien101.diedricoanimation.openGL.ProyectionPlane;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 
 /**
@@ -20,16 +25,13 @@ public class MyGLRenderer extends MyGLRendererCamera {
     private Axis mAxis;
     private Axis mAxis2;
 
-    private Line mLine;
-
-    private ImportModel mModel;
-
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
     private final float[] mTranslationMatrix = new float[16];
+    float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
 
     static float squareCoords[] = {
             -1.0f,  0.0f, 0.5f,   // top left
@@ -43,6 +45,27 @@ public class MyGLRenderer extends MyGLRendererCamera {
             0.0f, -1.0f, -0.5f,   // bottom right
             0.0f,  1.0f, -0.5f }; // top right
 
+
+    Diedrico diedrico;
+
+    List<PointVector> points = new ArrayList<>();      //To handle the position of the points
+    List<GLPoint> glPoints = new ArrayList<>();         //The points
+
+    List<Line> lines = new ArrayList<>();
+    List<ProyectionPlane> planes = new ArrayList<>();
+    //List<ImportModel> models = new ArrayList<>();
+
+    public MyGLRenderer(Diedrico diedrico){
+        this.diedrico = diedrico;
+
+        /*
+        if(diedrico.getModels() != null){
+            for(int i = 0; i < diedrico.getModels().size(); i++){
+                models.add(diedrico.getModels().get(i));
+            }
+        }*/
+    }
+
     @Override
     public void onSurfaceCreated(GL10 gl, javax.microedition.khronos.egl.EGLConfig config) {
         // Set the background frame color
@@ -52,10 +75,25 @@ public class MyGLRenderer extends MyGLRendererCamera {
         mAxis = new Axis(squareCoords);
         mAxis2 = new Axis(squareCoords2);
 
-        float color[] = {0.0f, 0.0f, 0.0f, 1.0f};
-        mLine = new Line(0.0f, 0.0f, 0.5f, 0.0f, 0.0f, -0.5f, color);
+        if(diedrico.getPoints() != null){           //Points are a quite different, they must be created and then we change the position.
+            points.addAll(diedrico.getPoints());        //To handle the position
+            for(int i = 0; i < points.size(); i++){
+                glPoints.add(new GLPoint(10,10,0.01f, 0.7f));
+            }
+        }
 
-        mModel = new ImportModel(new BienvenidoPrueba());
+        if(diedrico.getLines() != null){
+            for(int i = 0; i < diedrico.getLines().size(); i++) {
+                lines.add(new Line(diedrico.getLines().get(i), color));
+            }
+
+        }
+
+        if(diedrico.getPlanes() != null){
+            for(int i = 0; i < diedrico.getPlanes().size(); i++){
+                planes.add(new ProyectionPlane(diedrico.getPlanes().get(i)));
+            }
+        }
     }
 
     @Override
@@ -71,7 +109,6 @@ public class MyGLRenderer extends MyGLRendererCamera {
 
     public void onDrawFrame(GL10 unused) {
         float[] scratch = new float[16];
-        float[] bienvenido = new float[16];
 
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
@@ -117,26 +154,24 @@ public class MyGLRenderer extends MyGLRendererCamera {
         // combine the model with the view matrix
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
-        Matrix.setIdentityM(mTranslationMatrix, 0);
-
-        Matrix.translateM(mTranslationMatrix, 0, 0.5f, 0.5f, 0.0f);
-
-        Matrix.multiplyMM(bienvenido, 0, scratch, 0, mTranslationMatrix, 0);
-
-        Matrix.setIdentityM(mRotationMatrix, 0);
-
-        Matrix.rotateM(mRotationMatrix, 0, 90, 0.0f, 1.0f, 0.0f);
-
-        Matrix.multiplyMM(bienvenido, 0, bienvenido, 0, mRotationMatrix, 0);
-
 
         // Draw shape
         mAxis.draw(scratch);
         mAxis2.draw(scratch);
 
-        mModel.draw(bienvenido);
+        for(int i = 0; i < points.size(); i++){
+            Matrix.setIdentityM(mTranslationMatrix, 0);
+            Matrix.translateM(mTranslationMatrix, 0, points.get(i).getPointX(), points.get(i).getPointY(), points.get(i).getPointZ());
+            Matrix.multiplyMM(scratch, 0, scratch, 0, mTranslationMatrix, 0);
 
-        mLine.draw(scratch);
+            glPoints.get(i).draw(scratch);
+        }
+
+        for(int i = 0; i < lines.size(); i++)
+            lines.get(i).draw(scratch);
+
+        for(int i = 0; i < planes.size(); i++)
+            planes.get(i).draw(scratch);
     }
 
     public static int loadShader(int type, String shaderCode){

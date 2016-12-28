@@ -45,7 +45,7 @@ public class DiedricoFragment extends BaseFragment{
 
     @Override
     public CharSequence getTitle(Resources r) {
-        return r.getString(R.string.representation);
+        return r.getString(R.string.app_name);
     }
 
     @Override

@@ -7,22 +7,22 @@ public class LineVectorEquation {
     PointVector point;
     SpatialVector vector;
 
-    private double lambda;
+    private float lambda;
 
     public LineVectorEquation(PointVector point, SpatialVector vector) {
         this.point = point;
         this.vector = vector;
     }
 
-    public double getX(double lambda) {
+    public float getX(float lambda) {
         return (point.getPointX() + (vector.getX() * lambda));
     }
 
-    public double getY(double lambda) {
+    public float getY(float lambda) {
         return (point.getPointY() + (vector.getY() * lambda));
     }
 
-    public double getZ(double lambda) {
+    public float getZ(float lambda) {
         return (point.getPointZ() + (vector.getZ() * lambda));
     }
 }

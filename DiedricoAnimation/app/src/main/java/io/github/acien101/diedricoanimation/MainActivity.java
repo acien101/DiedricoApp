@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity.
 
-        renderer = new MyGLRenderer();              //The main screen is the MyGLRenderer() obj, where is a home renderer
+        renderer = new MyGLRenderer(new Diedrico(null, null, null));              //The main screen is the MyGLRenderer() obj, where is a home renderer
         mGLView = new MyGLSurfaceView(this, renderer);
 
         threadTime();               //start the thread, for rotate the camera if the user don't press the screen
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.id = item.getItemId();
 
         if (this.id == R.id.welcome) {
-            changeRenderer(new MyGLRenderer());
+            changeRenderer(new MyGLRenderer(new Diedrico(null, null, null)));
             buttonsLayout.setVisibility(View.GONE);
             projectionLayout.setVisibility(View.GONE);
             textInfoProjection.setVisibility(View.VISIBLE);

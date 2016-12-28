@@ -8,16 +8,16 @@ import android.os.Parcelable;
  */
 public class PointVector implements Parcelable{
 
-    private double pointY;
-    private double pointX;
-    private double pointZ;
+    private float pointY;
+    private float pointX;
+    private float pointZ;
 
     public int describeContents() {
         return 0;
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeDoubleArray(new double[]{this.pointY,
+        out.writeFloatArray(new float[]{this.pointY,
                                           this.pointX,
                                           this.pointZ});
     }
@@ -34,42 +34,42 @@ public class PointVector implements Parcelable{
     };
 
     public PointVector(Parcel in) {
-        double[] data = new double[3];
+        float[] data = new float[3];
 
-        in.readDoubleArray(data);
+        in.readFloatArray(data);
         this.pointY = data[0];
         this.pointX = data[1];
         this.pointZ = data[2];
     }
 
-    public PointVector(double pointX, double pointY, double pointZ) {
+    public PointVector(float pointX, float pointY, float pointZ) {
         this.pointX = pointX;
         this.pointY = pointY;
         this.pointZ = pointZ;
     }
 
-    public double getPointX() {
+    public float getPointX() {
 
         return pointX;
     }
 
-    public void setPointX(double pointX) {
+    public void setPointX(float pointX) {
         this.pointX = pointX;
     }
 
-    public double getPointY() {
+    public float getPointY() {
         return pointY;
     }
 
-    public void setPointY(double pointY) {
+    public void setPointY(float pointY) {
         this.pointY = pointY;
     }
 
-    public double getPointZ() {
+    public float getPointZ() {
         return pointZ;
     }
 
-    public void setPointZ(double pointZ) {
+    public void setPointZ(float pointZ) {
         this.pointZ = pointZ;
     }
 }
