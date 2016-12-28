@@ -66,4 +66,7 @@
     <string name="yPoint">Cota punto</string>
     <string name="infoCamara">Con una foto puedes pasar tus láminas de diédrico a 3D! \r\n Lo único que tienes que hacer es hacer una foto y poner los elementos presentes en la imagen.</string>
     <string name="XLine">Alejamiento linea</string>
+    <string name="projection">Proyección</string>
+    <string name="representation">Representación</string>
+    <string name="explanation">Explicación</string>
 </resources>

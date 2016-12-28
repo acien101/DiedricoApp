@@ -107,7 +107,7 @@ public class ProjectionFragment extends BaseFragment{
     }
     @Override
     public CharSequence getTitle(Resources r) {
-        return r.getString(R.string.title_activity_main2);
+        return r.getString(R.string.projection);
     }
 
     @Override

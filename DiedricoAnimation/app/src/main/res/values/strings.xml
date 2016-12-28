@@ -78,4 +78,7 @@
     <string name="yPoint">Y point</string>
     <string name="line">Line</string>
     <string name="point">Point</string>
+    <string name="projection">Projection</string>
+    <string name="representation">Representation</string>
+    <string name="explanation">Explanation</string>
 </resources>

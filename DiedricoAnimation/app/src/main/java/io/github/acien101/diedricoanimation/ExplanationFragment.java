@@ -44,7 +44,7 @@ public class ExplanationFragment extends BaseFragment{
 
     @Override
     public CharSequence getTitle(Resources r) {
-        return r.getString(R.string.app_name);
+        return r.getString(R.string.explanation);
     }
 
     @Override
