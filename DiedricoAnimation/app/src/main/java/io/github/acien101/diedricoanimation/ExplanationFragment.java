@@ -17,8 +17,8 @@ import android.widget.TextView;
 public class ExplanationFragment extends BaseFragment{
 
     static final String TAG = "tag.ExplanationFragment";
-    private int exp;
-    TextView txt;
+    private int explanation = R.string.firtstext;
+    TextView textView;
 
     public static ExplanationFragment newInstance() {
         final Bundle bundle = new Bundle();
@@ -36,10 +36,8 @@ public class ExplanationFragment extends BaseFragment{
 
         final View view = inflater.inflate(R.layout.fragment_explanation, parent, false);
 
-        txt = (TextView) view.findViewById(R.id.explanationText);
-        Log.i("Ahoar", "asdf");
-        Log.i("Ahoar", Integer.toString(exp));
-        //txt.setText(exp);
+        textView = (TextView) view.findViewById(R.id.explanationText);
+        textView.setText(explanation);
 
         return view;
     }
@@ -67,8 +65,7 @@ public class ExplanationFragment extends BaseFragment{
     }
 
     public void setExplanation(int exp){
-        //this.exp = exp;
-        txt.setText(exp);
+        this.explanation = exp;
     }
 
 }
