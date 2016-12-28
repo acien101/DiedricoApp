@@ -1,11 +1,13 @@
 package io.github.acien101.diedricoanimation;
 
 import android.content.res.Resources;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,9 +19,11 @@ public class DiedricoFragment extends BaseFragment{
 
     static final String TAG = "tag.DiedricoFragment";
 
-    public static DiedricoFragment newInstance(int color) {
+    ImageView diedrico;            //ImageView
+    CreateDiedrico createDiedrico;      //For changing the pictures of the imageView
+
+    public static DiedricoFragment newInstance() {
         final Bundle bundle = new Bundle();
-        bundle.putInt(ARG_COLOR, color);
 
         final DiedricoFragment fragment = new DiedricoFragment();
         fragment.setArguments(bundle);
@@ -33,21 +37,15 @@ public class DiedricoFragment extends BaseFragment{
 
         final View view = inflater.inflate(R.layout.fragment_diedrico, parent, false);
 
-        TextView text = (TextView) view.findViewById(R.id.test);
-        text.setText("asdfaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-
-        Button button = new Button(parent.getContext());
-        button.setText("asdf");
-
-        LinearLayout layout = (LinearLayout) view.findViewById(R.id.layoutTest);
-        layout.addView(button);
+        diedrico = (ImageView) view.findViewById(R.id.projection);
+        createDiedrico = new CreateDiedrico(diedrico);
 
         return view;
     }
 
     @Override
     public CharSequence getTitle(Resources r) {
-        return r.getString(R.string.app_name);
+        return r.getString(R.string.representation);
     }
 
     @Override
@@ -64,6 +62,20 @@ public class DiedricoFragment extends BaseFragment{
     public void onFlingOver(int y, long duration) {
         if (mListView != null) {
             mListView.smoothScrollBy(y, (int) duration);
+        }
+    }
+
+    public void setDiedrico(Diedrico diedrico){
+        if(diedrico.getPoints() != null){
+            this.createDiedrico.addDiedricoPoints(diedrico.getPoints());
+        }
+
+        if(diedrico.getLines() != null){
+            this.createDiedrico.addDiedricoLines(diedrico.getLines());
+        }
+
+        if(diedrico.getPlanes() != null){
+            this.createDiedrico.addPlanes(diedrico.getPlanes());
         }
     }
 }

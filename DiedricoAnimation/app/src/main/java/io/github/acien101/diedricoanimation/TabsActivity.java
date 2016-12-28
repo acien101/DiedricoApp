@@ -22,7 +22,10 @@ import java.util.Collections;
 import java.util.List;
 
 import io.github.acien101.diedricoanimation.DiedricoTo3D.CameraActivity;
+import io.github.acien101.diedricoanimation.vector.LineVector;
+import io.github.acien101.diedricoanimation.vector.PointVector;
 import ru.noties.scrollable.CanScrollVerticallyDelegate;
+import ru.noties.scrollable.OnFlingOverListener;
 import ru.noties.scrollable.OnScrollChangedListener;
 import ru.noties.scrollable.ScrollableLayout;
 
@@ -31,11 +34,14 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
     private static final String ARG_LAST_SCROLL_Y = "arg.LastScrollY";
 
     private ScrollableLayout mScrollableLayout;
+
     ProjectionFragment projectionFragment;
+    DiedricoFragment diedricoFragment;
     ExplanationFragment explanationFragment;
 
     CreateDiedrico createDiedrico;
-    TextView infoText;
+
+    Diedrico diedrico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +76,6 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
                 return adapter.canScrollVertically(viewPager.getCurrentItem(), direction);
             }
         });
-
         mScrollableLayout.setOnScrollChangedListener(new OnScrollChangedListener() {
             @Override
             public void onScrollChanged(int y, int oldY, int maxY) {
@@ -88,14 +93,6 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
         });
     }
 
-    /*
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(ARG_LAST_SCROLL_Y, mScrollableLayout.getScrollY());
-        super.onSaveInstanceState(outState);
-    }
-
-    */
     private List<BaseFragment> getFragments() {
 
         final FragmentManager manager = getSupportFragmentManager();
@@ -106,10 +103,9 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
             projectionFragment = ProjectionFragment.newInstance();
         }
 
-        DiedricoFragment diedricoFragment
-                = (DiedricoFragment) manager.findFragmentByTag(DiedricoFragment.TAG);
+        diedricoFragment = (DiedricoFragment) manager.findFragmentByTag(DiedricoFragment.TAG);
         if(diedricoFragment == null){
-            diedricoFragment = DiedricoFragment.newInstance(Color.rgb(245, 245, 245));
+            diedricoFragment = DiedricoFragment.newInstance();
         }
 
 
@@ -154,27 +150,84 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.welcome) {
-            projectionFragment.changeRenderer(new MyGLRenderer());
+            diedrico = new Diedrico(null, null, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
             projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
 
             explanationFragment.setExplanation(R.string.firtstext);
             explanationFragment.newInstance();
         } else if (id == R.id.components) {
+            diedrico = new Diedrico(null, null, null);
+
             projectionFragment.changeRenderer(new MyGLRendererEdges(false, null));
             projectionFragment.newInstance();
+
+
+            diedricoFragment.setDiedrico(new Diedrico(null, null, null));
 
             explanationFragment.setExplanation(R.string.edges);
             explanationFragment.newInstance();
         } else if (id == R.id.edges) {
-            //projectionFragment.changeRenderer(new MyGLRendererEdges(true, createDiedrico));
+            diedrico = new Diedrico(null, null, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.newInstance();
         } else if (id == R.id.pointProjection) {
-            //projectionFragment.changeRenderer(new MyGLRendererPointProyection(createDiedrico));
+
+            List<PointVector> pointVectors = new ArrayList<>();
+            pointVectors.add(new PointVector(0.75f, 0.25f, 0.0f));
+            pointVectors.add(new PointVector(0.4f, 0.6f, 0.0f));
+
+            diedrico = new Diedrico(pointVectors, null, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.newInstance();
         } else if (id == R.id.lineProjection) {
-            //projectionFragment.changeRenderer(new MyGLRendererLineProyection(createDiedrico));
+
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.0f, 0.8f, 0.4f, 0.9f, 0.0f, -0.4f));
+            diedrico = new Diedrico(null, null, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.newInstance();
         } else if (id == R.id.typeOflines) {
-            //projectionFragment.changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
+            diedrico = new Diedrico(null, null, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.newInstance();
         } else if (id == R.id.typeOfPlanes) {
-            //projectionFragment.changeRenderer(new MyGLRendererTypeOfPlanes(createDiedrico, 0, infoText));
+            diedrico = new Diedrico(null, null, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.newInstance();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_tabs_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -182,4 +235,6 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
 
     }
+
+
 }
