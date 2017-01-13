@@ -81,4 +81,5 @@
     <string name="projection">Projection</string>
     <string name="representation">Representation</string>
     <string name="explanation">Explanation</string>
+    <string name="profileLine">Profile line</string>
 </resources>

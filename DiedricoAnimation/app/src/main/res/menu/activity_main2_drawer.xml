@@ -19,8 +19,27 @@
 
     <item android:title="@string/typeOfLines">
         <menu>
-            <item android:id="@+id/typeOflines" android:title="@string/typeOfLines" />
-            <item android:id="@+id/typeOfPlanes" android:title="@string/typeOfPlanes" />
+            <item android:id="@+id/crosswideLine" android:title="@string/crosswideLine"/>
+            <item android:id="@+id/horizontalLine" android:title="@string/horizontalLine"/>
+            <item android:id="@+id/frontalLine" android:title="@string/frontalLine"/>
+            <item android:id="@+id/verticalLine" android:title="@string/verticalLine"/>
+            <item android:id="@+id/rigidLine" android:title="@string/rigidLine"/>
+            <item android:id="@+id/groundLineParallelLine" android:title="@string/groundLineParallelLine"/>
+            <item android:id="@+id/profileLine" android:title="@string/profileLine"/>
+            <item android:id="@+id/groundLineCuttedLine" android:title="@string/groundLineCuttedLine"/>
+        </menu>
+    </item>
+
+    <item android:title="@string/typeOfPlanes">
+        <menu>
+            <item android:id="@+id/crosswidePlane" android:title="@string/crosswidePlane"/>
+            <item android:id="@+id/horizontalPlane" android:title="@string/horizontalPlane"/>
+            <item android:id="@+id/frontalPlane" android:title="@string/frontalPlane"/>
+            <item android:id="@+id/horizontalProjectionPlane" android:title="@string/horizontalProjectionPlane"/>
+            <item android:id="@+id/verticalProjectionPlane" android:title="@string/verticalProjectionPlane"/>
+            <item android:id="@+id/groundLineParallelPlane" android:title="@string/groundLineParallelPlane"/>
+            <item android:id="@+id/profilePlane" android:title="@string/profilePlane"/>
+            <item android:id="@+id/groundLineCuttedPlane" android:title="@string/groundLineCuttedPlane"/>
         </menu>
     </item>
 

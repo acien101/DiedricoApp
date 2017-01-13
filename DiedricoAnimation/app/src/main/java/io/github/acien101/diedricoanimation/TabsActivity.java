@@ -208,7 +208,7 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
 
             explanationFragment.setExplanation(R.string.firtstext);
             explanationFragment.newInstance();
-        } else if (id == R.id.typeOflines) {
+        } /*else if (id == R.id.typeOflines) {
             diedrico = new Diedrico(null, null, null);
 
             projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
@@ -228,7 +228,7 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
 
             explanationFragment.setExplanation(R.string.firtstext);
             explanationFragment.newInstance();
-        }
+        }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_tabs_layout);
         drawer.closeDrawer(GravityCompat.START);
 

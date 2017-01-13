@@ -69,4 +69,5 @@
     <string name="projection">Proyección</string>
     <string name="representation">Representación</string>
     <string name="explanation">Explicación</string>
+    <string name="profileLine">Recta de perfil</string>
 </resources>

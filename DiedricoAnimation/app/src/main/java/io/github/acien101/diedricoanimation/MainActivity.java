@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             cotaText.setVisibility(View.INVISIBLE);
             alejamientoText.setVisibility(View.INVISIBLE);
-        } else if (this.id == R.id.typeOflines) {
+        } /*else if (this.id == R.id.typeOflines) {
             changeRenderer(new MyGLRendererTypeOfLines(createDiedrico, 0, infoText));
             buttonsLayout.setVisibility(View.VISIBLE);
             projectionLayout.setVisibility(View.VISIBLE);
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             cotaText.setVisibility(View.INVISIBLE);
             alejamientoText.setVisibility(View.INVISIBLE);
             isTypeOfLines = false;
-        } else if (this.id == R.id.camara){
+        } */else if (this.id == R.id.camara){
             Intent intent = new Intent(this, CameraActivity.class);
             this.startActivity(intent);
         }
@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     infoDialogText.setText(R.string.pointProjectionInfo);
                 } else if (id == R.id.lineProjection) {
                     infoDialogText.setText(R.string.lineProjectionInfo);
-                } else if (id == R.id.typeOflines) {
+                } /*else if (id == R.id.typeOflines) {
                     switch (currentType){
                         case 0:
                             infoDialogText.setText(R.string.crosswideLineInfo);
@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             break;
 
                     }
-                }
+                }*/
                 dialogButton.show();
 
             }
