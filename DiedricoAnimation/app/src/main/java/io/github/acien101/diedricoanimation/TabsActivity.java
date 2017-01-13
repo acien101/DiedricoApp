@@ -23,6 +23,7 @@ import java.util.List;
 
 import io.github.acien101.diedricoanimation.DiedricoTo3D.CameraActivity;
 import io.github.acien101.diedricoanimation.vector.LineVector;
+import io.github.acien101.diedricoanimation.vector.PlaneVector;
 import io.github.acien101.diedricoanimation.vector.PointVector;
 import ru.noties.scrollable.CanScrollVerticallyDelegate;
 import ru.noties.scrollable.OnFlingOverListener;
@@ -208,27 +209,215 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
 
             explanationFragment.setExplanation(R.string.firtstext);
             explanationFragment.newInstance();
-        } /*else if (id == R.id.typeOflines) {
-            diedrico = new Diedrico(null, null, null);
+        } else if(id == R.id.crosswideLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.0f, 0.8f, 0.4f, 0.9f, 0.0f, -0.4f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
 
             projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
             projectionFragment.newInstance();
 
             diedricoFragment.setDiedrico(diedrico);
 
-            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.setExplanation(R.string.crosswideLineInfo);
             explanationFragment.newInstance();
-        } else if (id == R.id.typeOfPlanes) {
-            diedrico = new Diedrico(null, null, null);
+        } else if(id == R.id.horizontalLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.9f, 0.0f, 0.4f, 0.9f, 0.9f, -0.4f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
 
             projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
             projectionFragment.newInstance();
 
             diedricoFragment.setDiedrico(diedrico);
 
-            explanationFragment.setExplanation(R.string.firtstext);
+            explanationFragment.setExplanation(R.string.horizontalLineInfo);
             explanationFragment.newInstance();
-        }*/
+        } else if(id == R.id.frontalLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.0f, 0.5f, 0.4f, 0.9f, 0.5f, -0.4f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.frontalLineInfo);
+            explanationFragment.newInstance();
+        } else if(id == R.id.rigidLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.5f, 0.0f, 0.0f, 0.5f, 0.9f, 0.0f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.rigidLineInfo);
+            explanationFragment.newInstance();
+        } else if(id == R.id.verticalLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.0f, 0.5f, 0.0f, 0.9f, 0.5f, 0.0f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.verticalLineInfo);
+            explanationFragment.newInstance();
+        } else if(id == R.id.groundLineParallelLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.5f, 0.5f, 0.4f, 0.5f, 0.5f, -0.4f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.groundLineParallelLineInfo);
+            explanationFragment.newInstance();
+        /*} else if(id == R.id.profileLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.5f, 0.5f, 0.4f, 0.5f, 0.5f, -0.4f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.groundLineParallelLineInfo);
+            explanationFragment.newInstance();*/
+        } else if(id == R.id.groundLineCuttedLine){
+            List<LineVector> lineVectors = new ArrayList<>();
+            lineVectors.add(new LineVector(0.0f, 0.0f, 0.0f, 0.9f, 0.9f, 0.0f));
+
+            diedrico = new Diedrico(null, lineVectors, null);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.groundLineParallelLineInfo);
+            explanationFragment.newInstance();
+        } else if(id == R.id.crosswidePlane) {
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f, -0.5f), new PointVector(0.5f, 0.5f, -0.5f), new PointVector(1.0f, 0.0f, -0.5f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.crosswidePlanoInfo);
+            explanationFragment.newInstance();
+        }  else if(id == R.id.horizontalPlane){
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.0f, 0.5f, -0.5f),  new PointVector(0.0f, 0.5f, 0.5f), new PointVector(0.9f, 0.5f, 0.5f),new PointVector(0.9f, 0.5f, -0.5f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.horizontalPlaneInfo);
+            explanationFragment.newInstance();
+        }  else if(id == R.id.frontalPlane){
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f), new PointVector(0.5f, 1.0f, 0.5f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.frontalLineInfo);
+            explanationFragment.newInstance();
+        }  else if(id == R.id.horizontalProjectionPlane){
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.0f, 1.0f, 0.4f) ,new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.5f, 1.0f, -0.5f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.horizontalProjectionPlaneInfo);
+            explanationFragment.newInstance();
+        }  else if(id == R.id.verticalProjectionPlane){
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.0f, 0.0f, 0.4f), new PointVector(0.0f, 1.0f,-0.5f), new PointVector(1.0f, 1.0f , -0.5f), new PointVector(1.0f, 0.0f, 0.4f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.verticalProjectionPlaneInfo);
+            explanationFragment.newInstance();
+        }  else if(id == R.id.groundLineParallelPlane){
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.5f, 0.0f, 0.5f), new PointVector(0.5f, 0.0f, -0.5f), new PointVector(0.0f, 0.7f, -0.5f), new PointVector(0.0f, 0.7f, 0.5f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.groundLineParallelPlaneInfo);
+            explanationFragment.newInstance();
+        }  else if(id == R.id.profilePlane){
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.0f, 0.0f, 0.0f), new PointVector(1.0f, 0.0f, 0.0f), new PointVector(1.0f, 1.0f, 0.0f), new PointVector(0.0f, 1.0f, 0.0f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.profilePlaneInfo);
+            explanationFragment.newInstance();
+        }  else if(id == R.id.groundLineCuttedPlane){
+            List<PlaneVector> planeVectors = new ArrayList<>();
+            planeVectors.add(new PlaneVector(new PointVector(0.0f, 0.0f, 0.5f), new PointVector(1.0f, 1.0f, 0.5f), new PointVector(1.0f, 1.0f, -0.5f), new PointVector(0.0f, 0.0f, -0.5f)));
+
+            diedrico = new Diedrico(null, null, planeVectors);
+
+            projectionFragment.changeRenderer(new MyGLRenderer(diedrico));
+            projectionFragment.newInstance();
+
+            diedricoFragment.setDiedrico(diedrico);
+
+            explanationFragment.setExplanation(R.string.groundLineCuttedPlaneInfo);
+            explanationFragment.newInstance();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_tabs_layout);
         drawer.closeDrawer(GravityCompat.START);
 
