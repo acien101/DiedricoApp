@@ -287,9 +287,9 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
 
             explanationFragment.setExplanation(R.string.groundLineParallelLineInfo);
             explanationFragment.newInstance();
-        /*} else if(id == R.id.profileLine){
+        } else if(id == R.id.profileLine){
             List<LineVector> lineVectors = new ArrayList<>();
-            lineVectors.add(new LineVector(0.5f, 0.5f, 0.4f, 0.5f, 0.5f, -0.4f));
+            lineVectors.add(new LineVector(0.9f, 0.0f, 0.0f, 0.0f, 0.9f, 0.0f));
 
             diedrico = new Diedrico(null, lineVectors, null);
 
@@ -299,7 +299,7 @@ public class TabsActivity extends BaseActivity implements NavigationView.OnNavig
             diedricoFragment.setDiedrico(diedrico);
 
             explanationFragment.setExplanation(R.string.groundLineParallelLineInfo);
-            explanationFragment.newInstance();*/
+            explanationFragment.newInstance();
         } else if(id == R.id.groundLineCuttedLine){
             List<LineVector> lineVectors = new ArrayList<>();
             lineVectors.add(new LineVector(0.0f, 0.0f, 0.0f, 0.9f, 0.9f, 0.0f));
